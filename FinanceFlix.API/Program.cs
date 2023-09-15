@@ -1,4 +1,8 @@
 using FinanceFlix.Data.Context;
+using FinanceFlix.Data.Repositories;
+using FinanceFlix.Domain.Interfaces.IRepositories;
+using FinanceFlix.Domain.Interfaces.IServices;
+using FinanceFlix.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,9 +25,14 @@ builder.Services.AddDbContext<DataContext>(options => options.UseOracle(connecti
 #endregion
 
 
-//Inversão de Controles
+//Inversão de Controles - Repositories
 #region Inversão de Controles
-// builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+#endregion
+
+//Inversão de Controles - Services
+#region Inversão de Controles
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 #endregion
 
 var app = builder.Build();

@@ -18,8 +18,4 @@
     <ProjectReference Include="..\FinanceFlix.Data\FinanceFlix.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

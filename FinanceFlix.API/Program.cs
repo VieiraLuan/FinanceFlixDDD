@@ -20,6 +20,12 @@ var connectionString = builder.Configuration.GetConnectionString("DatabaseConnec
 builder.Services.AddDbContext<DataContext>(options => options.UseOracle(connectionString).EnableSensitiveDataLogging(true));
 #endregion
 
+
+//Inversão de Controles
+#region Inversão de Controles
+// builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+#endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

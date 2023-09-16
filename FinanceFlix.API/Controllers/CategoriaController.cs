@@ -17,11 +17,11 @@ namespace FinanceFlix.API.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public ActionResult GetAll()
+        public async Task<ActionResult> GetAll()
         {
             try
             {
-                var categorias = _categoriaService.GetAll();
+                var categorias = await _categoriaService.GetAll();
 
                 return Ok(categorias);
             }
@@ -33,7 +33,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetById(Guid id)
+        public async Task<ActionResult> GetById(Guid id)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace FinanceFlix.API.Controllers
                 }
                 else
                 {
-                    var categoria = _categoriaService.GetById(id);
+                    var categoria = await _categoriaService.GetById(id);
                     return Ok(categoria);
                 }
             }
@@ -55,7 +55,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add([FromBody] Categoria categoria)
+        public async Task<ActionResult> Add([FromBody] Categoria categoria)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace FinanceFlix.API.Controllers
                     return BadRequest();
                 }
 
-                if (_categoriaService.Add(categoria) == false)
+                if (await _categoriaService.Add(categoria) == false)
                 {
                     return BadRequest();
                 }
@@ -82,7 +82,7 @@ namespace FinanceFlix.API.Controllers
 
         [HttpPut]
         [Route("Update")]
-        public  ActionResult Update([FromBody] Categoria categoria)
+        public async Task<ActionResult> Update([FromBody] Categoria categoria)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace FinanceFlix.API.Controllers
                     return BadRequest();
                 }
 
-                if (_categoriaService.Update(categoria) == false)
+                if (await _categoriaService.Update(categoria) == false)
                 {
                     return BadRequest();
                 }
@@ -107,18 +107,18 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(Guid id)
+        public async Task<ActionResult> Delete(Guid id)
         {
-           try
+            try
             {
-                var categoria = _categoriaService.GetById(id);
+                var categoria = await _categoriaService.GetById(id);
 
                 if (categoria == null)
                 {
                     return NotFound();
                 }
 
-                if (_categoriaService.Delete(categoria) == false)
+                if (await _categoriaService.Delete(categoria) == false)
                 {
                     return BadRequest();
                 }

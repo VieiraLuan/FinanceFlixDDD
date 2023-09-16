@@ -2,8 +2,6 @@
 using FinanceFlix.Domain.Interfaces.IRepositories;
 using FinanceFlix.Domain.Interfaces.IServices;
 
-
-
 namespace FinanceFlix.Domain.Services
 {
     public class CategoriaService : ICategoriaService
@@ -15,65 +13,132 @@ namespace FinanceFlix.Domain.Services
             _categoriaRepository = categoriaRepository;
         }
 
-        public bool Add(Categoria categoria)
+        public async Task<bool> Add(Categoria categoria)
         {
-            if (categoria == null)
+            try
             {
-                return false;
-            }
-            _categoriaRepository.Add(categoria);
-
-            return true;
-        }
-
-        public bool Delete(Categoria categoria)
-        {
-            if (categoria.Id == Guid.Empty)
-            {
-                return false;
-
-            }
-            else
-            {
-                if (_categoriaRepository.GetById(categoria.Id) != null)
+                if (categoria != null)
                 {
-                    _categoriaRepository.Delete(categoria);
-                    return true;
+                    await _categoriaRepository.Add(categoria);
 
+                    return true;
                 }
                 else
                 {
                     return false;
                 }
+            }
+            catch (Exception)
+            {
+                //Registro no Log
+                return false;
 
             }
-
-
         }
 
-        public IEnumerable<Categoria> GetAll()
+        public async Task<bool> Delete(Categoria categoria)
         {
-            return _categoriaRepository.GetAll();
-        }
-
-        public Categoria GetById(Guid id)
-        {
-            return _categoriaRepository.GetById(id);
-
-        }
-
-        public bool Update(Categoria categoria)
-        {
-            if (_categoriaRepository.GetById(categoria.Id) != null)
+            try
             {
-                _categoriaRepository.Update(categoria);
-                return true;
+                if (categoria != null)
+                {
+                    if (await _categoriaRepository.Delete(categoria))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        //Registro no Log
+                        return false;
+                    }
+                }
+                else
+                {
+                    //Registro no Log
+                    return false;
+                }
+
             }
-            else
+            catch (Exception)
             {
+                //Registro no Log
                 return false;
             }
+        }
 
+        public async Task<IEnumerable<Categoria>> GetAll()
+        {
+            try
+            {
+                var categorias = await _categoriaRepository.GetAll();
+                if(categorias != null)
+                {
+                    return categorias;
+                }
+                else
+                {
+                    //Registro no Log
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                //Registro no Log
+                return null;
+            }
+        }
+
+        public async Task<Categoria> GetById(Guid id)
+        {
+            try
+            {
+                var categoria = await _categoriaRepository.GetById(id);
+                if (categoria != null)
+                {
+                    return categoria;
+                }
+                else
+                {
+                    //Registro no Log
+                    return null;
+                }
+
+            }
+            catch (Exception)
+            {
+                //Registro no Log
+                return null;
+            }
+        }
+
+        public async Task<bool> Update(Categoria categoria)
+        {
+           try
+            {
+                if (categoria != null)
+                {
+                    if (await _categoriaRepository.Update(categoria))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        //Registro no Log
+                        return false;
+                    }
+                }
+                else
+                {
+                    //Registro no Log
+                    return false;
+                }
+
+            }
+            catch (Exception)
+            {
+                //Registro no Log
+                return false;
+            }
         }
     }
 }

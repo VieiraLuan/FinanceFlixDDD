@@ -73,9 +73,14 @@ namespace FinanceFlix.Data.Migrations
                         .HasColumnType("NVARCHAR2(80)")
                         .HasColumnName("NOME_CURSO");
 
+                    b.Property<Guid?>("TrilhaId")
+                        .HasColumnType("RAW(16)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
+
+                    b.HasIndex("TrilhaId");
 
                     b.ToTable("TB_CURSO");
                 });
@@ -127,11 +132,39 @@ namespace FinanceFlix.Data.Migrations
                     b.ToTable("TB_VIDEO");
                 });
 
+            modelBuilder.Entity("FinanceFlix.Domain.Entities.Trilha", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("RAW(16)")
+                        .HasColumnName("ID_TRILHA");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("NVARCHAR2(120)")
+                        .HasColumnName("DESC_TRILHA");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("NVARCHAR2(80)")
+                        .HasColumnName("NOME_TRILHA");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TB_TRILHA");
+                });
+
             modelBuilder.Entity("FinanceFlix.API.Entities.Curso", b =>
                 {
                     b.HasOne("FinanceFlix.API.Entities.Categoria", "Categoria")
                         .WithMany()
                         .HasForeignKey("CategoriaId");
+
+                    b.HasOne("FinanceFlix.Domain.Entities.Trilha", null)
+                        .WithMany("Cursos")
+                        .HasForeignKey("TrilhaId");
 
                     b.Navigation("Categoria");
                 });
@@ -148,6 +181,11 @@ namespace FinanceFlix.Data.Migrations
             modelBuilder.Entity("FinanceFlix.API.Entities.Curso", b =>
                 {
                     b.Navigation("Videos");
+                });
+
+            modelBuilder.Entity("FinanceFlix.Domain.Entities.Trilha", b =>
+                {
+                    b.Navigation("Cursos");
                 });
 #pragma warning restore 612, 618
         }

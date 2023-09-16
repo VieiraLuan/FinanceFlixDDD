@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FinanceFlix.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class CreatingTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,6 +25,19 @@ namespace FinanceFlix.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TB_TRILHA",
+                columns: table => new
+                {
+                    ID_TRILHA = table.Column<Guid>(type: "RAW(16)", nullable: false),
+                    NOME_TRILHA = table.Column<string>(type: "NVARCHAR2(80)", maxLength: 80, nullable: false),
+                    DESC_TRILHA = table.Column<string>(type: "NVARCHAR2(120)", maxLength: 120, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_TRILHA", x => x.ID_TRILHA);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TB_CURSO",
                 columns: table => new
                 {
@@ -32,7 +45,8 @@ namespace FinanceFlix.Data.Migrations
                     NOME_CURSO = table.Column<string>(type: "NVARCHAR2(80)", maxLength: 80, nullable: false),
                     DESC_CURSO = table.Column<string>(type: "NVARCHAR2(120)", maxLength: 120, nullable: false),
                     IMG_CURSO = table.Column<byte[]>(type: "RAW(2000)", nullable: false),
-                    CategoriaId = table.Column<Guid>(type: "RAW(16)", nullable: true)
+                    CategoriaId = table.Column<Guid>(type: "RAW(16)", nullable: true),
+                    TrilhaId = table.Column<Guid>(type: "RAW(16)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,6 +56,11 @@ namespace FinanceFlix.Data.Migrations
                         column: x => x.CategoriaId,
                         principalTable: "TB_CATEGORIA",
                         principalColumn: "ID_CATEGORIA");
+                    table.ForeignKey(
+                        name: "FK_TB_CURSO_TB_TRILHA_TrilhaId",
+                        column: x => x.TrilhaId,
+                        principalTable: "TB_TRILHA",
+                        principalColumn: "ID_TRILHA");
                 });
 
             migrationBuilder.CreateTable(
@@ -73,6 +92,11 @@ namespace FinanceFlix.Data.Migrations
                 column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TB_CURSO_TrilhaId",
+                table: "TB_CURSO",
+                column: "TrilhaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TB_VIDEO_CursoId",
                 table: "TB_VIDEO",
                 column: "CursoId");
@@ -89,6 +113,9 @@ namespace FinanceFlix.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "TB_CATEGORIA");
+
+            migrationBuilder.DropTable(
+                name: "TB_TRILHA");
         }
     }
 }

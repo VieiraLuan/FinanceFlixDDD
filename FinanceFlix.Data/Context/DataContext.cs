@@ -1,4 +1,5 @@
 ﻿using FinanceFlix.API.Entities;
+using FinanceFlix.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceFlix.Data.Context
@@ -18,6 +19,8 @@ namespace FinanceFlix.Data.Context
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Video> Videos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
+
+        public DbSet<Trilha> Trilhas { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

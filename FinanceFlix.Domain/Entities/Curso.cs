@@ -24,7 +24,7 @@ namespace FinanceFlix.API.Entities
         [Column("IMG_CURSO")]
         public byte[] ImagemUrl { get; set; }
 
-        public Categoria? Categoria { get; set; }
+        public Video? Categoria { get; set; }
 
         public ICollection<Video> Videos { get; set; }  
 

@@ -18,7 +18,7 @@ namespace FinanceFlix.Data.Context
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Video> Videos { get; set; }
-        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Video> Categorias { get; set; }
 
         public DbSet<Trilha> Trilhas { get; set; }
 

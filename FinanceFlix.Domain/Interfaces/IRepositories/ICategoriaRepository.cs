@@ -6,15 +6,15 @@ namespace FinanceFlix.Domain.Interfaces.IRepositories
     public interface ICategoriaRepository
     {
 
-        Task<bool> Add(Categoria categoria);
+        Task<bool> Add(Video categoria);
 
-        Task<bool> Update(Categoria categoria);
+        Task<bool> Update(Video categoria);
 
-        Task<bool> Delete(Categoria categoria);
+        Task<bool> Delete(Video categoria);
 
-        Task<Categoria> GetById(Guid id);
+        Task<Video> GetById(Guid id);
 
-        Task<IList<Categoria>> GetAll();
+        Task<IList<Video>> GetAll();
 
     }
 }

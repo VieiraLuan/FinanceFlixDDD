@@ -13,7 +13,7 @@ namespace FinanceFlix.Domain.Services
             _categoriaRepository = categoriaRepository;
         }
 
-        public async Task<bool> Add(Categoria categoria)
+        public async Task<bool> Add(Video categoria)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<bool> Delete(Categoria categoria)
+        public async Task<bool> Delete(Video categoria)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<IEnumerable<Categoria>> GetAll()
+        public async Task<IEnumerable<Video>> GetAll()
         {
             try
             {
@@ -88,7 +88,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<Categoria> GetById(Guid id)
+        public async Task<Video> GetById(Guid id)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<bool> Update(Categoria categoria)
+        public async Task<bool> Update(Video categoria)
         {
            try
             {

@@ -28,11 +28,13 @@ builder.Services.AddDbContext<DataContext>(options => options.UseOracle(connecti
 //Inversão de Controles - Repositories
 #region Inversão de Controles - Repositories
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IVideoRepository, VideoRepository>();
 #endregion
 
 //Inversão de Controles - Services
 #region Inversão de Controles - Services
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<IVideoService, VideoService>();
 #endregion
 
 var app = builder.Build();

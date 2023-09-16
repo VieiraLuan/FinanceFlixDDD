@@ -10,15 +10,15 @@ namespace FinanceFlix.Domain.Interfaces.IServices
     public interface ICategoriaService
     {
 
-        Task<bool> Add(Categoria categoria);
+        Task<bool> Add(Video categoria);
 
-        Task<bool> Update(Categoria categoria);
+        Task<bool> Update(Video categoria);
 
-        Task<bool> Delete(Categoria categoria);
+        Task<bool> Delete(Video categoria);
 
-        Task<Categoria> GetById(Guid id);
+        Task<Video> GetById(Guid id);
 
-        Task<IEnumerable<Categoria>> GetAll();
+        Task<IEnumerable<Video>> GetAll();
 
 
     }

@@ -15,7 +15,7 @@ namespace FinanceFlix.Data.Repositories
             _context = context;
         }
 
-        public async Task<bool> Add(Video categoria)
+        public async Task<bool> Add(Categoria categoria)
         {
             if (categoria == null)
             {
@@ -40,7 +40,7 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<bool> Delete(Video categoria)
+        public async Task<bool> Delete(Categoria categoria)
         {
             if (categoria == null)
             {
@@ -65,7 +65,7 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<IList<Video>> GetAll()
+        public async Task<IList<Categoria>> GetAll()
         {
 
             try
@@ -80,7 +80,7 @@ namespace FinanceFlix.Data.Repositories
 
         }
 
-        public async Task<Video> GetById(Guid id)
+        public async Task<Categoria> GetById(Guid id)
         {
             if (id == Guid.Empty)
             {
@@ -98,7 +98,7 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<bool> Update(Video categoria)
+        public async Task<bool> Update(Categoria categoria)
         {
             if (categoria == null)
             {

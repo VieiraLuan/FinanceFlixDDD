@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace FinanceFlix.API.Entities
 {
     [Table("TB_VIDEO")]
-        public class Video
+    public class Video
     {
         [Column("ID_VIDEO")]
         [Key]
@@ -13,19 +13,19 @@ namespace FinanceFlix.API.Entities
         [Column("NOME_VIDEO")]
         [Required]
         [StringLength(80)]
-        public string Nome{ get; set; } // Título do vídeo
+        public string Nome { get; set; } // Título do vídeo
 
         [Column("DESC_VIDEO")]
         [StringLength(120)]
-        public string Descricao{ get; set; } // Descrição do vídeo
+        public string Descricao { get; set; } // Descrição do vídeo
 
         [Column("URL_VIDEO")]
-        [StringLength(200)]        
+        [StringLength(200)]
         public string Url { get; set; } // URL do vídeo
 
         [Column("DURACAO_VIDEO")]
         [Required]
-        
+
         public int DuracaoSegundos { get; set; } // Duração do vídeo em segundos
 
         [Column("PATH_VIDEO")]
@@ -34,7 +34,7 @@ namespace FinanceFlix.API.Entities
 
         public Curso? Curso { get; set; } // Curso ao qual o vídeo pertence
 
-        
+
 
     }
 }

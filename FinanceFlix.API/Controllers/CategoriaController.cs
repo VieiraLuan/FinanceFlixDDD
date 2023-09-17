@@ -55,7 +55,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add([FromBody] Video categoria)
+        public async Task<ActionResult> Add([FromBody] Categoria categoria)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace FinanceFlix.API.Controllers
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = categoria.Guid}, categoria);
+                    return CreatedAtAction(nameof(GetById), new { id = categoria.Id}, categoria);
                 }
 
             }
@@ -82,7 +82,7 @@ namespace FinanceFlix.API.Controllers
 
         [HttpPut]
         [Route("Update")]
-        public async Task<ActionResult> Update([FromBody] Video categoria)
+        public async Task<ActionResult> Update([FromBody] Categoria categoria)
         {
             try
             {

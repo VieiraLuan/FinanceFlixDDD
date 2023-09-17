@@ -3,33 +3,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinanceFlix.API.Entities
 {
-    [Table("TB_CURSO")]
-    public class Curso
+    [Table("TB_CATEGORIA")]
+    public class Categoria
     {
-        [Column("ID_CURSO")]
-        [Key]
+        [Column("ID_CATEGORIA")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public Guid Id { get; set; }
 
-        [Column("NOME_CURSO")]
+        [Column("NOME_CATEGORIA")]
         [Required]
         [StringLength(80)]
         public string Nome { get; set; }
 
-        [Column("DESC_CURSO")]
+        [Column("DESC_CATEGORIA")]
         [Required]
         [StringLength(120)]
         public string Descricao { get; set; }
-
-        [Column("IMG_CURSO")]
-        public byte[] ImagemUrl { get; set; }
-
-        public Categoria? Categoria { get; set; }
-
-        public ICollection<Video> Videos { get; set; }  
-
-
-
+        
 
     }
 }

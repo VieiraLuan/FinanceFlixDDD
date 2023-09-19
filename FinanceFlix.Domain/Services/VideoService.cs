@@ -156,6 +156,38 @@ namespace FinanceFlix.Domain.Services
 
             }
         }
+
+        public async Task<IList<Video>> GetByCategoriaCurso(Guid id)
+        {
+            try
+            {
+                if (id != Guid.Empty)
+                {
+                    var videos = await _videoRepository.GetByCategoria(id);
+
+                    if (videos == null)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return videos;
+                    }
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                //todo: implementar log
+                return null;
+            }
+        }
+
+    
     }
 }
 

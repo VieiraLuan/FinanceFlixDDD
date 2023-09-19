@@ -1,18 +1,20 @@
 ﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Domain.Interfaces.IServices;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceFlix.API.Controllers
 {
-    [Route("Categoria")]
+    [Route("[controller]")]
     [ApiController]
-    public class CategoriaController : ControllerBase
+    public class VideoController : ControllerBase
     {
-        private readonly ICategoriaService _categoriaService;
 
-        public CategoriaController(ICategoriaService categoriaService)
+        private readonly IVideoService _videoService;
+
+        public VideoController(IVideoService videoService)
         {
-            _categoriaService = categoriaService;
+            _videoService = videoService;
         }
 
         [HttpGet]
@@ -21,9 +23,9 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                var categorias = await _categoriaService.GetAll();
+                var videos = await _videoService.GetAll();
 
-                return Ok(categorias);
+                return Ok(videos);
             }
             catch (Exception ex)
             {
@@ -32,19 +34,20 @@ namespace FinanceFlix.API.Controllers
 
         }
 
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
             {
-                if (_categoriaService.GetById == null)
+                if (_videoService.GetById == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    var categoria = await _categoriaService.GetById(id);
-                    return Ok(categoria);
+                    var video = await _videoService.GetById(id);
+                    return Ok(video);
                 }
             }
             catch (Exception ex)
@@ -55,22 +58,22 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Categoria categoria)
+        public async Task<IActionResult> Add([FromBody] Video video)
         {
             try
             {
-                if (categoria == null)
+                if (video == null)
                 {
                     return BadRequest();
                 }
 
-                if (await _categoriaService.Add(categoria) == false)
+                if (await _videoService.Add(video) == false)
                 {
                     return BadRequest();
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = categoria.Id}, categoria);
+                    return CreatedAtAction(nameof(GetById), new { id = video.Id }, video);
                 }
 
             }
@@ -81,17 +84,16 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPut]
-        [Route("Update")]
-        public async Task<IActionResult> Update([FromBody] Categoria categoria)
+        public async Task<IActionResult> Update([FromBody] Video video)
         {
             try
             {
-                if (categoria == null)
+                if (video == null)
                 {
                     return BadRequest();
                 }
 
-                if (await _categoriaService.Update(categoria) == false)
+                if (await _videoService.Update(video) == false)
                 {
                     return BadRequest();
                 }
@@ -107,18 +109,19 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpDelete("{id}")]
+  
         public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
-                var categoria = await _categoriaService.GetById(id);
+                var categoria = await _videoService.GetById(id);
 
                 if (categoria == null)
                 {
                     return NotFound();
                 }
 
-                if (await _categoriaService.Delete(categoria) == false)
+                if (await _videoService.Delete(categoria) == false)
                 {
                     return BadRequest();
                 }
@@ -132,6 +135,59 @@ namespace FinanceFlix.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); throw;
             }
         }
+
+        [HttpGet("WatchVideo/{id}")]
+        public async Task<IActionResult> WatchVideoUrl(Guid id)
+        {
+            try
+            {
+                if (id == Guid.Empty)
+                {
+                    return BadRequest();
+                }
+
+                var video = await _videoService.WatchVideoUrl(id);
+
+                if (video == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(video);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
+        }
+
+        [HttpGet]
+        [Route("GetAllByCategoriaCurso")]
+        public async Task<IActionResult> GetAllByCategoria(Guid id)
+        {
+            try
+            {
+                if (id == Guid.Empty)
+                {
+                    return BadRequest();
+                }
+
+                var videos = await _videoService.GetByCategoriaCurso(id);
+
+                if (videos == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(videos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
 
     }
 }

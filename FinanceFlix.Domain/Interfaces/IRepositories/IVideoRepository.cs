@@ -23,5 +23,7 @@ namespace FinanceFlix.Domain.Interfaces.IRepositories
 
         Task<IList<Video>> GetAll();
 
+        Task<IList<Video>> GetByCategoria(Guid id);
+
     }
 }

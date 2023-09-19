@@ -20,6 +20,10 @@ namespace FinanceFlix.Domain.Interfaces.IServices
 
         Task<IEnumerable<Categoria>> GetAll();
 
+    
+
+       
+
 
     }
 }

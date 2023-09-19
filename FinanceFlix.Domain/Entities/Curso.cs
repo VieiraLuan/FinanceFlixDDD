@@ -22,11 +22,11 @@ namespace FinanceFlix.API.Entities
         public string Descricao { get; set; }
 
         [Column("IMG_CURSO")]
-        public byte[] ImagemUrl { get; set; }
+        public byte[]? ImagemUrl { get; set; }
 
         public Categoria? Categoria { get; set; }
 
-        public ICollection<Video> Videos { get; set; }  
+        public ICollection<Video>? Videos { get; set; }  
 
 
 

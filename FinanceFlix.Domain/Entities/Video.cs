@@ -9,7 +9,7 @@ namespace FinanceFlix.API.Entities
         [Column("ID_VIDEO")]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Guid { get; set; } // Identificador único do vídeo
+        public Guid Id{ get; set; } // Identificador único do vídeo
         [Column("NOME_VIDEO")]
         [Required]
         [StringLength(80)]

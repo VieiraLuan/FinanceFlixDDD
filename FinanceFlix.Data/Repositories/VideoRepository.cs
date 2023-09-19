@@ -75,6 +75,37 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
+        public async Task<IList<Video>> GetByCategoria(Guid id)
+        {
+            try
+            {
+                if (id != Guid.Empty)
+                {
+                   //Listar videos por categoria de curso
+                   var videos = await _context.Videos.Include(x => x.Curso.Categoria).Where(x => x.Curso.Categoria.Id == id).ToListAsync();
+
+                    if(videos != null)
+                    {
+                        return videos;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                //TODO: Implementar log
+                return null;
+            }
+        }
+
         public async Task<Video?> GetById(Guid id)
         {
             if (id != Guid.Empty)

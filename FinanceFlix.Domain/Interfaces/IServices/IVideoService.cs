@@ -22,5 +22,7 @@ namespace FinanceFlix.Domain.Interfaces.IServices
         Task<string> WatchVideoUrl(Guid id);
 
         Task<string> WatchVideoFilePath(Guid id);
+
+        Task<IList<Video>> GetByCategoriaCurso(Guid id);
     }
 }

@@ -162,32 +162,6 @@ namespace FinanceFlix.API.Controllers
 
         }
 
-        [HttpGet]
-        [Route("GetAllByCategoriaCurso")]
-        public async Task<IActionResult> GetAllByCategoria(int id)
-        {
-            try
-            {
-                if (id != null)
-                {
-                    return BadRequest();
-                }
-
-                var videos = await _videoService.GetByCategoriaCurso(id);
-
-                if (videos == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(videos);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-
 
     }
 }

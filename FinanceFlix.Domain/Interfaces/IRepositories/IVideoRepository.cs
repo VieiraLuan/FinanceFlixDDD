@@ -1,9 +1,5 @@
 ﻿using FinanceFlix.API.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace FinanceFlix.Domain.Interfaces.IRepositories
 {
@@ -23,7 +19,7 @@ namespace FinanceFlix.Domain.Interfaces.IRepositories
 
         Task<IList<Video>> GetAll();
 
-        Task<IList<Video>> GetByCategoria(int id);
+        
 
     }
 }

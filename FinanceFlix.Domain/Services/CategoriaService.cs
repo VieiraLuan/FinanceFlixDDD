@@ -88,7 +88,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<Categoria> GetById(Guid id)
+        public async Task<Categoria> GetById(int id)
         {
             try
             {

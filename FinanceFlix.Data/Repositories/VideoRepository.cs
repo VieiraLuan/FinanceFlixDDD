@@ -66,42 +66,17 @@ namespace FinanceFlix.Data.Repositories
         {
             try
             {
-                return await _context.Videos.ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                //TODO: Implementar log
-                return null;
-            }
-        }
+                var videos = await _context.Videos.ToListAsync();
 
-        public async Task<IList<Video>> GetByCategoria(int id)
-        {
-            try
-            {
-                if (id != null)
+                if (videos != null)
                 {
-                    //Listar videos por categoria de curso
-                    var videos = await _context.Videos
-                         .Include(v => v.CursosVideos)
-                         .ThenInclude(cv => cv.Curso)
-                         .Where(v => v.CursosVideos.Any(cv => cv.Curso.CategoriaId == id))
-                         .ToListAsync();
-
-                    if (videos != null)
-                    {
-                        return videos;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-
+                    return videos;
                 }
                 else
                 {
                     return null;
                 }
+
             }
             catch (Exception ex)
             {
@@ -116,7 +91,16 @@ namespace FinanceFlix.Data.Repositories
             {
                 try
                 {
-                    return await _context.Videos.FindAsync(id);
+                    var video = await _context.Videos.FindAsync(id);
+
+                    if (video != null)
+                    {
+                        return video;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 catch (Exception)
                 {

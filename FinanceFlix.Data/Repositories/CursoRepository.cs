@@ -22,14 +22,14 @@ namespace FinanceFlix.Data.Repositories
             {
                 try
                 {
-                     _context.Cursos.Add(curso);
+                    _context.Cursos.Add(curso);
                     await _context.SaveChangesAsync();
                     return true;
                 }
                 catch (Exception ex)
                 {
                     //TODO: Implementar log
-                    await Console.Out.WriteLineAsync(ex.Message + "ERRO LSV");
+               
                     return false;
                 }
             }
@@ -67,7 +67,16 @@ namespace FinanceFlix.Data.Repositories
         {
             try
             {
-                return await _context.Cursos.ToListAsync();
+                var cursos = await _context.Cursos.ToListAsync();
+
+                if(cursos != null)
+                {
+                    return cursos;
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception ex)
             {
@@ -113,7 +122,16 @@ namespace FinanceFlix.Data.Repositories
             {
                 try
                 {
-                    return await _context.Cursos.FindAsync(id);
+                    var curso =  await _context.Cursos.FindAsync(id);
+
+                    if(curso != null)
+                    {
+                        return curso;
+                    }
+                    else
+                    {
+                        return null;
+                    }   
                 }
                 catch (Exception)
                 {

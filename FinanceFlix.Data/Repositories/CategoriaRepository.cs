@@ -70,7 +70,17 @@ namespace FinanceFlix.Data.Repositories
 
             try
             {
-                return await _context.Categorias.ToListAsync();
+               var categorias = await _context.Categorias.ToListAsync();
+
+                if(categorias == null)
+                {
+                    //Registro no Log
+                    return null;
+                }
+                else
+                {
+                    return categorias;
+                }
             }
             catch (Exception ex)
             {
@@ -80,22 +90,35 @@ namespace FinanceFlix.Data.Repositories
 
         }
 
-        public async Task<Categoria> GetById(Guid id)
+        public async Task<Categoria> GetById(int id)
         {
-            if (id == Guid.Empty)
+            if (id != null)
             {
-                //Registro no Log
+                try
+                {
+                    var categoria = await _context.Categorias.FindAsync(id);
+
+                    if(categoria == null)
+                    {
+                        //Registro no Log
+                        return null;
+                    }
+                    else
+                    {
+                        return categoria;
+                    }   
+                }
+                catch (Exception ex)
+                {
+                    //Registro no Log
+                    return null;
+                }
+            }
+            else
+            {
                 return null;
             }
-            try
-            {
-                return await _context.Categorias.FindAsync(id);
-            }
-            catch (Exception ex)
-            {
-                //Registro no Log
-                return null;
-            }
+            
         }
 
         public async Task<bool> Update(Categoria categoria)

@@ -12,7 +12,7 @@ namespace FinanceFlix.Domain.Interfaces.IRepositories
 
         Task<bool> Delete(Categoria categoria);
 
-        Task<Categoria> GetById(Guid id);
+        Task<Categoria> GetById(int id);
 
         Task<IList<Categoria>> GetAll();
 

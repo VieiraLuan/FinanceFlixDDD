@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FinanceFlix.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinanceFlix.API.Entities
@@ -9,7 +10,7 @@ namespace FinanceFlix.API.Entities
         [Column("ID_VIDEO")]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id{ get; set; } // Identificador único do vídeo
+        public int Id{ get; set; } // Identificador único do vídeo
         [Column("NOME_VIDEO")]
         [Required]
         [StringLength(80)]
@@ -30,9 +31,9 @@ namespace FinanceFlix.API.Entities
 
         [Column("PATH_VIDEO")]
         [StringLength(200)]
-        public string FilePath { get; set; } // Caminho do arquivo de vídeo no servidor
+        public string? FilePath { get; set; } // Caminho do arquivo de vídeo no servidor
 
-        public Curso? Curso { get; set; } // Curso ao qual o vídeo pertence
+        public ICollection<CursoVideo>? CursosVideos { get; set; }
 
 
 

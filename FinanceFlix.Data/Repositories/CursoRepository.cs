@@ -6,23 +6,47 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FinanceFlix.Data.Repositories
 {
-    public class VideoRepository : IVideoRepository
+    public class CursoRepository : ICursoRepository
     {
 
         private readonly DataContext _context;
 
-        public VideoRepository(DataContext context)
+        public CursoRepository(DataContext context)
         {
             _context = context;
         }
 
-        public async Task<bool> Add(Video video)
+        public async Task<bool> Add(Curso curso)
         {
-            if (video != null)
+            if (curso != null)
             {
                 try
                 {
-                    _context.Videos.Add(video);
+                     _context.Cursos.Add(curso);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Implementar log
+                    await Console.Out.WriteLineAsync(ex.Message + "ERRO LSV");
+                    return false;
+                }
+            }
+            else
+            {
+                //TODO: Implementar log
+                return false;
+            }
+        }
+
+        public async Task<bool> Delete(Curso curso)
+        {
+            if (curso != null)
+            {
+                try
+                {
+                    _context.Cursos.Remove(curso);
                     await _context.SaveChangesAsync();
                     return true;
                 }
@@ -39,34 +63,11 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<bool> Delete(Video video)
-        {
-            if (video != null)
-            {
-                try
-                {
-                    _context.Videos.Remove(video);
-                    await _context.SaveChangesAsync();
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    //TODO: Implementar log
-                    return false;
-                }
-            }
-            else
-            {
-                //TODO: Implementar log
-                return false;
-            }
-        }
-
-        public async Task<IList<Video>> GetAll()
+        public async Task<IList<Curso>> GetAll()
         {
             try
             {
-                return await _context.Videos.ToListAsync();
+                return await _context.Cursos.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -75,22 +76,18 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<IList<Video>> GetByCategoria(int id)
+        public async Task<IList<Curso>> GetByCategoria(int id)
         {
             try
             {
                 if (id != null)
                 {
-                    //Listar videos por categoria de curso
-                    var videos = await _context.Videos
-                         .Include(v => v.CursosVideos)
-                         .ThenInclude(cv => cv.Curso)
-                         .Where(v => v.CursosVideos.Any(cv => cv.Curso.CategoriaId == id))
-                         .ToListAsync();
+                   //Listar cursos por categoria 
+                   var cursos = await _context.Cursos.Include(c => c.Categoria).Where(c => c.Categoria.Id == id).ToListAsync();
 
-                    if (videos != null)
+                    if(cursos != null)
                     {
-                        return videos;
+                        return cursos;
                     }
                     else
                     {
@@ -110,13 +107,13 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<Video?> GetById(int id)
+        public async Task<Curso?> GetById(int id)
         {
             if (id != null)
             {
                 try
                 {
-                    return await _context.Videos.FindAsync(id);
+                    return await _context.Cursos.FindAsync(id);
                 }
                 catch (Exception)
                 {
@@ -131,58 +128,15 @@ namespace FinanceFlix.Data.Repositories
             }
 
         }
+      
 
-        public async Task<string> GetVideoFilePath(int id)
+        public async Task<bool> Update(Curso curso)
         {
-            try
-            {
-                var video = await _context.Videos.FindAsync(id);
-
-                if (video != null)
-                {
-                    return video.FilePath;
-                }
-
-                return null;
-
-            }
-            catch (Exception)
-            {
-                //TODO: Implementar log
-                return null;
-
-            }
-        }
-
-        public async Task<string> GetVideoUrl(int id)
-        {
-            try
-            {
-                var video = await _context.Videos.FindAsync(id);
-
-                if (video != null)
-                {
-                    return video.Url;
-                }
-
-                return null;
-
-            }
-            catch (Exception)
-            {
-                //TODO: Implementar log
-                return null;
-
-            }
-        }
-
-        public async Task<bool> Update(Video video)
-        {
-            if (video != null)
+            if (curso != null)
             {
                 try
                 {
-                    _context.Videos.Update(video);
+                    _context.Cursos.Update(curso);
                     await _context.SaveChangesAsync();
                     return true;
                 }

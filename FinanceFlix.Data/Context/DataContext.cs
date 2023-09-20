@@ -1,6 +1,7 @@
 ﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace FinanceFlix.Data.Context
 {
@@ -19,8 +20,9 @@ namespace FinanceFlix.Data.Context
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Video> Videos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
-
         public DbSet<Trilha> Trilhas { get; set; }
+        public DbSet<CursoVideo> CursosVideos { get; set; }
+        public DbSet<CursoTrilha> CursosTrilhas { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -38,6 +40,8 @@ namespace FinanceFlix.Data.Context
 
 
         }
+
+
 
         //Strings de conexão com o banco de dados
 

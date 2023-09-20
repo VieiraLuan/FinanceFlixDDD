@@ -1,15 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FinanceFlix.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinanceFlix.API.Entities
 {
+    //Produto
     [Table("TB_CURSO")]
     public class Curso
     {
         [Column("ID_CURSO")]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Column("NOME_CURSO")]
         [Required]
@@ -24,9 +26,15 @@ namespace FinanceFlix.API.Entities
         [Column("IMG_CURSO")]
         public byte[]? ImagemUrl { get; set; }
 
+       
+        public int CategoriaId { get; set; }
+
+     
         public Categoria? Categoria { get; set; }
 
-        public ICollection<Video>? Videos { get; set; }  
+        public ICollection<CursoVideo>? CursosVideos { get; set; }
+
+        public ICollection<CursoTrilha>? CursosTrilhas{ get; set; }
 
 
 

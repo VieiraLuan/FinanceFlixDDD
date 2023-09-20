@@ -9,18 +9,20 @@ namespace FinanceFlix.API.Entities
         [Column("ID_CATEGORIA")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Column("NOME_CATEGORIA")]
-        [Required]
+
         [StringLength(80)]
         public string Nome { get; set; }
 
         [Column("DESC_CATEGORIA")]
-        [Required]
+
         [StringLength(120)]
         public string Descricao { get; set; }
-        
+
+        public ICollection<Curso>? Cursos { get; set; }
+
 
     }
 }

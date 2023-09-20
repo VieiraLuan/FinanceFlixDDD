@@ -15,14 +15,14 @@ namespace FinanceFlix.Domain.Interfaces.IServices
 
         Task<bool> Delete(Video video);
 
-        Task<Video> GetById(Guid id);
+        Task<Video> GetById(int id);
 
         Task<IList<Video>> GetAll();
 
-        Task<string> WatchVideoUrl(Guid id);
+        Task<string> WatchVideoUrl(int id);
 
-        Task<string> WatchVideoFilePath(Guid id);
+        Task<string> WatchVideoFilePath(int id);
 
-        Task<IList<Video>> GetByCategoriaCurso(Guid id);
+        Task<IList<Video>> GetByCategoriaCurso(int id);
     }
 }

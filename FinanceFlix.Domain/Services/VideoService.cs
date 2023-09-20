@@ -65,7 +65,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<Video> GetById(Guid id)
+        public async Task<Video> GetById(int id)
         {
             try
             {
@@ -97,11 +97,11 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<string> WatchVideoFilePath(Guid id)
+        public async Task<string> WatchVideoFilePath(int id)
         {
             try
             {
-                if (id != Guid.Empty)
+                if (id != null)
                 {
                     string url = await _videoRepository.GetVideoFilePath(id);
 
@@ -126,11 +126,11 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<string> WatchVideoUrl(Guid id)
+        public async Task<string> WatchVideoUrl(int id)
         {
             try
             {
-                if (id != Guid.Empty)
+                if (id != null)
                 {
                     string url = await _videoRepository.GetVideoUrl(id);
 
@@ -157,11 +157,11 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<IList<Video>> GetByCategoriaCurso(Guid id)
+        public async Task<IList<Video>> GetByCategoriaCurso(int id)
         {
             try
             {
-                if (id != Guid.Empty)
+                if (id != null)
                 {
                     var videos = await _videoRepository.GetByCategoria(id);
 

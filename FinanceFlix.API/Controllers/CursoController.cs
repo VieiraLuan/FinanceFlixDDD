@@ -7,14 +7,14 @@ namespace FinanceFlix.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class VideoController : ControllerBase
+    public class CursoController : ControllerBase
     {
 
-        private readonly IVideoService _videoService;
+        private readonly ICursoService _cursoService;
 
-        public VideoController(IVideoService videoService)
+        public CursoController(ICursoService cursoService)
         {
-            _videoService = videoService;
+            _cursoService = cursoService;
         }
 
         [HttpGet]
@@ -23,9 +23,9 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                var videos = await _videoService.GetAll();
+                var cursos = await _cursoService.GetAll();
 
-                return Ok(videos);
+                return Ok(cursos);
             }
             catch (Exception ex)
             {
@@ -40,14 +40,16 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                if (_videoService.GetById == null)
+                var curso = await _cursoService.GetById(id);
+
+                if (curso == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    var video = await _videoService.GetById(id);
-                    return Ok(video);
+
+                    return Ok(curso);
                 }
             }
             catch (Exception ex)
@@ -58,22 +60,23 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Video video)
+        public async Task<IActionResult> Add([FromBody] Curso curso)
         {
             try
             {
-                if (video == null)
+                if (curso == null)
                 {
                     return BadRequest();
                 }
 
-                if (await _videoService.Add(video) == false)
+                if (await _cursoService.Add(curso) != false)
                 {
-                    return BadRequest();
+                    return CreatedAtAction(nameof(GetById), new { id = curso.Id }, curso);
+
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = video.Id }, video);
+                    return BadRequest();
                 }
 
             }
@@ -84,16 +87,16 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Video video)
+        public async Task<IActionResult> Update([FromBody] Curso curso)
         {
             try
             {
-                if (video == null)
+                if (curso == null)
                 {
                     return BadRequest();
                 }
 
-                if (await _videoService.Update(video) == false)
+                if (await _cursoService.Update(curso) == false)
                 {
                     return BadRequest();
                 }
@@ -109,19 +112,19 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpDelete("{id}")]
-  
+
         public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var categoria = await _videoService.GetById(id);
+                var curso = await _cursoService.GetById(id);
 
-                if (categoria == null)
+                if (curso == null)
                 {
                     return NotFound();
                 }
 
-                if (await _videoService.Delete(categoria) == false)
+                if (await _cursoService.Delete(curso) == false)
                 {
                     return BadRequest();
                 }
@@ -136,31 +139,7 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
-        [HttpGet("WatchVideo/{id}")]
-        public async Task<IActionResult> WatchVideoUrl(int id)
-        {
-            try
-            {
-                if (id != null)
-                {
-                    return BadRequest();
-                }
 
-                var video = await _videoService.WatchVideoUrl(id);
-
-                if (video == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(video);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-
-        }
 
         [HttpGet]
         [Route("GetAllByCategoriaCurso")]
@@ -173,14 +152,14 @@ namespace FinanceFlix.API.Controllers
                     return BadRequest();
                 }
 
-                var videos = await _videoService.GetByCategoriaCurso(id);
+                var cursos = await _cursoService.GetByCategoriaCurso(id);
 
-                if (videos == null)
+                if (cursos == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(videos);
+                return Ok(cursos);
             }
             catch (Exception ex)
             {

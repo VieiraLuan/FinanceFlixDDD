@@ -15,8 +15,8 @@ namespace FinanceFlix.Domain.Entities
         [Column("ID_TRILHA")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        
-        public Guid Id { get; set; }
+
+        public int Id { get; set; }
 
         [Column("NOME_TRILHA")]
         [Required]
@@ -28,6 +28,6 @@ namespace FinanceFlix.Domain.Entities
 
         public string Descricao { get; set; }
 
-        public ICollection<Curso> Cursos { get; set; }
+        public ICollection<CursoTrilha>? CursosTrilhas { get; set; }
     }
 }

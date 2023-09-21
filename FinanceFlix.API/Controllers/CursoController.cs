@@ -142,15 +142,11 @@ namespace FinanceFlix.API.Controllers
 
 
         [HttpGet]
-        [Route("GetAllByCategoriaCurso")]
+        [Route("GetAllByCategoriaCurso/{id}")]
         public async Task<IActionResult> GetAllByCategoria(int id)
         {
             try
-            {
-                if (id != null)
-                {
-                    return BadRequest();
-                }
+            {                
 
                 var cursos = await _cursoService.GetByCategoriaCurso(id);
 

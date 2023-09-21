@@ -89,25 +89,15 @@ namespace FinanceFlix.Data.Repositories
         {
             try
             {
-                if (id != null)
-                {
-                   //Listar cursos por categoria 
-                   var cursos = await _context.Cursos.Include(c => c.Categoria).Where(c => c.Categoria.Id == id).ToListAsync();
 
-                    if(cursos != null)
-                    {
-                        return cursos;
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                //Listar cursos por categoria 
+                var cursos = await _context.Cursos.Where(x => x.Categoria.Id == id).ToListAsync();
 
-                }
-                else
-                {
-                    return null;
-                }
+                
+
+                    return (IList<Curso>)cursos;
+
+              
             }
             catch (Exception ex)
             {

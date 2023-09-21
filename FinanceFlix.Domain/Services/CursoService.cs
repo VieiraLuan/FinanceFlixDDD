@@ -101,8 +101,8 @@ namespace FinanceFlix.Domain.Services
         {
             try
             {
-                if (id != null)
-                {
+               
+                
                     var cursos = await _cursoRepository.GetByCategoria(id);
 
                     if (cursos == null)
@@ -114,11 +114,8 @@ namespace FinanceFlix.Domain.Services
                         return cursos;
                     }
 
-                }
-                else
-                {
-                    return null;
-                }
+                
+              
             }
             catch (Exception)
             {

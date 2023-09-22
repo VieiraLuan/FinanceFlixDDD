@@ -70,7 +70,7 @@ namespace FinanceFlix.Data.Repositories
 
             try
             {
-               var categorias = await _context.Categorias.ToListAsync();
+               var categorias =  _context.Categorias.ToList();
 
                 if(categorias == null)
                 {
@@ -85,6 +85,7 @@ namespace FinanceFlix.Data.Repositories
             catch (Exception ex)
             {
                 // Registro no Log
+                Console.WriteLine(ex.Message);
                 return null;
             }
 

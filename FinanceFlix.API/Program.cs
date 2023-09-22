@@ -1,3 +1,5 @@
+using FinanceFlix.Application.Interfaces;
+using FinanceFlix.Application.Services;
 using FinanceFlix.Data.Context;
 using FinanceFlix.Data.Repositories;
 using FinanceFlix.Domain.Interfaces.IRepositories;
@@ -37,6 +39,12 @@ builder.Services.AddScoped<ICursoRepository, CursoRepository>();
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IVideoService, VideoService>();
 builder.Services.AddScoped<ICursoService, CursoService>();
+#endregion
+
+
+//Inversão de Controles - Application Services
+#region Inversão de Controles - Services
+builder.Services.AddScoped<ICategoriaApplicationService, CategoriaApplicationService>();
 #endregion
 
 var app = builder.Build();

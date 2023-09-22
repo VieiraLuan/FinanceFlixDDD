@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FinanceFlix.Application\FinanceFlix.Application.csproj" />
     <ProjectReference Include="..\FinanceFlix.Data\FinanceFlix.Data.csproj" />
   </ItemGroup>
 

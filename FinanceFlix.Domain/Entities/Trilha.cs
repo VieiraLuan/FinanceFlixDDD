@@ -12,22 +12,30 @@ namespace FinanceFlix.Domain.Entities
     [Table("TB_TRILHA")]
     public class Trilha
     {
+        public Trilha(int id, string nome, string descricao, ICollection<CursoTrilha>? cursosTrilhas)
+        {
+            Id = id;
+            Nome = nome;
+            Descricao = descricao;
+            CursosTrilhas = cursosTrilhas;
+        }
+
         [Column("ID_TRILHA")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
 
-        public int Id { get; set; }
+        public int Id { get; private set; }
 
         [Column("NOME_TRILHA")]
         [Required]
         [StringLength(80)]
-        public string Nome { get; set; }
+        public string Nome { get; private  set; }
 
         [Column("DESC_TRILHA")]
         [StringLength(120)]
 
-        public string Descricao { get; set; }
+        public string Descricao { get; private set; }
 
-        public ICollection<CursoTrilha>? CursosTrilhas { get; set; }
+        public ICollection<CursoTrilha>? CursosTrilhas { get; private set; }
     }
 }

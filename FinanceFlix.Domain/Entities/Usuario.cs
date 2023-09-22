@@ -16,6 +16,6 @@ namespace FinanceFlix.API.Entities
         [Column("NOME_USUARIO")]
         [Required]
         [StringLength(80)]
-        public string Nome { get; set; }
+        public string Nome { get; private set; }
     }
 }

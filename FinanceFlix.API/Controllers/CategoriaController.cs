@@ -1,5 +1,6 @@
 ﻿using FinanceFlix.API.Entities;
-using FinanceFlix.Domain.Interfaces.IServices;
+using FinanceFlix.Application.Interfaces;
+using FinanceFlix.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceFlix.API.Controllers
@@ -8,9 +9,9 @@ namespace FinanceFlix.API.Controllers
     [ApiController]
     public class CategoriaController : ControllerBase
     {
-        private readonly ICategoriaService _categoriaService;
+        private readonly ICategoriaApplicationService _categoriaService;
 
-        public CategoriaController(ICategoriaService categoriaService)
+        public CategoriaController(ICategoriaApplicationService categoriaService)
         {
             _categoriaService = categoriaService;
         }
@@ -55,11 +56,11 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Categoria categoria)
+        public async Task<IActionResult> Add([FromBody] CategoriaViewModel categoria)
         {
             try
             {
-                if (categoria == null)
+                if (categoria == null || !ModelState.IsValid)
                 {
                     return BadRequest();
                 }
@@ -70,7 +71,7 @@ namespace FinanceFlix.API.Controllers
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = categoria.Id}, categoria);
+                    return CreatedAtAction(nameof(GetById), new { id = categoria.Id }, categoria);
                 }
 
             }
@@ -82,7 +83,7 @@ namespace FinanceFlix.API.Controllers
 
         [HttpPut]
         [Route("Update")]
-        public async Task<IActionResult> Update([FromBody] Categoria categoria)
+        public async Task<IActionResult> Update([FromBody] CategoriaViewModel categoria)
         {
             try
             {

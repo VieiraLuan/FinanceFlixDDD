@@ -12,19 +12,28 @@ namespace FinanceFlix.Domain.Entities
     [Table("TB_CURSO_TRILHA")]
     public class CursoTrilha
     {
+        public CursoTrilha(int cursoVideoId, int cursoId, int trilhaId, Curso curso, Trilha trilha)
+        {
+            CursoVideoId = cursoVideoId;
+            CursoId = cursoId;
+            TrilhaId = trilhaId;
+            Curso = curso;
+            Trilha = trilha;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-        public int CursoVideoId { get; set; }
+        public int CursoVideoId { get; private set; }
 
-        public int CursoId { get; set; }
+        public int CursoId { get; private set; }
 
-        public int TrilhaId { get; set; }
-
-
-        public Curso Curso { get; set; }
+        public int TrilhaId { get; private set; }
 
 
-        public Trilha Trilha { get; set; }
+        public Curso Curso { get; private set; }
+
+
+        public Trilha Trilha { get; private set; }
     }
 }

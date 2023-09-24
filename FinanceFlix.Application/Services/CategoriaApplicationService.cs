@@ -1,6 +1,7 @@
 ﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Application.Interfaces;
 using FinanceFlix.Application.ViewModels;
+using FinanceFlix.Domain.Interfaces.IRepositories;
 using FinanceFlix.Domain.Interfaces.IServices;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,11 @@ namespace FinanceFlix.Application.Services
         {
             try
             {
-                var categoriaEntity = new Categoria
-                    (
-                    categoria.Id, categoria.Nome, categoria.Descricao
+                Categoria categoriaEntity = new Categoria(
+
+                    categoria.Nome,
+                    categoria.Descricao
+
                     );
 
                 return await _categoriaService.Add(categoriaEntity);
@@ -45,10 +48,9 @@ namespace FinanceFlix.Application.Services
         {
             try
             {
-                var categoriaEntity = new Categoria
-                   (
-                   categoria.Id, categoria.Nome, categoria.Descricao
-                    );
+                Categoria categoriaEntity = new Categoria();
+
+
 
                 return await _categoriaService.Delete(categoriaEntity);
 
@@ -60,13 +62,13 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<IEnumerable<CategoriaViewModel>> GetAll()
+        public async Task<ICollection<CategoriaViewModel>> GetAll()
         {
             try
             {
 
-              
-                IEnumerable<Categoria> categorias = await _categoriaService.GetAll();
+
+                ICollection<Categoria> categorias = await _categoriaService.GetAll();
 
                 if (categorias == null)
                     return null;
@@ -77,7 +79,7 @@ namespace FinanceFlix.Application.Services
                 {
                     var categoriaViewModel = new CategoriaViewModel
                     {
-                        Id = categoria.Id,
+
                         Nome = categoria.Nome,
                         Descricao = categoria.Descricao
                     };
@@ -85,7 +87,7 @@ namespace FinanceFlix.Application.Services
                     categoriasViewModel.Add(categoriaViewModel);
                 }
 
-                return categoriasViewModel; 
+                return categoriasViewModel;
             }
             catch (Exception ex)
             {
@@ -106,7 +108,7 @@ namespace FinanceFlix.Application.Services
 
                 var categoriaViewModel = new CategoriaViewModel
                 {
-                    Id = categoria.Id,
+                    //Id = categoria.Id,
                     Nome = categoria.Nome,
                     Descricao = categoria.Descricao
                 };
@@ -124,10 +126,7 @@ namespace FinanceFlix.Application.Services
         {
             try
             {
-                var categoriaEntity = new Categoria
-                    (
-                                       categoria.Id, categoria.Nome, categoria.Descricao
-                                                          );
+                Categoria categoriaEntity = new Categoria();
 
                 return _categoriaService.Update(categoriaEntity);
 

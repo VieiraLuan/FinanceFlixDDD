@@ -14,7 +14,9 @@ namespace FinanceFlix.Domain.Interfaces.IRepositories
 
         Task<Categoria> GetById(int id);
 
-        Task<IList<Categoria>> GetAll();
+        Task<ICollection<Categoria>> GetAll();
+
+       
 
     }
 }

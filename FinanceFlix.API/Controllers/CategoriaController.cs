@@ -71,7 +71,7 @@ namespace FinanceFlix.API.Controllers
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = categoria.Id }, categoria);
+                    return CreatedAtAction(nameof(GetById), new { id = categoria.Descricao }, categoria);
                 }
 
             }

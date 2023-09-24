@@ -12,6 +12,10 @@ namespace FinanceFlix.Domain.Entities
     [Table("TB_CURSO_TRILHA")]
     public class CursoTrilha
     {
+        public CursoTrilha()
+        {
+        }
+
         public CursoTrilha(int cursoVideoId, int cursoId, int trilhaId, Curso curso, Trilha trilha)
         {
             CursoVideoId = cursoVideoId;

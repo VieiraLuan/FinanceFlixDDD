@@ -21,6 +21,10 @@ namespace FinanceFlix.API.Entities
             CursosTrilhas = cursosTrilhas;
         }
 
+        public Curso()
+        {
+        }
+
         [Column("ID_CURSO")]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

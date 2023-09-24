@@ -65,12 +65,12 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<IList<Categoria>> GetAll()
+        public async Task<ICollection<Categoria>> GetAll()
         {
 
             try
             {
-               var categorias =  _context.Categorias.ToList();
+               var categorias =  await _context.Categorias.ToListAsync();
 
                 if(categorias == null)
                 {
@@ -90,6 +90,8 @@ namespace FinanceFlix.Data.Repositories
             }
 
         }
+
+        
 
         public async Task<Categoria> GetById(int id)
         {

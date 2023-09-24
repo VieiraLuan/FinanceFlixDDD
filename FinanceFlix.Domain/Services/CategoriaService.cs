@@ -66,12 +66,13 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<IEnumerable<Categoria>> GetAll()
+        public async Task<ICollection<Categoria>> GetAll()
         {
             try
             {
+
                 var categorias = await _categoriaRepository.GetAll();
-                if(categorias != null)
+                if (categorias != null)
                 {
                     return categorias;
                 }
@@ -113,7 +114,7 @@ namespace FinanceFlix.Domain.Services
 
         public async Task<bool> Update(Categoria categoria)
         {
-           try
+            try
             {
                 if (categoria != null)
                 {

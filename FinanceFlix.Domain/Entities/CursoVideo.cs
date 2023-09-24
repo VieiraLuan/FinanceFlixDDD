@@ -21,6 +21,10 @@ namespace FinanceFlix.Domain.Entities
             Video = video;
         }
 
+        public CursoVideo()
+        {
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 

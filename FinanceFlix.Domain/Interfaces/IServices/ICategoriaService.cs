@@ -18,7 +18,7 @@ namespace FinanceFlix.Domain.Interfaces.IServices
 
         Task<Categoria> GetById(int id);
 
-        Task<IEnumerable<Categoria>> GetAll();
+        Task<ICollection<Categoria>> GetAll();
 
     }
 }

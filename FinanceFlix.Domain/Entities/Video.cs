@@ -19,6 +19,10 @@ namespace FinanceFlix.API.Entities
             CursosVideos = cursosVideos;
         }
 
+        public Video()
+        {
+        }
+
         [Column("ID_VIDEO")]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -18,6 +18,6 @@ namespace FinanceFlix.Application.Interfaces
 
         Task<CategoriaViewModel> GetById(int id);
 
-        Task<IEnumerable<CategoriaViewModel>> GetAll();
+        Task<ICollection<CategoriaViewModel>> GetAll();
     }
 }

@@ -5,7 +5,7 @@
 namespace FinanceFlix.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class CreatingTablesNN3 : Migration
+    public partial class CreatingEntities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

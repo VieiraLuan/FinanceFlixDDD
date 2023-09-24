@@ -20,6 +20,10 @@ namespace FinanceFlix.Domain.Entities
             CursosTrilhas = cursosTrilhas;
         }
 
+        public Trilha()
+        {
+        }
+
         [Column("ID_TRILHA")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

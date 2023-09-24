@@ -6,12 +6,24 @@ namespace FinanceFlix.API.Entities
     [Table("TB_CATEGORIA")]
     public class Categoria
     {
-        public Categoria(int? id, string nome, string descricao)
+        public Categoria()
         {
-            Id = id ?? default;
+        }
+
+        public Categoria(string nome, string descricao)
+        {
+            
             Nome = nome;
             Descricao = descricao;
-     
+
+        }
+
+        public Categoria(int id, string nome, string descricao, ICollection<Curso>? cursos)
+        {
+            Id = id;
+            Nome = nome;
+            Descricao = descricao;
+            Cursos = cursos;
         }
 
         [Column("ID_CATEGORIA")]

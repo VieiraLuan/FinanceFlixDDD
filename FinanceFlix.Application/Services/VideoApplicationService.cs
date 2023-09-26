@@ -152,9 +152,17 @@ namespace FinanceFlix.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<string> WatchVideoUrl(int id)
+        public async Task<string> WatchVideoUrl(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _videoService.WatchVideoUrl(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }

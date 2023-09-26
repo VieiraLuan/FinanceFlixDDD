@@ -171,7 +171,7 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                if (id != null)
+                if (id == null)
                 {
                     return BadRequest();
                 }

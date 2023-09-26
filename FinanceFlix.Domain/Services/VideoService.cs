@@ -34,6 +34,19 @@ namespace FinanceFlix.Domain.Services
 
         }
 
+        public Task<bool> AddVideoCurso(int idVideo, int idCurso)
+        {
+            try
+            {
+                return _videoRepository.AddVideoCurso(idVideo, idCurso);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public async Task<bool> Delete(Video video)
         {
             if (video == null)
@@ -62,6 +75,20 @@ namespace FinanceFlix.Domain.Services
             {
                 //TODO: Implementar log
                 return null;
+            }
+        }
+
+        public async Task<IList<Video>> GetAllVideosByCurso(int idCurso)
+        {
+           try
+            {
+                var videos = await _videoRepository.GetAllVideosByCurso(idCurso);
+                return videos;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
         }
 

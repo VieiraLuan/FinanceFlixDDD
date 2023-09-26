@@ -13,7 +13,7 @@ namespace FinanceFlix.Application.ViewModels
     {
 
     
-       // public int Id { get;  set; }
+       public int Id { get;  set; }
         
         [StringLength(80,ErrorMessage = "O tamanho do {0} deve ser")]
         
@@ -24,7 +24,7 @@ namespace FinanceFlix.Application.ViewModels
         [StringLength(120)]
         public string Descricao { get;  set; }
 
-       // public ICollection<Curso>? Cursos { get;  set; }
+        public ICollection<Curso>? Cursos { get;  set; }
 
 
     }

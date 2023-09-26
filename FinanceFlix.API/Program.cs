@@ -19,10 +19,10 @@ builder.Services.AddSwaggerGen();
 //Conexão com o banco de dados
 #region Conexão com o banco de dados
 //habilitar para desenvolvimento
-var connectionString = builder.Configuration.GetConnectionString("DatabaseConnectionLOCAL");
+//var connectionString = builder.Configuration.GetConnectionString("DatabaseConnectionLOCAL");
 
 //habilitar para produção
-//var connectionString = builder.Configuration.GetConnectionString("DatabaseConnectionFIAP");
+var connectionString = builder.Configuration.GetConnectionString("DatabaseConnectionFIAP");
 builder.Services.AddDbContext<DataContext>(options => options.UseOracle(connectionString).EnableSensitiveDataLogging(true));
 #endregion
 
@@ -45,6 +45,8 @@ builder.Services.AddScoped<ICursoService, CursoService>();
 //Inversão de Controles - Application Services
 #region Inversão de Controles - Services
 builder.Services.AddScoped<ICategoriaApplicationService, CategoriaApplicationService>();
+builder.Services.AddScoped<ICursoApplicationService, CursoApplicationService>();
+builder.Services.AddScoped<IVideoApplicationService, VideoApplicationService>();
 #endregion
 
 var app = builder.Build();

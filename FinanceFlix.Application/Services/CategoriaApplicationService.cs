@@ -48,7 +48,12 @@ namespace FinanceFlix.Application.Services
         {
             try
             {
-                Categoria categoriaEntity = new Categoria();
+                Categoria categoriaEntity = new Categoria(
+
+                    categoria.Id,
+                                        categoria.Nome,
+                                                            categoria.Descricao
+                                                            );
 
 
 
@@ -79,7 +84,7 @@ namespace FinanceFlix.Application.Services
                 {
                     var categoriaViewModel = new CategoriaViewModel
                     {
-
+                        Id = categoria.Id,
                         Nome = categoria.Nome,
                         Descricao = categoria.Descricao
                     };
@@ -108,7 +113,7 @@ namespace FinanceFlix.Application.Services
 
                 var categoriaViewModel = new CategoriaViewModel
                 {
-                    //Id = categoria.Id,
+                    Id = categoria.Id,
                     Nome = categoria.Nome,
                     Descricao = categoria.Descricao
                 };

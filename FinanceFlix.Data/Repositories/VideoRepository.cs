@@ -1,5 +1,6 @@
 ﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Data.Context;
+using FinanceFlix.Domain.Entities;
 using FinanceFlix.Domain.Interfaces.IRepositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +37,26 @@ namespace FinanceFlix.Data.Repositories
             {
                 //TODO: Implementar log
                 return false;
+            }
+        }
+
+        public async Task<bool> AddVideoCurso(int idVideo, int idCurso)
+        {
+            try
+            {
+                CursoVideo cursoVideo = new CursoVideo(
+                   idCurso,
+                   idVideo
+                    );
+
+                _context.CursosVideos.Add(cursoVideo);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
         }
 
@@ -82,6 +103,53 @@ namespace FinanceFlix.Data.Repositories
             {
                 //TODO: Implementar log
                 return null;
+            }
+        }
+
+        public async Task<IList<Video>> GetAllVideosByCurso(int idCurso)
+        {
+            try
+            {
+                //Recuperando todos os videos por id do curso
+                var videos = await _context.CursosVideos.Where(x => x.CursoId == idCurso).ToListAsync();
+
+                if (videos != null)
+                {
+                    List<Video> videosList = new List<Video>();
+
+
+                    foreach (var item in videos)
+                    {
+
+                        videosList.Add(await _context.Videos.FindAsync(item.VideoId));
+
+                    }
+
+                    foreach (var item in videosList)
+                    {
+                        Console.WriteLine(item.Id + "ID");
+                        Console.WriteLine(item.Nome + "Nome");
+                        Console.WriteLine(item.Descricao + "Descricao");
+                        Console.WriteLine(item.Url + "Url");
+
+
+                    }
+
+                    return videosList;
+                }
+                else
+                {
+                    return null;
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
         }
 

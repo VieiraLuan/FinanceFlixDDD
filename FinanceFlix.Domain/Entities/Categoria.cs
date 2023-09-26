@@ -18,6 +18,16 @@ namespace FinanceFlix.API.Entities
 
         }
 
+        public Categoria(int id,string nome, string descricao)
+        {
+            Id = id;
+            Nome = nome;
+            Descricao = descricao;
+
+        }
+
+
+
         public Categoria(int id, string nome, string descricao, ICollection<Curso>? cursos)
         {
             Id = id;

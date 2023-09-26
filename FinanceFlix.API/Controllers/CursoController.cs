@@ -1,4 +1,6 @@
 ﻿using FinanceFlix.API.Entities;
+using FinanceFlix.Application.Interfaces;
+using FinanceFlix.Application.ViewModels;
 using FinanceFlix.Domain.Interfaces.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +12,9 @@ namespace FinanceFlix.API.Controllers
     public class CursoController : ControllerBase
     {
 
-        private readonly ICursoService _cursoService;
+        private readonly ICursoApplicationService _cursoService;
 
-        public CursoController(ICursoService cursoService)
+        public CursoController(ICursoApplicationService cursoService)
         {
             _cursoService = cursoService;
         }
@@ -60,7 +62,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Curso curso)
+        public async Task<IActionResult> Add([FromBody] CursoViewModel curso)
         {
             try
             {
@@ -87,7 +89,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Curso curso)
+        public async Task<IActionResult> Update([FromBody] CursoViewModel curso)
         {
             try
             {
@@ -146,7 +148,7 @@ namespace FinanceFlix.API.Controllers
         public async Task<IActionResult> GetAllByCategoria(int id)
         {
             try
-            {                
+            {
 
                 var cursos = await _cursoService.GetByCategoriaCurso(id);
 
@@ -154,7 +156,7 @@ namespace FinanceFlix.API.Controllers
                 {
                     return NotFound();
                 }
-
+                
                 return Ok(cursos);
             }
             catch (Exception ex)

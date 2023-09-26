@@ -21,6 +21,12 @@ namespace FinanceFlix.Domain.Entities
             Video = video;
         }
 
+        public CursoVideo(int cursoId, int videoId)
+        {
+            CursoId = cursoId;
+            VideoId = videoId;
+        }
+
         public CursoVideo()
         {
         }

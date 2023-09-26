@@ -17,9 +17,9 @@ namespace FinanceFlix.Application.ViewModels
         public int VideoId { get;  set; }
 
 
-        public Curso Curso { get;  set; }
+        public Curso? Curso { get;  set; }
 
-        public Video Video { get;  set; }
+        public Video? Video { get;  set; }
 
     }
 }

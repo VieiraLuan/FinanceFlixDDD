@@ -19,6 +19,18 @@ namespace FinanceFlix.API.Entities
             CursosVideos = cursosVideos;
         }
 
+        public Video(string nome, string descricao, string url, int duracaoSegundos,
+           string? filePath)
+        {
+
+            Nome = nome;
+            Descricao = descricao;
+            Url = url;
+            DuracaoSegundos = duracaoSegundos;
+            FilePath = filePath;
+
+        }
+
         public Video()
         {
         }

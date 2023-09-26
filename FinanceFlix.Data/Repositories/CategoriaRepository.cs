@@ -60,7 +60,7 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (Exception ex)
             {
-                //Registro no Log
+                Console.WriteLine("Erro: " + ex.Message);   
                 return false;
             }
         }

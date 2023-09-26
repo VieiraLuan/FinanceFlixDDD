@@ -21,6 +21,15 @@ namespace FinanceFlix.API.Entities
             CursosTrilhas = cursosTrilhas;
         }
 
+        public Curso(int id, string nome, string descricao, byte[]? imagemUrl, int categoriaId)
+        {
+            Id = id;
+            Nome = nome;
+            Descricao = descricao;
+            ImagemUrl = imagemUrl;
+            CategoriaId = categoriaId;
+        }
+
         public Curso()
         {
         }

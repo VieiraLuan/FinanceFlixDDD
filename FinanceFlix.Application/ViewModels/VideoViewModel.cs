@@ -35,6 +35,6 @@ namespace FinanceFlix.Application.ViewModels
         [StringLength(200)]
         public string? FilePath { get; set; } // Caminho do arquivo de vídeo no servidor
 
-        public ICollection<CursoVideo>? CursosVideos { get; set; }
+       
     }
 }

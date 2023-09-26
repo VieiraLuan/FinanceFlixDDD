@@ -31,11 +31,6 @@ namespace FinanceFlix.Application.ViewModels
         public int CategoriaId { get;  set; }
 
 
-        public Categoria? Categoria { get;  set; }
-
-        public ICollection<CursoVideo>? CursosVideos { get;  set; }
-
-        public ICollection<CursoTrilhaViewModel>? CursosTrilhas { get;  set; }
 
     }
 }

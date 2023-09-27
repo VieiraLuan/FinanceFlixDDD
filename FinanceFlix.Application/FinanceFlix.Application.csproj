@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\Curso\" />
     <Folder Include="ViewModels\Video\" />
     <Folder Include="ViewModels\Trilha\" />
   </ItemGroup>

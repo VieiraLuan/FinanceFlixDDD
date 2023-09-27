@@ -1,8 +1,6 @@
-﻿using FinanceFlix.API.Entities;
+﻿
 using FinanceFlix.Application.Interfaces;
-using FinanceFlix.Application.ViewModels;
-using FinanceFlix.Domain.Interfaces.IServices;
-using Microsoft.AspNetCore.Http;
+using FinanceFlix.Application.ViewModels.Curso;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceFlix.API.Controllers
@@ -62,18 +60,18 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CursoViewModel curso)
+        public async Task<IActionResult> Add([FromBody] AddCursoViewModel curso)
         {
             try
             {
-                if (curso == null)
+                if (curso == null || !ModelState.IsValid)
                 {
                     return BadRequest();
                 }
 
                 if (await _cursoService.Add(curso) != false)
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = curso.Id }, curso);
+                    return CreatedAtAction(nameof(GetById), new { id = curso.Nome }, curso);
 
                 }
                 else
@@ -89,7 +87,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] CursoViewModel curso)
+        public async Task<IActionResult> Update([FromBody] EditCursoViewModel curso)
         {
             try
             {
@@ -114,26 +112,27 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpDelete("{id}")]
-
         public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var curso = await _cursoService.GetById(id);
+                /*     var curso = await _cursoService.GetById(id);
 
-                if (curso == null)
-                {
-                    return NotFound();
-                }
+                 if (curso == null)
+                 {
+                     return NotFound();
+                 }
 
-                if (await _cursoService.Delete(curso) == false)
-                {
-                    return BadRequest();
-                }
-                else
-                {
-                    return NoContent();
-                }
+                 if (await _cursoService.Delete(curso) == false)
+                 {
+                     return BadRequest();
+                 }
+                 else
+                 {
+                     return NoContent();
+                 }*/
+
+                return null;
             }
             catch (Exception ex)
             {

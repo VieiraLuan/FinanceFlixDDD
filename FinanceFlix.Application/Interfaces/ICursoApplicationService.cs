@@ -1,5 +1,6 @@
 ﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Application.ViewModels;
+using FinanceFlix.Application.ViewModels.Curso;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,16 @@ namespace FinanceFlix.Application.Interfaces
 {
     public interface ICursoApplicationService
     {
-        Task<bool> Add(CursoViewModel curso);
+        Task<bool> Add(AddCursoViewModel curso);
 
-        Task<bool> Update(CursoViewModel curso);
+        Task<bool> Update(EditCursoViewModel curso);
 
-        Task<bool> Delete(CursoViewModel curso);
+        Task<bool> Delete(int id);
 
-        Task<CursoViewModel> GetById(int id);
+        Task<ListCursoViewModel> GetById(int id);
 
-        Task<IList<CursoViewModel>> GetAll();
+        Task<IList<ListCursoViewModel>> GetAll();
 
-        Task<IList<CursoViewModel>> GetByCategoriaCurso(int id);
+        Task<IList<ListCursoViewModel>> GetByCategoriaCurso(int id);
     }
 }

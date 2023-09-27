@@ -17,10 +17,6 @@ namespace FinanceFlix.Application.ViewModels
         public int TrilhaId { get; set; }
 
 
-        public Curso Curso { get; set; }
-
-
-        public Trilha Trilha { get; set; }
 
     }
 }

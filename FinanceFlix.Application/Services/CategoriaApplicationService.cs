@@ -1,6 +1,7 @@
 ﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Application.Interfaces;
 using FinanceFlix.Application.ViewModels;
+using FinanceFlix.Application.ViewModels.Categoria;
 using FinanceFlix.Domain.Interfaces.IRepositories;
 using FinanceFlix.Domain.Interfaces.IServices;
 using System;
@@ -22,7 +23,7 @@ namespace FinanceFlix.Application.Services
             _categoriaService = categoriaService;
         }
 
-        public async Task<bool> Add(CategoriaViewModel categoria)
+        public async Task<bool> Add(AddCategoriaViewModel categoria)
         {
             try
             {
@@ -44,20 +45,12 @@ namespace FinanceFlix.Application.Services
 
         }
 
-        public async Task<bool> Delete(CategoriaViewModel categoria)
+        public async Task<bool> Delete(int id)
         {
             try
             {
-                Categoria categoriaEntity = new Categoria(
 
-                    categoria.Id,
-                                        categoria.Nome,
-                                                            categoria.Descricao
-                                                            );
-
-
-
-                return await _categoriaService.Delete(categoriaEntity);
+                return await _categoriaService.Delete(id);
 
             }
             catch (Exception ex)
@@ -67,7 +60,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<ICollection<CategoriaViewModel>> GetAll()
+        public async Task<ICollection<ListCategoriaViewModel>> GetAll()
         {
             try
             {
@@ -78,11 +71,11 @@ namespace FinanceFlix.Application.Services
                 if (categorias == null)
                     return null;
 
-                var categoriasViewModel = new List<CategoriaViewModel>();
+                var categoriasViewModel = new List<ListCategoriaViewModel>();
 
                 foreach (var categoria in categorias)
                 {
-                    var categoriaViewModel = new CategoriaViewModel
+                    var categoriaViewModel = new ListCategoriaViewModel
                     {
                         Id = categoria.Id,
                         Nome = categoria.Nome,
@@ -101,7 +94,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<CategoriaViewModel> GetById(int id)
+        public async Task<ListCategoriaViewModel> GetById(int id)
         {
             try
             {
@@ -111,7 +104,7 @@ namespace FinanceFlix.Application.Services
                     return null;
 
 
-                var categoriaViewModel = new CategoriaViewModel
+                var categoriaViewModel = new ListCategoriaViewModel
                 {
                     Id = categoria.Id,
                     Nome = categoria.Nome,
@@ -127,11 +120,20 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public Task<bool> Update(CategoriaViewModel categoria)
+        public Task<bool> Update(EditCategoriaViewModel categoria)
         {
             try
             {
-                Categoria categoriaEntity = new Categoria();
+
+
+
+                Categoria categoriaEntity = new Categoria(
+                    categoria.Id,
+                    categoria.Nome,
+                    categoria.Descricao
+                    );
+
+
 
                 return _categoriaService.Update(categoriaEntity);
 

@@ -14,7 +14,7 @@ namespace FinanceFlix.Domain.Interfaces.IServices
 
         Task<bool> Update(Categoria categoria);
 
-        Task<bool> Delete(Categoria categoria);
+        Task<bool> Delete(int id);
 
         Task<Categoria> GetById(int id);
 

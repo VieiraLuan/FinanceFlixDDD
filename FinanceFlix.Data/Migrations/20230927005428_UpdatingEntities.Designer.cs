@@ -11,8 +11,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace FinanceFlix.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230926003416_CreatingEntities")]
-    partial class CreatingEntities
+    [Migration("20230927005428_UpdatingEntities")]
+    partial class UpdatingEntities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

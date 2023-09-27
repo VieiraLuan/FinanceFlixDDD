@@ -40,15 +40,22 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<bool> Delete(Categoria categoria)
+        public async Task<bool> Delete(int id)
         {
-            if (categoria == null)
+            if (id == null)
             {
                 return false;
 
             }
             try
-            {
+            {   var categoria = await _context.Categorias.FindAsync(id);
+
+                if(categoria == null)
+                {
+                    //Registro no Log
+                    return false;
+                }
+
                 _context.Categorias.Remove(categoria);
                 await _context.SaveChangesAsync();
                 return true;

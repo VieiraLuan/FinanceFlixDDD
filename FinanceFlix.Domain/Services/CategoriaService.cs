@@ -36,13 +36,13 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<bool> Delete(Categoria categoria)
+        public async Task<bool> Delete(int id)
         {
             try
             {
-                if (categoria != null)
+                if (id != null)
                 {
-                    if (await _categoriaRepository.Delete(categoria))
+                    if (await _categoriaRepository.Delete(id))
                     {
                         return true;
                     }

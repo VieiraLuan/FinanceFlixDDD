@@ -1,6 +1,5 @@
-﻿using FinanceFlix.API.Entities;
-using FinanceFlix.Application.Interfaces;
-using FinanceFlix.Application.ViewModels;
+﻿using FinanceFlix.Application.Interfaces;
+using FinanceFlix.Application.ViewModels.Categoria;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceFlix.API.Controllers
@@ -17,7 +16,6 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -56,7 +54,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CategoriaViewModel categoria)
+        public async Task<IActionResult> Add([FromBody] AddCategoriaViewModel categoria)
         {
             try
             {
@@ -82,15 +80,15 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPut]
-        [Route("Update")]
-        public async Task<IActionResult> Update([FromBody] CategoriaViewModel categoria)
+        public async Task<IActionResult> Update([FromBody] EditCategoriaViewModel categoria)
         {
             try
             {
-                if (categoria == null)
+                if (categoria == null || !ModelState.IsValid)
                 {
                     return BadRequest();
                 }
+
 
                 if (await _categoriaService.Update(categoria) == false)
                 {
@@ -112,14 +110,14 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                var categoria = await _categoriaService.GetById(id);
+                
 
-                if (categoria == null)
+                if (id == null)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
 
-                if (await _categoriaService.Delete(categoria) == false)
+                if (await _categoriaService.Delete(id) == false)
                 {
                     return BadRequest();
                 }

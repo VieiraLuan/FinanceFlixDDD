@@ -42,12 +42,12 @@ namespace FinanceFlix.API.Entities
         public int Id { get; private set; }
 
         [Column("NOME_CATEGORIA")]
-
+        [Required]
         [StringLength(80)]
         public string Nome { get; private set; }
 
         [Column("DESC_CATEGORIA")]
-
+        [Required]
         [StringLength(120)]
         public string Descricao { get; private set; }
 

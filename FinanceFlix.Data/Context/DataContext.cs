@@ -5,11 +5,12 @@ using System.Collections.Generic;
 
 namespace FinanceFlix.Data.Context
 {
-    public class DataContext:DbContext //Classe que herda de DbContext
+    public class DataContext : DbContext //Classe que herda de DbContext
     {
 
         //Construtor
-        public DataContext(DbContextOptions<DataContext> options) : base(options){
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
 
 
         }
@@ -27,8 +28,10 @@ namespace FinanceFlix.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
             if (!optionsBuilder.IsConfigured)
             {
+
                 //Banco de dados Oracle Desenvolvimento
                 optionsBuilder.UseOracle(GetDatabaseConnectionLOCAL());
 

@@ -17,8 +17,8 @@ namespace FinanceFlix.Domain.Interfaces.IServices
 
         Task<IList<Curso>> GetAll();
 
-        Task<IList<Curso>> GetByCategoriaCurso(int id);
+        Task<IList<Curso>> GetByCategoriaCurso(Guid id);
 
-        Task<Curso> GetById(int id);
+        Task<Curso> GetById(Guid id);
     }
 }

@@ -65,7 +65,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<Curso> GetById(int id)
+        public async Task<Curso> GetById(Guid id)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<IList<Curso>> GetByCategoriaCurso(int id)
+        public async Task<IList<Curso>> GetByCategoriaCurso(Guid id)
         {
             try
             {

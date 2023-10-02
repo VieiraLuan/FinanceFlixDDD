@@ -18,7 +18,7 @@ namespace FinanceFlix.Application.IoC
         {
             
 
-            //Inversão de Controles - Application Services
+            //Application
             #region Inversão de Controles - Services
             services.AddScoped<ICategoriaApplicationService, CategoriaApplicationService>();
             services.AddScoped<ICursoApplicationService, CursoApplicationService>();
@@ -46,15 +46,13 @@ namespace FinanceFlix.Application.IoC
             //Conexão com o banco de dados - Dev
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseOracle("User Id=C##SYS_DBA;Password=senha123;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SID=xe)))"); // Substitua pelo provedor de banco de dados adequado e pela string de conexão apropriada
-            });
+                options.UseOracle("User Id=C##SYS_DBA;Password=senha123;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SID=xe)))");   });
 
             /*
             //Conexão com o banco de dados - Produção
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseOracle("User Id=RM96330;Password=140400;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=oracle.fiap.com.br)(PORT=1521))(CONNECT_DATA=(SID=ORCL)))"); // Substitua pelo provedor de banco de dados adequado e pela string de conexão apropriada
-            });
+                options.UseOracle("User Id=RM96330;Password=140400;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=oracle.fiap.com.br)(PORT=1521))(CONNECT_DATA=(SID=ORCL)))");     });
             */
             #endregion
 

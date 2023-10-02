@@ -16,17 +16,17 @@ namespace FinanceFlix.Application.Interfaces
 
         Task<bool> Delete(VideoViewModel video);
 
-        Task<VideoViewModel> GetById(int id);
+        Task<VideoViewModel> GetById(Guid id);
 
         Task<IList<VideoViewModel>> GetAll();
 
-        Task<string> WatchVideoUrl(int id);
+        Task<string> WatchVideoUrl(Guid id);
 
-        Task<string> WatchVideoFilePath(int id);
+        Task<string> WatchVideoFilePath(Guid id);
 
-        Task<bool> AddVideoCurso(int idVideo, int idCurso);
+        Task<bool> AddVideoCurso(Guid idVideo, Guid idCurso);
 
-        Task <IList<VideoViewModel>> GetAllVideosByCurso(int idCurso);
+        Task <IList<VideoViewModel>> GetAllVideosByCurso(Guid idCurso);
 
 
 

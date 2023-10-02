@@ -51,9 +51,24 @@ namespace FinanceFlix.Application.Services
 
         }
 
-        public Task<bool> Delete(int id)
+        public Task<bool> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (id != null)
+                {
+                    return _cursoService.Delete(null);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public async Task<IList<ListCursoViewModel>> GetAll()
@@ -71,12 +86,12 @@ namespace FinanceFlix.Application.Services
                     foreach (var curso in cursos)
                     {
                         cursoViewModels.Add(new ListCursoViewModel
-                        {/*
+                        {
                             Id = curso.Id,
                             Nome = curso.Nome,
                             Descricao = curso.Descricao,
                             Imagem = curso.ImagemUrl,
-                            CategoriaId = curso.CategoriaId*/
+                            CategoriaId = curso.CategoriaId
                         });
                     }
 
@@ -94,7 +109,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<IList<ListCursoViewModel>> GetByCategoriaCurso(int id)
+        public async Task<IList<ListCursoViewModel>> GetByCategoriaCurso(Guid id)
         {
             try
             {
@@ -130,7 +145,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<ListCursoViewModel> GetById(int id)
+        public async Task<ListCursoViewModel> GetById(Guid id)
         {
             try
             {

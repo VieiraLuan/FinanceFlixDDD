@@ -85,7 +85,7 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<IList<Curso>> GetByCategoria(int id)
+        public async Task<IList<Curso>> GetByCategoria(Guid id)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<Curso?> GetById(int id)
+        public async Task<Curso?> GetById(Guid id)
         {
             if (id != null)
             {

@@ -36,7 +36,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(Guid id)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<Categoria> GetById(int id)
+        public async Task<Categoria> GetById(Guid id)
         {
             try
             {

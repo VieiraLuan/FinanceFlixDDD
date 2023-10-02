@@ -10,7 +10,7 @@ namespace FinanceFlix.Application.ViewModels.Categoria
     public class EditCategoriaViewModel
     {
         [Required]
-         public int Id { get; set; }
+         public Guid Id { get; set; }
 
         [StringLength(80, ErrorMessage = "O nome deve ter até 50 caracteres")]
         public string Nome { get; set; }

@@ -41,7 +41,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<bool> AddVideoCurso(int idVideo, int idCurso)
+        public async Task<bool> AddVideoCurso(Guid idVideo, Guid idCurso)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<IList<VideoViewModel>> GetAllVideosByCurso(int idCurso)
+        public async Task<IList<VideoViewModel>> GetAllVideosByCurso(Guid idCurso)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public Task<VideoViewModel> GetById(int id)
+        public Task<VideoViewModel> GetById(Guid id)
         {
             throw new NotImplementedException();
         }
@@ -147,12 +147,12 @@ namespace FinanceFlix.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<string> WatchVideoFilePath(int id)
+        public Task<string> WatchVideoFilePath(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<string> WatchVideoUrl(int id)
+        public async Task<string> WatchVideoUrl(Guid id)
         {
             try
             {

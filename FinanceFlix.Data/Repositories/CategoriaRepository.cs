@@ -40,7 +40,7 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(Guid id)
         {
             if (id == null)
             {
@@ -100,7 +100,7 @@ namespace FinanceFlix.Data.Repositories
 
         
 
-        public async Task<Categoria> GetById(int id)
+        public async Task<Categoria> GetById(Guid id)
         {
             if (id != null)
             {

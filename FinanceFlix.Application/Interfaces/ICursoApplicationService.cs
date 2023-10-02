@@ -15,12 +15,12 @@ namespace FinanceFlix.Application.Interfaces
 
         Task<bool> Update(EditCursoViewModel curso);
 
-        Task<bool> Delete(int id);
+        Task<bool> Delete(Guid id);
 
-        Task<ListCursoViewModel> GetById(int id);
+        Task<ListCursoViewModel> GetById(Guid id);
 
         Task<IList<ListCursoViewModel>> GetAll();
 
-        Task<IList<ListCursoViewModel>> GetByCategoriaCurso(int id);
+        Task<IList<ListCursoViewModel>> GetByCategoriaCurso(Guid id);
     }
 }

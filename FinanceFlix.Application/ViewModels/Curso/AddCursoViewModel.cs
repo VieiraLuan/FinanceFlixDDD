@@ -24,7 +24,7 @@ namespace FinanceFlix.Application.ViewModels.Curso
 
         public byte[]? Imagem { get;  set; }
 
-        public int CategoriaId { get;  set; }
+        public Guid CategoriaId { get;  set; }
 
 
     }

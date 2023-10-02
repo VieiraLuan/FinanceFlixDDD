@@ -12,11 +12,11 @@ namespace FinanceFlix.Domain.Interfaces.IRepositories
 
         Task<bool> Delete(Curso categoria);
 
-        Task<Curso> GetById(int id);
+        Task<Curso> GetById(Guid id);
 
         Task<IList<Curso>> GetAll();
 
-        Task<IList<Curso>> GetByCategoria(int id);
+        Task<IList<Curso>> GetByCategoria(Guid id);
 
     }
 }

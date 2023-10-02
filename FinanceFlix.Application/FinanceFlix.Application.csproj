@@ -16,8 +16,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\Video\" />
-    <Folder Include="ViewModels\Trilha\" />
+    <Folder Include="ViewModels\Categoria\Response\" />
+    <Folder Include="ViewModels\Categoria\Request\" />
+    <Folder Include="ViewModels\Curso\Request\" />
+    <Folder Include="ViewModels\Curso\Response\" />
+    <Folder Include="ViewModels\Trilha\Request\" />
+    <Folder Include="ViewModels\Trilha\Response\" />
+    <Folder Include="ViewModels\Video\Request\" />
+    <Folder Include="ViewModels\Video\Response\" />
   </ItemGroup>
 
 </Project>

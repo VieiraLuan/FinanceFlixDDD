@@ -45,7 +45,7 @@ namespace FinanceFlix.Application.Services
 
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(Guid id)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<ListCategoriaViewModel> GetById(int id)
+        public async Task<ListCategoriaViewModel> GetById(Guid id)
         {
             try
             {
@@ -130,7 +130,9 @@ namespace FinanceFlix.Application.Services
                 Categoria categoriaEntity = new Categoria(
                     categoria.Id,
                     categoria.Nome,
-                    categoria.Descricao
+                    categoria.Descricao,
+                    null
+
                     );
 
 

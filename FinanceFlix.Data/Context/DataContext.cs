@@ -12,7 +12,7 @@ namespace FinanceFlix.Data.Context
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
 
-
+            
         }
 
         //Mapeamento das tabelas
@@ -23,14 +23,30 @@ namespace FinanceFlix.Data.Context
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Trilha> Trilhas { get; set; }
         public DbSet<CursoVideo> CursosVideos { get; set; }
-        public DbSet<CursoTrilha> CursosTrilhas { get; set; }
+        //public DbSet<CursoTrilha> CursosTrilhas { get; set; }
 
+
+      
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //Utilizar mapeamento
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
+          
+
+
+            base.OnModelCreating(modelBuilder);
+
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
+
+
             if (!optionsBuilder.IsConfigured)
             {
+
 
                 //Banco de dados Oracle Desenvolvimento
                 optionsBuilder.UseOracle(GetDatabaseConnectionLOCAL());

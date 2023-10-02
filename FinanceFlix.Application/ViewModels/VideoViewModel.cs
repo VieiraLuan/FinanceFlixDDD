@@ -12,7 +12,7 @@ namespace FinanceFlix.Application.ViewModels
     public class VideoViewModel
     {
 
-        public int Id { get; set; } // Identificador único do vídeo
+        public Guid Id { get; set; } // Identificador único do vídeo
         [Column("NOME_VIDEO")]
         [Required]
         [StringLength(80)]

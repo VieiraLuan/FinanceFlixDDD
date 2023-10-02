@@ -15,9 +15,9 @@ namespace FinanceFlix.Application.Interfaces
 
         Task<bool> Update(EditCategoriaViewModel categoria);
 
-        Task<bool> Delete(int id);
+        Task<bool> Delete(Guid id);
 
-        Task<ListCategoriaViewModel> GetById(int id);
+        Task<ListCategoriaViewModel> GetById(Guid id);
 
         Task<ICollection<ListCategoriaViewModel>> GetAll();
     }

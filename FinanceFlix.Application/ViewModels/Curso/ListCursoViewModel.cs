@@ -11,12 +11,12 @@ namespace FinanceFlix.Application.ViewModels.Curso
     public class ListCursoViewModel
     {
         
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Nome { get;  set; }
         public string Descricao { get;  set; }
         public byte[]? Imagem { get;  set; }
 
-        public int CategoriaId { get;  set; }
+        public Guid CategoriaId { get;  set; }
 
     }
 }

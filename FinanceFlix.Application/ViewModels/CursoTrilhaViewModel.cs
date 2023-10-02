@@ -10,11 +10,11 @@ namespace FinanceFlix.Application.ViewModels
 {
     public class CursoTrilhaViewModel
     {
-        public int CursoVideoId { get; set; }
+        public Guid CursoVideoId { get; set; }
 
-        public int CursoId { get; set; }
+        public Guid CursoId { get; set; }
 
-        public int TrilhaId { get; set; }
+        public Guid TrilhaId { get; set; }
 
 
 

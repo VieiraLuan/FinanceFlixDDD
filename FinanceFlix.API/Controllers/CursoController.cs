@@ -36,7 +36,7 @@ namespace FinanceFlix.API.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace FinanceFlix.API.Controllers
 
         [HttpGet]
         [Route("GetAllByCategoriaCurso/{id}")]
-        public async Task<IActionResult> GetAllByCategoria(int id)
+        public async Task<IActionResult> GetAllByCategoria(Guid id)
         {
             try
             {

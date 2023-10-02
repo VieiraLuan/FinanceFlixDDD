@@ -34,7 +34,7 @@ namespace FinanceFlix.Domain.Services
 
         }
 
-        public Task<bool> AddVideoCurso(int idVideo, int idCurso)
+        public Task<bool> AddVideoCurso(Guid idVideo, Guid idCurso)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<IList<Video>> GetAllVideosByCurso(int idCurso)
+        public async Task<IList<Video>> GetAllVideosByCurso(Guid idCurso)
         {
            try
             {
@@ -92,7 +92,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<Video> GetById(int id)
+        public async Task<Video> GetById(Guid id)
         {
             try
             {
@@ -124,7 +124,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<string> WatchVideoFilePath(int id)
+        public async Task<string> WatchVideoFilePath(Guid id)
         {
             try
             {
@@ -153,7 +153,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-        public async Task<string> WatchVideoUrl(int id)
+        public async Task<string> WatchVideoUrl(Guid id)
         {
             try
             {

@@ -11,7 +11,7 @@ namespace FinanceFlix.Application.ViewModels.Curso
     public class EditCursoViewModel
     {
         [Required]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [StringLength(80, ErrorMessage = "O nome deve ter até 80 caracteres")]
@@ -25,6 +25,6 @@ namespace FinanceFlix.Application.ViewModels.Curso
        
         public byte[]? Imagem { get;  set; }
 
-        public int CategoriaId { get;  set; }
+        public Guid CategoriaId { get;  set; }
     }
 }

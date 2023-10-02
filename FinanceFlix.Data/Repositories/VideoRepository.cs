@@ -40,7 +40,7 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<bool> AddVideoCurso(int idVideo, int idCurso)
+        public async Task<bool> AddVideoCurso(Guid idVideo, Guid idCurso)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<IList<Video>> GetAllVideosByCurso(int idCurso)
+        public async Task<IList<Video>> GetAllVideosByCurso(Guid idCurso)
         {
             try
             {
@@ -153,7 +153,7 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<Video?> GetById(int id)
+        public async Task<Video?> GetById(Guid id)
         {
             if (id != null)
             {
@@ -184,7 +184,7 @@ namespace FinanceFlix.Data.Repositories
 
         }
 
-        public async Task<string> GetVideoFilePath(int id)
+        public async Task<string> GetVideoFilePath(Guid id)
         {
             try
             {
@@ -206,7 +206,7 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<string> GetVideoUrl(int id)
+        public async Task<string> GetVideoUrl(Guid id)
         {
             try
             {

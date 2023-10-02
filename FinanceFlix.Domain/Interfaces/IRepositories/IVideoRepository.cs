@@ -11,17 +11,17 @@ namespace FinanceFlix.Domain.Interfaces.IRepositories
 
         Task<bool> Delete(Video video);
 
-        Task<Video> GetById(int id);
+        Task<Video> GetById(Guid id);
 
-        Task<string> GetVideoUrl(int id);
+        Task<string> GetVideoUrl(Guid id);
 
-        Task<string> GetVideoFilePath(int id);
+        Task<string> GetVideoFilePath(Guid id);
 
         Task<IList<Video>> GetAll();
 
-        Task<bool> AddVideoCurso(int idVideo, int idCurso);
+        Task<bool> AddVideoCurso(Guid idVideo, Guid idCurso);
 
-        Task<IList<Video>> GetAllVideosByCurso(int idCurso);
+        Task<IList<Video>> GetAllVideosByCurso(Guid idCurso);
 
 
 

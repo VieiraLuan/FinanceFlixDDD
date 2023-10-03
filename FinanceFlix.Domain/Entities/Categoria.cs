@@ -3,21 +3,8 @@
 
 namespace FinanceFlix.API.Entities
 {
-    public class Categoria:Entity
+    public class Categoria : Entity
     {
-        public Categoria()
-        {
-        }
-
-        public Categoria(string nome, string descricao)
-        {
-            
-            Nome = nome;
-            Descricao = descricao;
-
-        }
-
-
 
         public Categoria(Guid id, string nome, string descricao, ICollection<Curso>? cursos)
         {
@@ -26,7 +13,19 @@ namespace FinanceFlix.API.Entities
             Descricao = descricao;
             Cursos = cursos;
         }
-               
+
+        public Categoria(string nome, string descricao, ICollection<Curso>? cursos)
+        {
+
+            Nome = nome;
+            Descricao = descricao;
+            Cursos = cursos;
+        }
+
+        Categoria()
+        {
+        }
+
 
         public string Nome { get; private set; }
         public string Descricao { get; private set; }

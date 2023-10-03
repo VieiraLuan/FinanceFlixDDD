@@ -30,6 +30,7 @@ namespace FinanceFlix.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             //Utilizar mapeamento
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
           

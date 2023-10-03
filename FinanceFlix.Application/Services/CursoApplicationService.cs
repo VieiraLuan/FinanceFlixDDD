@@ -1,7 +1,9 @@
 ﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Application.Interfaces;
 using FinanceFlix.Application.ViewModels;
-using FinanceFlix.Application.ViewModels.Curso;
+using FinanceFlix.Application.ViewModels.Categoria.Response;
+using FinanceFlix.Application.ViewModels.Curso.Request;
+using FinanceFlix.Application.ViewModels.Curso.Response;
 using FinanceFlix.Domain.Interfaces.IServices;
 using System;
 using System.Collections.Generic;
@@ -15,23 +17,55 @@ namespace FinanceFlix.Application.Services
     {
 
         private readonly ICursoService _cursoService;
+        private readonly ICategoriaService _categoriaService;
 
-        public CursoApplicationService(ICursoService cursoService)
+        public CursoApplicationService(ICursoService cursoService, ICategoriaService categoriaService)
         {
             _cursoService = cursoService;
+            _categoriaService = categoriaService;
+
         }
 
-        public async Task<bool> Add(AddCursoViewModel curso)
+
+        public async Task<bool> Add(AddCursoRequestViewModel curso)
         {
             try
             {
-                Curso cursoEntity = new Curso(
+                var categoriaEntity = await _categoriaService.GetById(curso.CategoriaId);
 
-                    curso.Nome,
-                    curso.Descricao,
-                    curso.Imagem,
-                    curso.CategoriaId
-                );
+                if (categoriaEntity != null)
+                {
+                    Curso cursoEntity = new Curso(curso.Nome, curso.Descricao, curso.Imagem, curso.CategoriaId, categoriaEntity);
+
+
+                    if (await _cursoService.Add(cursoEntity) == true)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                //todo: logar erro
+                throw;
+            }
+
+        }
+
+        public async Task<bool> AddCursoCategoria(AddCursoCategoriaRequestViewModel curso)
+        {
+            try
+            {
+                var categoriaEntity = new Categoria(curso.Categoria.Nome, curso.Categoria.Descricao, null);
+                var cursoEntity = new Curso(curso.Nome, curso.Descricao, curso.Imagem, categoriaEntity.Id, categoriaEntity);
 
 
                 if (await _cursoService.Add(cursoEntity) == true)
@@ -48,16 +82,15 @@ namespace FinanceFlix.Application.Services
                 //todo: logar erro
                 throw;
             }
-
         }
 
         public Task<bool> Delete(Guid id)
         {
             try
             {
-                if (id != null)
+                if (!id.Equals(Guid.Empty))
                 {
-                    return _cursoService.Delete(null);
+                    return _cursoService.Delete(id);
                 }
                 else
                 {
@@ -71,7 +104,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<IList<ListCursoViewModel>> GetAll()
+        public async Task<IList<ListCursoResponseViewModel>> GetAll()
         {
 
 
@@ -81,21 +114,31 @@ namespace FinanceFlix.Application.Services
 
                 if (cursos != null)
                 {
-                    IList<ListCursoViewModel> cursoViewModels = new List<ListCursoViewModel>();
+                    IList<ListCursoResponseViewModel> listaCursos = new List<ListCursoResponseViewModel>();
+
 
                     foreach (var curso in cursos)
                     {
-                        cursoViewModels.Add(new ListCursoViewModel
+                        ListCategoriaResponseViewModel categoria = new ListCategoriaResponseViewModel();
+                        categoria.Id = curso.Categoria.Id;
+                        categoria.Nome = curso.Categoria.Nome;
+                        categoria.Descricao = curso.Categoria.Descricao;
+                        categoria.CreatedDate = curso.Categoria.CreatedDate;
+
+                        listaCursos.Add(new ListCursoResponseViewModel
                         {
                             Id = curso.Id,
                             Nome = curso.Nome,
                             Descricao = curso.Descricao,
                             Imagem = curso.ImagemUrl,
-                            CategoriaId = curso.CategoriaId
+                            Categoria = categoria
+
+
                         });
+
                     }
 
-                    return cursoViewModels;
+                    return listaCursos;
                 }
                 else
                 {
@@ -109,7 +152,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<IList<ListCursoViewModel>> GetByCategoriaCurso(Guid id)
+        public async Task<IList<ListCursoResponseViewModel>> GetByCategoriaCurso(Guid id)
         {
             try
             {
@@ -117,11 +160,11 @@ namespace FinanceFlix.Application.Services
 
                 if (cursos != null)
                 {
-                    IList<ListCursoViewModel> cursoViewModels = new List<ListCursoViewModel>();
+                    IList<ListCursoResponseViewModel> cursoViewModels = new List<ListCursoResponseViewModel>();
 
                     foreach (var curso in cursos)
                     {
-                        cursoViewModels.Add(new ListCursoViewModel
+                        cursoViewModels.Add(new ListCursoResponseViewModel
                         {
                             /* Id = curso.Id,
                              Nome = curso.Nome,
@@ -145,7 +188,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<ListCursoViewModel> GetById(Guid id)
+        public async Task<ListCursoResponseViewModel> GetById(Guid id)
         {
             try
             {
@@ -153,14 +196,18 @@ namespace FinanceFlix.Application.Services
 
                 if (curso != null)
                 {
-                    ListCursoViewModel cursoViewModel = new ListCursoViewModel();
-                    /*
+                    ListCursoResponseViewModel cursoViewModel = new ListCursoResponseViewModel();
+                    ListCategoriaResponseViewModel categoria = new ListCategoriaResponseViewModel();
+                    categoria.Id = curso.Categoria.Id;
+                    categoria.Nome = curso.Categoria.Nome;
+                    categoria.Descricao = curso.Categoria.Descricao;
+                    categoria.CreatedDate = curso.Categoria.CreatedDate;
+
                     cursoViewModel.Id = curso.Id;
                     cursoViewModel.Nome = curso.Nome;
                     cursoViewModel.Descricao = curso.Descricao;
-                    cursoViewModel.ImagemUrl = curso.ImagemUrl;
-                    cursoViewModel.CategoriaId = curso.CategoriaId;
-                    */
+                    cursoViewModel.Imagem = curso.ImagemUrl;
+                    cursoViewModel.Categoria = categoria;
 
                     return cursoViewModel;
                 }
@@ -176,7 +223,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public Task<bool> Update(EditCursoViewModel curso)
+        public Task<bool> Update(EditCursoRequestViewModel curso)
         {
             throw new NotImplementedException();
         }

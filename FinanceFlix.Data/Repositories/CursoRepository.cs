@@ -29,7 +29,7 @@ namespace FinanceFlix.Data.Repositories
                 catch (Exception ex)
                 {
                     //TODO: Implementar log
-               
+
                     return false;
                 }
             }
@@ -40,36 +40,40 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<bool> Delete(Curso curso)
+        public async Task<bool> Delete(Guid id)
         {
-            if (curso != null)
+
+            try
             {
-                try
+                if (!id.Equals(Guid.Empty))
                 {
+                    var curso = await _context.Cursos.FindAsync(id);
                     _context.Cursos.Remove(curso);
                     await _context.SaveChangesAsync();
                     return true;
+
                 }
-                catch (Exception ex)
+                else
                 {
-                    //TODO: Implementar log
                     return false;
                 }
             }
-            else
+            catch (Exception ex)
             {
                 //TODO: Implementar log
                 return false;
             }
+
+
         }
 
         public async Task<IList<Curso>> GetAll()
         {
             try
             {
-                var cursos = await _context.Cursos.ToListAsync();
+                var cursos = await _context.Cursos.Include(c => c.Categoria).ToListAsync();
 
-                if(cursos != null)
+                if (cursos != null)
                 {
                     return cursos;
                 }
@@ -93,11 +97,11 @@ namespace FinanceFlix.Data.Repositories
                 //Listar cursos por categoria 
                 var cursos = await _context.Cursos.Where(x => x.Categoria.Id == id).ToListAsync();
 
-                
 
-                    return (IList<Curso>)cursos;
 
-              
+                return (IList<Curso>)cursos;
+
+
             }
             catch (Exception ex)
             {
@@ -106,22 +110,22 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<Curso?> GetById(Guid id)
+        public async Task<Curso> GetById(Guid id)
         {
             if (id != null)
             {
                 try
                 {
-                    var curso =  await _context.Cursos.FindAsync(id);
+                    var curso = await _context.Cursos.Include(c => c.Categoria).Where(x => x.Id == id).FirstOrDefaultAsync();
 
-                    if(curso != null)
+                    if (curso != null)
                     {
                         return curso;
                     }
                     else
                     {
                         return null;
-                    }   
+                    }
                 }
                 catch (Exception)
                 {
@@ -136,7 +140,7 @@ namespace FinanceFlix.Data.Repositories
             }
 
         }
-      
+
 
         public async Task<bool> Update(Curso curso)
         {

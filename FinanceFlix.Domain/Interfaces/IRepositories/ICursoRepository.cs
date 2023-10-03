@@ -10,7 +10,7 @@ namespace FinanceFlix.Domain.Interfaces.IRepositories
 
         Task<bool> Update(Curso categoria);
 
-        Task<bool> Delete(Curso categoria);
+        Task<bool> Delete(Guid id);
 
         Task<Curso> GetById(Guid id);
 

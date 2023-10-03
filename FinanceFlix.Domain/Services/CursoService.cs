@@ -9,9 +9,11 @@ namespace FinanceFlix.Domain.Services
     {
         private readonly ICursoRepository _cursoRepository;
 
+
         public CursoService(ICursoRepository cursoRepository)
         {
             _cursoRepository = cursoRepository;
+
         }
 
         public async Task<bool> Add(Curso curso)
@@ -22,6 +24,8 @@ namespace FinanceFlix.Domain.Services
             }
             try
             {
+
+
                 await _cursoRepository.Add(curso);
                 return true;
             }
@@ -34,16 +38,21 @@ namespace FinanceFlix.Domain.Services
 
         }
 
-        public async Task<bool> Delete(Curso curso)
+        public async Task<bool> Delete(Guid id)
         {
-            if (curso == null)
-            {
-                return false;
-            }
+
             try
             {
-                await _cursoRepository.Delete(curso);
-                return true;
+                if (!id.Equals(Guid.Empty))
+                {
+                    await _cursoRepository.Delete(id);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                    
             }
             catch (Exception)
             {
@@ -101,21 +110,21 @@ namespace FinanceFlix.Domain.Services
         {
             try
             {
-               
-                
-                    var cursos = await _cursoRepository.GetByCategoria(id);
 
-                    if (cursos == null)
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        return cursos;
-                    }
 
-                
-              
+                var cursos = await _cursoRepository.GetByCategoria(id);
+
+                if (cursos == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return cursos;
+                }
+
+
+
             }
             catch (Exception)
             {
@@ -124,7 +133,7 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
- 
+
     }
 }
 

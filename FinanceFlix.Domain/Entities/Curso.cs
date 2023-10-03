@@ -3,12 +3,12 @@
 
 namespace FinanceFlix.API.Entities
 {
-    public class Curso:Entity
+    public class Curso : Entity
     {
-        public Curso(Guid id, string nome, string descricao, byte[]? imagemUrl, Guid categoriaId, Categoria? categoria,
+        public Curso(Guid id, string nome, string descricao, byte[] imagemUrl, Guid categoriaId, Categoria? categoria,
             ICollection<CursoVideo>? cursosVideos /*ICollection<CursoTrilha>? cursosTrilhas*/)
         {
-         
+            Id = id;
             Nome = nome;
             Descricao = descricao;
             ImagemUrl = imagemUrl;
@@ -18,13 +18,22 @@ namespace FinanceFlix.API.Entities
             //CursosTrilhas = cursosTrilhas;
         }
 
-        public Curso( string nome, string descricao, byte[]? imagemUrl, Guid categoriaId)
+        public Curso(string nome, string descricao, byte[] imagemUrl)
         {
-           
             Nome = nome;
             Descricao = descricao;
             ImagemUrl = imagemUrl;
-            CategoriaId = categoriaId;
+            
+        }
+
+        public Curso(string nome, string descricao, byte[] imagemUrl, Guid CategoriaId, Categoria categoria)
+        {
+            
+            Nome = nome;
+            Descricao = descricao;
+            ImagemUrl = imagemUrl;
+            this.CategoriaId = CategoriaId;
+            Categoria = categoria;
         }
 
         public Curso()
@@ -45,7 +54,7 @@ namespace FinanceFlix.API.Entities
 
         //public ICollection<CursoTrilha>? CursosTrilhas { get; private set; }
 
-
+      
 
 
     }

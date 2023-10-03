@@ -1,6 +1,6 @@
 ﻿
 using FinanceFlix.Application.Interfaces;
-using FinanceFlix.Application.ViewModels.Curso;
+using FinanceFlix.Application.ViewModels.Curso.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceFlix.API.Controllers
@@ -59,8 +59,10 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] AddCursoViewModel curso)
+        [Route("AddCursoCategoriaExists")]
+        public async Task<IActionResult> Add([FromBody] AddCursoRequestViewModel curso)
         {
             try
             {
@@ -86,8 +88,37 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
+
+        [HttpPost]
+        [Route("AddCursoCategoriaNoExists")]
+        public async Task<IActionResult> AddCursoCategoria([FromBody] AddCursoCategoriaRequestViewModel curso)
+        {
+            try
+            {
+                if (curso == null || !ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+
+                if (await _cursoService.AddCursoCategoria(curso) != false )
+                {
+                    return CreatedAtAction(nameof(GetById), new { id = curso.Nome }, curso);
+
+                }
+                else
+                {
+                    return BadRequest();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); throw;
+            }
+        }
+
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] EditCursoViewModel curso)
+        public async Task<IActionResult> Update([FromBody] EditCursoRequestViewModel curso)
         {
             try
             {

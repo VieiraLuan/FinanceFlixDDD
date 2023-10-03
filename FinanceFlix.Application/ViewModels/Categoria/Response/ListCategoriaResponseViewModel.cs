@@ -6,17 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinanceFlix.Application.ViewModels.Categoria
+namespace FinanceFlix.Application.ViewModels.Categoria.Response
 {
-    public class ListCategoriaViewModel
+    public class ListCategoriaResponseViewModel
     {
-        
+
         public Guid Id { get; set; }
-
-       
         public string Nome { get; set; }
-
-
         public string Descricao { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

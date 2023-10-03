@@ -13,7 +13,7 @@ namespace FinanceFlix.Domain.Interfaces.IServices
 
         Task<bool> Update(Curso curso);
 
-        Task<bool> Delete(Curso curso);
+        Task<bool> Delete(Guid id);
 
         Task<IList<Curso>> GetAll();
 

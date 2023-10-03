@@ -1,7 +1,8 @@
 ﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Application.Interfaces;
 using FinanceFlix.Application.ViewModels;
-using FinanceFlix.Application.ViewModels.Categoria;
+using FinanceFlix.Application.ViewModels.Categoria.Request;
+using FinanceFlix.Application.ViewModels.Categoria.Response;
 using FinanceFlix.Domain.Interfaces.IRepositories;
 using FinanceFlix.Domain.Interfaces.IServices;
 using System;
@@ -23,14 +24,15 @@ namespace FinanceFlix.Application.Services
             _categoriaService = categoriaService;
         }
 
-        public async Task<bool> Add(AddCategoriaViewModel categoria)
+        public async Task<bool> Add(AddCategoriaRequestViewModel categoria)
         {
             try
             {
                 Categoria categoriaEntity = new Categoria(
 
                     categoria.Nome,
-                    categoria.Descricao
+                    categoria.Descricao,
+                    null
 
                     );
 
@@ -49,6 +51,8 @@ namespace FinanceFlix.Application.Services
         {
             try
             {
+                if (id.Equals(Guid.Empty))
+                    return false;
 
                 return await _categoriaService.Delete(id);
 
@@ -60,7 +64,7 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<ICollection<ListCategoriaViewModel>> GetAll()
+        public async Task<ICollection<ListCategoriaResponseViewModel>> GetAll()
         {
             try
             {
@@ -71,15 +75,17 @@ namespace FinanceFlix.Application.Services
                 if (categorias == null)
                     return null;
 
-                var categoriasViewModel = new List<ListCategoriaViewModel>();
+                var categoriasViewModel = new List<ListCategoriaResponseViewModel>();
 
                 foreach (var categoria in categorias)
                 {
-                    var categoriaViewModel = new ListCategoriaViewModel
+                    var categoriaViewModel = new ListCategoriaResponseViewModel
                     {
                         Id = categoria.Id,
                         Nome = categoria.Nome,
-                        Descricao = categoria.Descricao
+                        Descricao = categoria.Descricao,
+                        CreatedDate = categoria.CreatedDate
+                        
                     };
 
                     categoriasViewModel.Add(categoriaViewModel);
@@ -94,21 +100,25 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<ListCategoriaViewModel> GetById(Guid id)
+        public async Task<ListCategoriaResponseViewModel> GetById(Guid id)
         {
             try
             {
+                if (id.Equals(Guid.Empty))
+                    return null;
+
                 Categoria categoria = await _categoriaService.GetById(id);
 
                 if (categoria == null)
                     return null;
 
 
-                var categoriaViewModel = new ListCategoriaViewModel
+                var categoriaViewModel = new ListCategoriaResponseViewModel
                 {
                     Id = categoria.Id,
                     Nome = categoria.Nome,
-                    Descricao = categoria.Descricao
+                    Descricao = categoria.Descricao,
+                    CreatedDate = categoria.CreatedDate
                 };
 
                 return categoriaViewModel;
@@ -120,22 +130,11 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public Task<bool> Update(EditCategoriaViewModel categoria)
+        public Task<bool> Update(EditCategoriaRequestViewModel categoria)
         {
             try
             {
-
-
-
-                Categoria categoriaEntity = new Categoria(
-                    categoria.Id,
-                    categoria.Nome,
-                    categoria.Descricao,
-                    null
-
-                    );
-
-
+                Categoria categoriaEntity = new Categoria(categoria.Id, categoria.Nome, categoria.Descricao, null);
 
                 return _categoriaService.Update(categoriaEntity);
 

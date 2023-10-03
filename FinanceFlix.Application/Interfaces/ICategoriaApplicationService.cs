@@ -1,6 +1,7 @@
 ﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Application.ViewModels;
-using FinanceFlix.Application.ViewModels.Categoria;
+using FinanceFlix.Application.ViewModels.Categoria.Request;
+using FinanceFlix.Application.ViewModels.Categoria.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,14 @@ namespace FinanceFlix.Application.Interfaces
 {
     public interface ICategoriaApplicationService
     {
-        Task<bool> Add(AddCategoriaViewModel categoria);
+        Task<bool> Add(AddCategoriaRequestViewModel categoria);
 
-        Task<bool> Update(EditCategoriaViewModel categoria);
+        Task<bool> Update(EditCategoriaRequestViewModel categoria);
 
         Task<bool> Delete(Guid id);
 
-        Task<ListCategoriaViewModel> GetById(Guid id);
+        Task<ListCategoriaResponseViewModel> GetById(Guid id);
 
-        Task<ICollection<ListCategoriaViewModel>> GetAll();
+        Task<ICollection<ListCategoriaResponseViewModel>> GetAll();
     }
 }

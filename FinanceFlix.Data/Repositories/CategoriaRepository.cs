@@ -17,13 +17,15 @@ namespace FinanceFlix.Data.Repositories
 
         public async Task<bool> Add(Categoria categoria)
         {
-            if (categoria == null)
-            {
-                //Registro no Log
-                return false;
-            }
             try
             {
+
+                if (categoria == null)
+                {
+                    //Registro no Log
+                    return false;
+                }
+
                 _context.Categorias.Add(categoria);
                 await _context.SaveChangesAsync();
                 return true;
@@ -42,15 +44,17 @@ namespace FinanceFlix.Data.Repositories
 
         public async Task<bool> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return false;
 
-            }
             try
-            {   var categoria = await _context.Categorias.FindAsync(id);
+            {
+                if (id.Equals(Guid.Empty))
+                {
+                    return false;
 
-                if(categoria == null)
+                }
+                var categoria = await _context.Categorias.FindAsync(id);
+
+                if (categoria == null)
                 {
                     //Registro no Log
                     return false;
@@ -67,7 +71,7 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Erro: " + ex.Message);   
+                Console.WriteLine("Erro: " + ex.Message);
                 return false;
             }
         }
@@ -77,9 +81,9 @@ namespace FinanceFlix.Data.Repositories
 
             try
             {
-               var categorias =  await _context.Categorias.ToListAsync();
+                var categorias = await _context.Categorias.ToListAsync();
 
-                if(categorias == null)
+                if (categorias == null)
                 {
                     //Registro no Log
                     return null;
@@ -98,49 +102,53 @@ namespace FinanceFlix.Data.Repositories
 
         }
 
-        
+
 
         public async Task<Categoria> GetById(Guid id)
         {
-            if (id != null)
-            {
-                try
-                {
-                    var categoria = await _context.Categorias.FindAsync(id);
 
-                    if(categoria == null)
-                    {
-                        //Registro no Log
-                        return null;
-                    }
-                    else
-                    {
-                        return categoria;
-                    }   
+            try
+            {
+                if (id.Equals(Guid.Empty))
+                {
+                    return null;
                 }
-                catch (Exception ex)
+
+                var categoria = await _context.Categorias.FindAsync(id);
+
+                if (categoria == null)
                 {
                     //Registro no Log
                     return null;
                 }
+                else
+                {
+                    return categoria;
+                }
             }
-            else
+            catch (Exception ex)
             {
+                //Registro no Log
                 return null;
             }
-            
+
+
+
         }
 
         public async Task<bool> Update(Categoria categoria)
         {
-            if (categoria == null)
-            {
-                //Registro no Log
-                return false;
-            }
+           
 
             try
             {
+
+                if (categoria == null)
+                {
+                    //Registro no Log
+                    return false;
+                }
+
                 _context.Categorias.Update(categoria);
                 await _context.SaveChangesAsync();
                 return true;
@@ -156,5 +164,6 @@ namespace FinanceFlix.Data.Repositories
                 return false;
             }
         }
+
     }
 }

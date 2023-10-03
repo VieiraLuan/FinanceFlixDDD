@@ -1,5 +1,5 @@
 ﻿using FinanceFlix.Application.Interfaces;
-using FinanceFlix.Application.ViewModels.Categoria;
+using FinanceFlix.Application.ViewModels.Categoria.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceFlix.API.Controllers
@@ -54,7 +54,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] AddCategoriaViewModel categoria)
+        public async Task<IActionResult> Add([FromBody] AddCategoriaRequestViewModel categoria)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] EditCategoriaViewModel categoria)
+        public async Task<IActionResult> Update([FromBody] EditCategoriaRequestViewModel categoria)
         {
             try
             {
@@ -90,13 +90,13 @@ namespace FinanceFlix.API.Controllers
                 }
 
 
-                if (await _categoriaService.Update(categoria) == false)
+                if (await _categoriaService.Update(categoria) != false)
                 {
-                    return BadRequest();
+                    return NoContent();
                 }
                 else
                 {
-                    return NoContent();
+                    return BadRequest();
                 }
             }
             catch (Exception ex)
@@ -110,9 +110,9 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                
 
-                if (id == null)
+
+                if (id.Equals(Guid.Empty))
                 {
                     return BadRequest();
                 }

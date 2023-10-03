@@ -40,7 +40,7 @@ namespace FinanceFlix.Domain.Services
         {
             try
             {
-                if (id != null)
+                if (!id.Equals(Guid.Empty))
                 {
                     if (await _categoriaRepository.Delete(id))
                     {

@@ -147,23 +147,21 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                /*     var curso = await _cursoService.GetById(id);
+                if(id.Equals(Guid.Empty))
+                {
+                    return BadRequest();
+                }
 
-                 if (curso == null)
-                 {
-                     return NotFound();
-                 }
+                if (await _cursoService.Delete(id) == false)
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    return NoContent();
+                }
 
-                 if (await _cursoService.Delete(curso) == false)
-                 {
-                     return BadRequest();
-                 }
-                 else
-                 {
-                     return NoContent();
-                 }*/
-
-                return null;
+                
             }
             catch (Exception ex)
             {

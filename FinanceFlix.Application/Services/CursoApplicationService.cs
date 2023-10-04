@@ -32,7 +32,7 @@ namespace FinanceFlix.Application.Services
             try
             {
                 var categoriaEntity = await _categoriaService.GetById(curso.CategoriaId);
-
+               
                 if (categoriaEntity != null)
                 {
                     Curso cursoEntity = new Curso(curso.Nome, curso.Descricao, curso.Imagem, curso.CategoriaId, categoriaEntity);
@@ -160,21 +160,31 @@ namespace FinanceFlix.Application.Services
 
                 if (cursos != null)
                 {
-                    IList<ListCursoResponseViewModel> cursoViewModels = new List<ListCursoResponseViewModel>();
+                    IList<ListCursoResponseViewModel> listaCursos = new List<ListCursoResponseViewModel>();
+
 
                     foreach (var curso in cursos)
                     {
-                        cursoViewModels.Add(new ListCursoResponseViewModel
+                        ListCategoriaResponseViewModel categoria = new ListCategoriaResponseViewModel();
+                        categoria.Id = curso.Categoria.Id;
+                        categoria.Nome = curso.Categoria.Nome;
+                        categoria.Descricao = curso.Categoria.Descricao;
+                        categoria.CreatedDate = curso.Categoria.CreatedDate;
+
+                        listaCursos.Add(new ListCursoResponseViewModel
                         {
-                            /* Id = curso.Id,
-                             Nome = curso.Nome,
-                             Descricao = curso.Descricao,
-                             ImagemUrl = curso.ImagemUrl,
-                             CategoriaId = curso.CategoriaId*/
+                            Id = curso.Id,
+                            Nome = curso.Nome,
+                            Descricao = curso.Descricao,
+                            Imagem = curso.ImagemUrl,
+                            Categoria = categoria
+
+
                         });
+
                     }
 
-                    return cursoViewModels;
+                    return listaCursos;
                 }
                 else
                 {
@@ -225,7 +235,20 @@ namespace FinanceFlix.Application.Services
 
         public Task<bool> Update(EditCursoRequestViewModel curso)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Curso cursoEntity = new Curso(curso.Id,curso.Nome,curso.Descricao,curso.Imagem,curso.CategoriaId,null,null);
+
+                return _cursoService.Update(cursoEntity);
+
+            }
+            catch (Exception ex)
+            {
+                //Todo: Implementar log 
+                throw ex;
+
+            }
+
         }
     }
 }

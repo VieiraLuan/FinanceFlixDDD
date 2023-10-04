@@ -44,7 +44,7 @@ namespace FinanceFlix.Data.Mappings
             //Relationships 1:N
             builder.HasOne(c => c.Categoria)
             .WithMany(c => c.Cursos)
-            .HasForeignKey(c => c.Id)
+            .HasForeignKey(c => c.CategoriaId)
             .HasPrincipalKey(c => c.Id)
             .OnDelete(DeleteBehavior.Restrict);
 

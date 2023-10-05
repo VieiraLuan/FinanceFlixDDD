@@ -1,6 +1,7 @@
 ﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Application.Interfaces;
 using FinanceFlix.Application.ViewModels;
+using FinanceFlix.Application.ViewModels.Video.Request;
 using FinanceFlix.Domain.Interfaces.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,7 @@ namespace FinanceFlix.API.Controllers
             _videoService = videoService;
         }
 
+        //Lista todos os videos existentes  
         [HttpGet]
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()
@@ -36,7 +38,7 @@ namespace FinanceFlix.API.Controllers
 
         }
 
-
+        //Lista um video pelo id 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -59,8 +61,10 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
+
+        //Adiciona um novo video e relaciona a um curso
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] VideoViewModel video)
+        public async Task<IActionResult> Add([FromBody] AddVideoRequestViewModel video)
         {
             try
             {
@@ -75,7 +79,7 @@ namespace FinanceFlix.API.Controllers
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = video.Id }, video);
+                    return CreatedAtAction(nameof(GetById), new { id = video.Nome }, video);
                 }
 
             }
@@ -85,10 +89,10 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
-
+        //Relaciona um video a uma coleção de cursos
         [HttpPost]
-        [Route("AddCursoVideo")]
-        public async Task<IActionResult> AddCursoVideo([FromBody] CursoVideoViewModel video)
+        [Route("AddVideoToCurso")]
+        public async Task<IActionResult> AddVideoToCurso([FromBody] AddVideoToCursoRequestViewModel video)
         {
             try
             {
@@ -97,13 +101,13 @@ namespace FinanceFlix.API.Controllers
                     return BadRequest();
                 }
 
-                if (await _videoService.AddVideoCurso(video.VideoId, video.CursoId) == false)
+                if (await _videoService.AddVideoCurso(video) == false)
                 {
                     return BadRequest();
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = video.CursoVideoId }, video);
+                    return CreatedAtAction(nameof(GetById), new { id = video.VideoId }, video);
                 }
 
             }
@@ -113,8 +117,9 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
+        //Atualiza um video
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] VideoViewModel video)
+        public async Task<IActionResult> Update([FromBody] EditVideoRequestViewModel video)
         {
             try
             {
@@ -138,8 +143,8 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
+        //Deleta um video
         [HttpDelete("{id}")]
-
         public async Task<IActionResult> Delete(Guid id)
         {
             try
@@ -166,6 +171,7 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
+        //Assiste um video especifico
         [HttpGet("WatchVideo/{id}")]
         public async Task<IActionResult> WatchVideoUrl(Guid id)
         {
@@ -192,6 +198,7 @@ namespace FinanceFlix.API.Controllers
 
         }
 
+        //Lista todos os videos de um curso especifico
         [HttpGet("GetAllVideosByCurso/{id}")]
         public async Task<IActionResult> GetAllVideosByCurso(Guid id)
         {

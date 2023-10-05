@@ -23,7 +23,7 @@ namespace FinanceFlix.Domain.Interfaces.IServices
 
         Task<string> WatchVideoFilePath(Guid id);
 
-        Task<bool> AddVideoCurso(Guid idVideo, Guid idCurso);
+        Task<bool> AddVideoCurso(Guid idVideo, ICollection<Guid> idCursos);
 
         Task<IList<Video>> GetAllVideosByCurso(Guid idCurso);
 

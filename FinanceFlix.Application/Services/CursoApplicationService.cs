@@ -4,6 +4,7 @@ using FinanceFlix.Application.ViewModels;
 using FinanceFlix.Application.ViewModels.Categoria.Response;
 using FinanceFlix.Application.ViewModels.Curso.Request;
 using FinanceFlix.Application.ViewModels.Curso.Response;
+using FinanceFlix.Application.ViewModels.CursoCategoria.Request;
 using FinanceFlix.Domain.Interfaces.IServices;
 using System;
 using System.Collections.Generic;

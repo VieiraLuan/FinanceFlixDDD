@@ -19,7 +19,7 @@ namespace FinanceFlix.Domain.Interfaces.IRepositories
 
         Task<IList<Video>> GetAll();
 
-        Task<bool> AddVideoCurso(Guid idVideo, Guid idCurso);
+        Task<bool> AddVideoCurso(Guid idVideo,ICollection<Guid> idCurso);
 
         Task<IList<Video>> GetAllVideosByCurso(Guid idCurso);
 

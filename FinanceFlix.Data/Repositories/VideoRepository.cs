@@ -40,17 +40,22 @@ namespace FinanceFlix.Data.Repositories
             }
         }
 
-        public async Task<bool> AddVideoCurso(Guid idVideo, Guid idCurso)
+        public async Task<bool> AddVideoCurso(Guid idVideo, ICollection<Guid> idCursos)
         {
             try
             {
-                CursoVideo cursoVideo = new CursoVideo(
-                   idCurso,
-                   idVideo
+                foreach (var item in idCursos)
+                {
+                    CursoVideo cursoVideo = new CursoVideo(
+                    item,
+                    idVideo
                     );
+                    _context.CursosVideos.Add(cursoVideo);
+                   
+                }
 
-                _context.CursosVideos.Add(cursoVideo);
                 await _context.SaveChangesAsync();
+
                 return true;
             }
             catch (Exception ex)

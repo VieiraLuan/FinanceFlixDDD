@@ -1,6 +1,7 @@
 ﻿
 using FinanceFlix.Application.Interfaces;
 using FinanceFlix.Application.ViewModels.Curso.Request;
+using FinanceFlix.Application.ViewModels.CursoCategoria.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceFlix.API.Controllers

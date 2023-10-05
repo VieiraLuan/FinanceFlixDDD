@@ -6,7 +6,7 @@ namespace FinanceFlix.API.Entities
     
     public class Video:Entity
     {
-        public Video(int id, string nome, string descricao, string url, int duracaoSegundos,
+        public Video(Guid id, string nome, string descricao, string url, int duracaoSegundos,
             string? filePath, ICollection<CursoVideo>? cursosVideos)
         {
         
@@ -19,7 +19,7 @@ namespace FinanceFlix.API.Entities
         }
 
         public Video(string nome, string descricao, string url, int duracaoSegundos,
-           string? filePath)
+           string? filePath)    
         {
 
             Nome = nome;

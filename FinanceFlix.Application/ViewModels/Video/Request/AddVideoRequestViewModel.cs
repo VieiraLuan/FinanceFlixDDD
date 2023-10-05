@@ -7,12 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinanceFlix.Application.ViewModels
+namespace FinanceFlix.Application.ViewModels.Video.Request
 {
-    public class VideoViewModel
+    public class AddVideoRequestViewModel
     {
 
-        public Guid Id { get; set; } // Identificador único do vídeo
         [Column("NOME_VIDEO")]
         [Required]
         [StringLength(80)]
@@ -35,6 +34,8 @@ namespace FinanceFlix.Application.ViewModels
         [StringLength(200)]
         public string? FilePath { get; set; } // Caminho do arquivo de vídeo no servidor
 
-       
+        public Guid CursoId { get; set; }
+
+
     }
 }

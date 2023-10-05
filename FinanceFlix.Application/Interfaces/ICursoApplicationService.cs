@@ -2,6 +2,7 @@
 using FinanceFlix.Application.ViewModels;
 using FinanceFlix.Application.ViewModels.Curso.Request;
 using FinanceFlix.Application.ViewModels.Curso.Response;
+using FinanceFlix.Application.ViewModels.CursoCategoria.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;

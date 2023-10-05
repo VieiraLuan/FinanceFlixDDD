@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FinanceFlix.Application.ViewModels.Categoria.Request;
 
-namespace FinanceFlix.Application.ViewModels.Curso.Request
+namespace FinanceFlix.Application.ViewModels.CursoCategoria.Request
 {
     public class AddCursoCategoriaRequestViewModel
     {

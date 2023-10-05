@@ -1,5 +1,5 @@
 ﻿using FinanceFlix.API.Entities;
-using FinanceFlix.Application.ViewModels;
+using FinanceFlix.Application.ViewModels.Video.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +10,23 @@ namespace FinanceFlix.Application.Interfaces
 {
     public interface IVideoApplicationService
     {
-        Task<bool> Add(VideoViewModel video);
+        Task<bool> Add(AddVideoRequestViewModel video);
 
-        Task<bool> Update(VideoViewModel video);
+        Task<bool> Update(EditVideoRequestViewModel video);
 
-        Task<bool> Delete(VideoViewModel video);
+        Task<bool> Delete(AddVideoRequestViewModel video);
 
-        Task<VideoViewModel> GetById(Guid id);
+        Task<AddVideoRequestViewModel> GetById(Guid id);
 
-        Task<IList<VideoViewModel>> GetAll();
+        Task<IList<AddVideoRequestViewModel>> GetAll();
 
         Task<string> WatchVideoUrl(Guid id);
 
         Task<string> WatchVideoFilePath(Guid id);
 
-        Task<bool> AddVideoCurso(Guid idVideo, Guid idCurso);
+        Task<bool> AddVideoCurso(AddVideoToCursoRequestViewModel video);
 
-        Task <IList<VideoViewModel>> GetAllVideosByCurso(Guid idCurso);
+        Task <IList<AddVideoRequestViewModel>> GetAllVideosByCurso(Guid idCurso);
 
 
 

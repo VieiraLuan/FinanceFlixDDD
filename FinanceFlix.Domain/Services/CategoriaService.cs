@@ -19,6 +19,10 @@ namespace FinanceFlix.Domain.Services
             {
                 if (categoria != null)
                 {
+
+                    
+
+
                     await _categoriaRepository.Add(categoria);
 
                     return true;

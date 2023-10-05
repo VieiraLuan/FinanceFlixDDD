@@ -34,11 +34,11 @@ namespace FinanceFlix.Domain.Services
 
         }
 
-        public Task<bool> AddVideoCurso(Guid idVideo, Guid idCurso)
+        public Task<bool> AddVideoCurso(Guid idVideo, ICollection<Guid> idCursos)
         {
             try
             {
-                return _videoRepository.AddVideoCurso(idVideo, idCurso);
+                return _videoRepository.AddVideoCurso(idVideo, idCursos);
             }
             catch (Exception ex)
             {

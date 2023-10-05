@@ -1,6 +1,7 @@
 ﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Application.Interfaces;
-using FinanceFlix.Application.ViewModels;
+using FinanceFlix.Application.ViewModels.Video.Request;
+using FinanceFlix.Domain.Entities;
 using FinanceFlix.Domain.Interfaces.IServices;
 using System;
 using System.Collections.Generic;
@@ -20,19 +21,23 @@ namespace FinanceFlix.Application.Services
             _videoService = videoService;
         }
 
-        public Task<bool> Add(VideoViewModel video)
+        public async Task<bool> Add(AddVideoRequestViewModel video)
         {
             try
             {
-                var videoEntity = new Video(
-                        video.Nome,
-                        video.Descricao,
-                        video.Url,
-                        video.DuracaoSegundos,
-                        video.FilePath
+                var videoCreated = new Video(video.Nome,video.Descricao,video.Url,video.DuracaoSegundos,
+                video.FilePath);
 
-                    );
-                return _videoService.Add(videoEntity);
+                ICollection<CursoVideo> cursosVideos = new List<CursoVideo>();  
+               
+               cursosVideos.Add(new CursoVideo(video.CursoId, videoCreated.Id));
+                
+
+                var videoEntity = new Video(videoCreated.Id, videoCreated.Nome, videoCreated.Descricao
+                    , videoCreated.Url, videoCreated.DuracaoSegundos, videoCreated.FilePath, cursosVideos);
+
+
+                return await _videoService.Add(videoEntity);
             }
             catch (Exception ex)
             {
@@ -41,11 +46,11 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<bool> AddVideoCurso(Guid idVideo, Guid idCurso)
+        public async Task<bool> AddVideoCurso(AddVideoToCursoRequestViewModel video)
         {
             try
             {
-                return await _videoService.AddVideoCurso(idVideo, idCurso);
+                return await _videoService.AddVideoCurso(video.VideoId, video.CursoIds);
             }
             catch (Exception ex)
             {
@@ -54,12 +59,12 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public Task<bool> Delete(VideoViewModel video)
+        public Task<bool> Delete(AddVideoRequestViewModel video)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IList<VideoViewModel>> GetAll()
+        public async Task<IList<AddVideoRequestViewModel>> GetAll()
         {
             try
             {
@@ -67,12 +72,12 @@ namespace FinanceFlix.Application.Services
 
                 if (videos != null)
                 {
-                    IList<VideoViewModel> videoViewModels = new List<VideoViewModel>();
+                    IList<AddVideoRequestViewModel> videoViewModels = new List<AddVideoRequestViewModel>();
 
                     foreach (var video in videos)
                     {
-                        VideoViewModel videoViewModel = new VideoViewModel();
-                        videoViewModel.Id = video.Id;
+                        AddVideoRequestViewModel videoViewModel = new AddVideoRequestViewModel();
+                        //videoViewModel.Id = video.Id;
                         videoViewModel.Nome = video.Nome;
                         videoViewModel.Descricao = video.Descricao;
                         videoViewModel.Url = video.Url;
@@ -99,26 +104,26 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public async Task<IList<VideoViewModel>> GetAllVideosByCurso(Guid idCurso)
+        public async Task<IList<AddVideoRequestViewModel>> GetAllVideosByCurso(Guid idCurso)
         {
             try
             {
                 var videos = await _videoService.GetAllVideosByCurso(idCurso);
-                IList<VideoViewModel> videoViewModels = new List<VideoViewModel>();
-             
+                IList<AddVideoRequestViewModel> videoViewModels = new List<AddVideoRequestViewModel>();
+
 
                 if (videos != null)
                 {
-                    foreach(var item in videos)
+                    foreach (var item in videos)
                     {
-                        VideoViewModel videoViewModel = new VideoViewModel();
-                        videoViewModel.Id = item.Id;
+                        AddVideoRequestViewModel videoViewModel = new AddVideoRequestViewModel();
+                        //videoViewModel.Id = item.Id;
                         videoViewModel.Nome = item.Nome;
                         videoViewModel.Descricao = item.Descricao;
                         videoViewModel.Url = item.Url;
                         videoViewModel.DuracaoSegundos = item.DuracaoSegundos;
                         videoViewModel.FilePath = item.FilePath;
-                      
+
 
                         videoViewModels.Add(videoViewModel);
                     }
@@ -137,14 +142,14 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public Task<VideoViewModel> GetById(Guid id)
+        public Task<AddVideoRequestViewModel> GetById(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Update(VideoViewModel video)
+        public Task<bool> Update(EditVideoRequestViewModel video)
         {
-            throw new NotImplementedException();
+            //parei aqui, pegar video e atualizar os dados e salvar
         }
 
         public Task<string> WatchVideoFilePath(Guid id)

@@ -26,7 +26,7 @@ namespace FinanceFlix.Application.ViewModels.CursoCategoria.Request
 
         public byte[]? Imagem { get; set; }
 
-
+        [Required]
         public AddCategoriaRequestViewModel Categoria { get; set; }
 
 

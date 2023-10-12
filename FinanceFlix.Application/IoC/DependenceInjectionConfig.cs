@@ -36,6 +36,7 @@ namespace FinanceFlix.Application.IoC
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             services.AddScoped<IVideoRepository, VideoRepository>();
             services.AddScoped<ICursoRepository, CursoRepository>();
+            services.AddScoped<ICursoVideoRepository, CursoVideoRepository>();
             #endregion
 
 

@@ -68,7 +68,7 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                if (video == null)
+                if (!ModelState.IsValid)
                 {
                     return BadRequest();
                 }
@@ -96,7 +96,7 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                if (video == null)
+                if (!ModelState.IsValid)
                 {
                     return BadRequest();
                 }
@@ -123,7 +123,7 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                if (video == null)
+                if (!ModelState.IsValid)
                 {
                     return BadRequest();
                 }
@@ -136,6 +136,7 @@ namespace FinanceFlix.API.Controllers
                 {
                     return NoContent();
                 }
+
             }
             catch (Exception ex)
             {
@@ -149,21 +150,21 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                var categoria = await _videoService.GetById(id);
-
-                if (categoria == null)
-                {
-                    return NotFound();
-                }
-
-                if (await _videoService.Delete(categoria) == false)
+                if (id.Equals(Guid.Empty))
                 {
                     return BadRequest();
                 }
-                else
+
+                if (await _videoService.Delete(id) == true)
                 {
                     return NoContent();
                 }
+                else
+                {
+                    return BadRequest();
+                }
+
+
             }
             catch (Exception ex)
             {
@@ -204,7 +205,7 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                if (id == null)
+                if (id.Equals(Guid.Empty))
                 {
                     return BadRequest();
                 }

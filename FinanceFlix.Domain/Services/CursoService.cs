@@ -18,16 +18,20 @@ namespace FinanceFlix.Domain.Services
 
         public async Task<bool> Add(Curso curso)
         {
-            if (curso == null)
-            {
-                return false;
-            }
+
             try
             {
+                if (curso != null)
+                {
+                    return await _cursoRepository.Add(curso);
 
 
-                await _cursoRepository.Add(curso);
-                return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
             catch (Exception)
             {
@@ -45,14 +49,15 @@ namespace FinanceFlix.Domain.Services
             {
                 if (!id.Equals(Guid.Empty))
                 {
-                    await _cursoRepository.Delete(id);
-                    return true;
+
+                    return await _cursoRepository.Delete(id);
+
                 }
                 else
                 {
                     return false;
                 }
-                    
+
             }
             catch (Exception)
             {
@@ -90,14 +95,17 @@ namespace FinanceFlix.Domain.Services
 
         public async Task<bool> Update(Curso curso)
         {
-            if (curso == null)
-            {
-                return false;
-            }
             try
             {
-                await _cursoRepository.Update(curso);
-                return true;
+
+                if (curso == null)
+                {
+                    return false;
+                }
+
+                return await _cursoRepository.Update(curso);
+
+
             }
             catch (Exception)
             {
@@ -110,20 +118,7 @@ namespace FinanceFlix.Domain.Services
         {
             try
             {
-
-
-                var cursos = await _cursoRepository.GetByCategoria(id);
-
-                if (cursos == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return cursos;
-                }
-
-
+                return await _cursoRepository.GetByCategoria(id);
 
             }
             catch (Exception)

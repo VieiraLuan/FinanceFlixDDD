@@ -58,7 +58,7 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                if (categoria == null || !ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
                     return BadRequest();
                 }
@@ -84,7 +84,7 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                if (categoria == null || !ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
                     return BadRequest();
                 }

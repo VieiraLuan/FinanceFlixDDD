@@ -22,13 +22,22 @@ namespace FinanceFlix.Data.Repositories
 
                 if (categoria == null)
                 {
-                    //Registro no Log
+
                     return false;
                 }
 
                 _context.Categorias.Add(categoria);
-                await _context.SaveChangesAsync();
-                return true;
+
+                if (await _context.SaveChangesAsync() > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
             }
             catch (DbUpdateException ex)
             {
@@ -44,25 +53,34 @@ namespace FinanceFlix.Data.Repositories
 
         public async Task<bool> Delete(Guid id)
         {
-
             try
             {
-                if (id.Equals(Guid.Empty))
+                if (!id.Equals(Guid.Empty))
+                {
+                    var categoria = await _context.Categorias.FindAsync(id);
+
+                    if (categoria != null)
+                    {
+                        _context.Categorias.Remove(categoria);
+
+                        if (await _context.SaveChangesAsync() > 0)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
                 {
                     return false;
-
                 }
-                var categoria = await _context.Categorias.FindAsync(id);
-
-                if (categoria == null)
-                {
-                    //Registro no Log
-                    return false;
-                }
-
-                _context.Categorias.Remove(categoria);
-                await _context.SaveChangesAsync();
-                return true;
             }
             catch (DbUpdateException ex)
             {
@@ -71,7 +89,7 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Erro: " + ex.Message);
+
                 return false;
             }
         }
@@ -81,50 +99,34 @@ namespace FinanceFlix.Data.Repositories
 
             try
             {
-                var categorias = await _context.Categorias.ToListAsync();
+                return await _context.Categorias.AsNoTracking().ToListAsync();
 
-                if (categorias == null)
-                {
-                    //Registro no Log
-                    return null;
-                }
-                else
-                {
-                    return categorias;
-                }
+
             }
             catch (Exception ex)
             {
                 // Registro no Log
-                Console.WriteLine(ex.Message);
                 return null;
             }
 
         }
-
-
 
         public async Task<Categoria> GetById(Guid id)
         {
 
             try
             {
-                if (id.Equals(Guid.Empty))
+                if (!id.Equals(Guid.Empty))
                 {
-                    return null;
-                }
+                    return await _context.Categorias.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
-                var categoria = await _context.Categorias.FindAsync(id);
-
-                if (categoria == null)
-                {
-                    //Registro no Log
-                    return null;
                 }
                 else
                 {
-                    return categoria;
+                    return null;
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -138,20 +140,33 @@ namespace FinanceFlix.Data.Repositories
 
         public async Task<bool> Update(Categoria categoria)
         {
-           
+
 
             try
             {
 
-                if (categoria == null)
+                if (categoria != null)
                 {
-                    //Registro no Log
+                    _context.Categorias.Update(categoria);
+
+
+                    if (await _context.SaveChangesAsync() > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                else
+                {
                     return false;
+
                 }
 
-                _context.Categorias.Update(categoria);
-                await _context.SaveChangesAsync();
-                return true;
+
             }
             catch (DbUpdateException ex)
             {

@@ -16,14 +16,17 @@ namespace FinanceFlix.Domain.Services
 
         public async Task<bool> Add(Video video)
         {
-            if (video == null)
-            {
-                return false;
-            }
+
             try
             {
-                await _videoRepository.Add(video);
-                return true;
+                if (video == null)
+                {
+                    return false;
+                }
+
+                return await _videoRepository.Add(video);
+
+
             }
             catch (Exception)
             {
@@ -55,8 +58,8 @@ namespace FinanceFlix.Domain.Services
             }
             try
             {
-                await _videoRepository.Delete(video);
-                return true;
+                return await _videoRepository.Delete(video);
+
             }
             catch (Exception)
             {
@@ -80,10 +83,10 @@ namespace FinanceFlix.Domain.Services
 
         public async Task<IList<Video>> GetAllVideosByCurso(Guid idCurso)
         {
-           try
+            try
             {
-                var videos = await _videoRepository.GetAllVideosByCurso(idCurso);
-                return videos;
+                return await _videoRepository.GetAllVideosByCurso(idCurso);
+
             }
             catch (Exception ex)
             {
@@ -114,8 +117,8 @@ namespace FinanceFlix.Domain.Services
             }
             try
             {
-                await _videoRepository.Update(video);
-                return true;
+                return await _videoRepository.Update(video);
+
             }
             catch (Exception)
             {
@@ -128,13 +131,13 @@ namespace FinanceFlix.Domain.Services
         {
             try
             {
-                if (id != null)
+                if (!id.Equals(Guid.Empty))
                 {
-                    string url = await _videoRepository.GetVideoFilePath(id);
+                    string path = await _videoRepository.GetVideoFilePath(id);
 
-                    if (url != null)
+                    if (path != null)
                     {
-                        return url;
+                        return path;
 
                     }
                     else
@@ -157,7 +160,7 @@ namespace FinanceFlix.Domain.Services
         {
             try
             {
-                if (id != null)
+                if (!id.Equals(Guid.Empty))
                 {
                     string url = await _videoRepository.GetVideoUrl(id);
 
@@ -172,8 +175,10 @@ namespace FinanceFlix.Domain.Services
                         return null;
                     }
                 }
-                return null;
-
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception)
             {
@@ -184,9 +189,9 @@ namespace FinanceFlix.Domain.Services
             }
         }
 
-       
 
-    
+
+
     }
 }
 

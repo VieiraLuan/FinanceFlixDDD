@@ -23,8 +23,15 @@ namespace FinanceFlix.Data.Repositories
                 try
                 {
                     _context.Cursos.Add(curso);
-                    await _context.SaveChangesAsync();
-                    return true;
+
+                    if (await _context.SaveChangesAsync() > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -42,15 +49,20 @@ namespace FinanceFlix.Data.Repositories
 
         public async Task<bool> Delete(Guid id)
         {
-
             try
             {
                 if (!id.Equals(Guid.Empty))
                 {
                     var curso = await _context.Cursos.FindAsync(id);
                     _context.Cursos.Remove(curso);
-                    await _context.SaveChangesAsync();
-                    return true;
+                    if (await _context.SaveChangesAsync() > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
                 }
                 else
@@ -71,16 +83,9 @@ namespace FinanceFlix.Data.Repositories
         {
             try
             {
-                var cursos = await _context.Cursos.Include(c => c.Categoria).ToListAsync();
+                return await _context.Cursos.AsNoTracking().Include(c => c.Categoria).ToListAsync();
 
-                if (cursos != null)
-                {
-                    return cursos;
-                }
-                else
-                {
-                    return null;
-                }
+
             }
             catch (Exception ex)
             {
@@ -97,10 +102,8 @@ namespace FinanceFlix.Data.Repositories
                 {
 
                     //Listar cursos por categoria 
-                    var cursos = await _context.Cursos.Include(c => c.Categoria).Where(x => x.Categoria.Id == id).ToListAsync();
+                    return (IList<Curso>)await _context.Cursos.AsNoTracking().Include(c => c.Categoria).Where(x => x.Categoria.Id == id).ToListAsync();
 
-
-                    return (IList<Curso>)cursos;
                 }
                 else
                 {
@@ -123,18 +126,8 @@ namespace FinanceFlix.Data.Repositories
             {
                 if (!id.Equals(Guid.Empty))
                 {
-                    var curso = await _context.Cursos.Include(c => c.Categoria).Where(x => x.Id == id).FirstOrDefaultAsync();
+                    return await _context.Cursos.AsNoTracking().Include(c => c.Categoria).Where(x => x.Id == id).FirstOrDefaultAsync();
 
-
-
-                    if (curso != null)
-                    {
-                        return curso;
-                    }
-                    else
-                    {
-                        return null;
-                    }
                 }
                 else
                 {
@@ -159,8 +152,14 @@ namespace FinanceFlix.Data.Repositories
                 try
                 {
                     _context.Cursos.Update(curso);
-                    await _context.SaveChangesAsync();
-                    return true;
+                    if (await _context.SaveChangesAsync() > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 catch (Exception ex)
                 {

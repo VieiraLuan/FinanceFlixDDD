@@ -19,13 +19,8 @@ namespace FinanceFlix.Domain.Services
             {
                 if (categoria != null)
                 {
+                    return await _categoriaRepository.Add(categoria) == true);
 
-                    
-
-
-                    await _categoriaRepository.Add(categoria);
-
-                    return true;
                 }
                 else
                 {
@@ -46,15 +41,8 @@ namespace FinanceFlix.Domain.Services
             {
                 if (!id.Equals(Guid.Empty))
                 {
-                    if (await _categoriaRepository.Delete(id))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        //Registro no Log
-                        return false;
-                    }
+                    return await _categoriaRepository.Delete(id);
+
                 }
                 else
                 {
@@ -75,16 +63,8 @@ namespace FinanceFlix.Domain.Services
             try
             {
 
-                var categorias = await _categoriaRepository.GetAll();
-                if (categorias != null)
-                {
-                    return categorias;
-                }
-                else
-                {
-                    //Registro no Log
-                    return null;
-                }
+                return await _categoriaRepository.GetAll();
+
             }
             catch (Exception)
             {
@@ -97,16 +77,8 @@ namespace FinanceFlix.Domain.Services
         {
             try
             {
-                var categoria = await _categoriaRepository.GetById(id);
-                if (categoria != null)
-                {
-                    return categoria;
-                }
-                else
-                {
-                    //Registro no Log
-                    return null;
-                }
+                return await _categoriaRepository.GetById(id);
+
 
             }
             catch (Exception)
@@ -122,19 +94,12 @@ namespace FinanceFlix.Domain.Services
             {
                 if (categoria != null)
                 {
-                    if (await _categoriaRepository.Update(categoria))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        //Registro no Log
-                        return false;
-                    }
+                    return await _categoriaRepository.Update(categoria);
+
                 }
                 else
                 {
-                    //Registro no Log
+
                     return false;
                 }
 

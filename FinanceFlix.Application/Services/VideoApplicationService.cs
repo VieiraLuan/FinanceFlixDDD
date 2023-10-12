@@ -1,11 +1,13 @@
 ﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Application.Interfaces;
 using FinanceFlix.Application.ViewModels.Video.Request;
+using FinanceFlix.Application.ViewModels.Video.Response;
 using FinanceFlix.Domain.Entities;
 using FinanceFlix.Domain.Interfaces.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,13 +27,13 @@ namespace FinanceFlix.Application.Services
         {
             try
             {
-                var videoCreated = new Video(video.Nome,video.Descricao,video.Url,video.DuracaoSegundos,
+                var videoCreated = new Video(video.Nome, video.Descricao, video.Url, video.DuracaoSegundos,
                 video.FilePath);
 
-                ICollection<CursoVideo> cursosVideos = new List<CursoVideo>();  
-               
-               cursosVideos.Add(new CursoVideo(video.CursoId, videoCreated.Id));
-                
+                ICollection<CursoVideo> cursosVideos = new List<CursoVideo>();
+
+                cursosVideos.Add(new CursoVideo(video.CursoId, videoCreated.Id));
+
 
                 var videoEntity = new Video(videoCreated.Id, videoCreated.Nome, videoCreated.Descricao
                     , videoCreated.Url, videoCreated.DuracaoSegundos, videoCreated.FilePath, cursosVideos);
@@ -59,76 +61,100 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public Task<bool> Delete(AddVideoRequestViewModel video)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IList<AddVideoRequestViewModel>> GetAll()
+        public async Task<bool> Delete(Guid id)
         {
             try
             {
-                var videos = await _videoService.GetAll();
-
-                if (videos != null)
+                if (!id.Equals(Guid.Empty))
                 {
-                    IList<AddVideoRequestViewModel> videoViewModels = new List<AddVideoRequestViewModel>();
-
-                    foreach (var video in videos)
+                    if (await _videoService.Delete(await _videoService.GetById(id)) == true)
                     {
-                        AddVideoRequestViewModel videoViewModel = new AddVideoRequestViewModel();
-                        //videoViewModel.Id = video.Id;
-                        videoViewModel.Nome = video.Nome;
-                        videoViewModel.Descricao = video.Descricao;
-                        videoViewModel.Url = video.Url;
-                        videoViewModel.DuracaoSegundos = video.DuracaoSegundos;
-                        videoViewModel.FilePath = video.FilePath;
-
-                        videoViewModels.Add(videoViewModel);
+                        return true;
                     }
-
-                    return videoViewModels;
-
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                    return null;
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                //Implementar log
+                return false;
+            }
+        }
+
+        public async Task<IList<ListVideoResponseViewModel>> GetAll()
+        {
+            try
+            {
+
+                var videos = await _videoService.GetAll();
+
+                var listaVideos = new List<ListVideoResponseViewModel>();
+
+                var video = new ListVideoResponseViewModel();
+
+                foreach (var item in videos)
+                {
+
+                    video.Id = item.Id;
+                    video.Nome = item.Nome;
+                    video.Descricao = item.Descricao;
+                    video.Url = item.Url;
+                    video.DuracaoSegundos = item.DuracaoSegundos;
+                    video.FilePath = item.FilePath;
+                    listaVideos.Add(video);
+
                 }
 
+                return listaVideos;
 
             }
             catch (Exception ex)
             {
 
-                throw ex;
+                throw;
             }
+
         }
 
-        public async Task<IList<AddVideoRequestViewModel>> GetAllVideosByCurso(Guid idCurso)
+        public async Task<IList<ListVideoResponseViewModel>> GetAllVideosByCurso(Guid idCurso)
         {
             try
             {
                 var videos = await _videoService.GetAllVideosByCurso(idCurso);
-                IList<AddVideoRequestViewModel> videoViewModels = new List<AddVideoRequestViewModel>();
+                var listaVideos = new List<ListVideoResponseViewModel>();
+                var cursoVideo = new CursoVideo();
+                var cursoId = new Guid();
 
 
                 if (videos != null)
                 {
                     foreach (var item in videos)
                     {
-                        AddVideoRequestViewModel videoViewModel = new AddVideoRequestViewModel();
-                        //videoViewModel.Id = item.Id;
-                        videoViewModel.Nome = item.Nome;
-                        videoViewModel.Descricao = item.Descricao;
-                        videoViewModel.Url = item.Url;
-                        videoViewModel.DuracaoSegundos = item.DuracaoSegundos;
-                        videoViewModel.FilePath = item.FilePath;
+                        var video = new ListVideoResponseViewModel();
 
+                        foreach (var id in item.CursosVideos)
+                        {
+                            cursoId = id.CursoId;
+                        }
 
-                        videoViewModels.Add(videoViewModel);
+                        video.CursoId = cursoId;
+                        video.Id = item.Id;
+                        video.Nome = item.Nome;
+                        video.Descricao = item.Descricao;
+                        video.Url = item.Url;
+                        video.DuracaoSegundos = item.DuracaoSegundos;
+                        video.FilePath = item.FilePath;
+                        listaVideos.Add(video);
                     }
 
-                    return videoViewModels;
+                    return listaVideos;
 
                 }
                 else
@@ -142,15 +168,35 @@ namespace FinanceFlix.Application.Services
             }
         }
 
-        public Task<AddVideoRequestViewModel> GetById(Guid id)
+        public Task<ListVideoResponseViewModel> GetById(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Update(EditVideoRequestViewModel video)
+        public async Task<bool> Update(EditVideoRequestViewModel video)
         {
-            //parei aqui, pegar video e atualizar os dados e salvar
+            try
+            {
+                if (video != null)
+                {
+                    var videoEntity = new Video(video.Id, video.Nome, video.Descricao, video.Url, video.DuracaoSegundos, video.FilePath, video.CursoId);
+
+                    await _videoService.Update(videoEntity);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+
+
 
         public Task<string> WatchVideoFilePath(Guid id)
         {

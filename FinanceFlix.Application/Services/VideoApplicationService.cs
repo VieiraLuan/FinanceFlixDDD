@@ -4,6 +4,7 @@ using FinanceFlix.Application.ViewModels.Video.Request;
 using FinanceFlix.Application.ViewModels.Video.Response;
 using FinanceFlix.Domain.Entities;
 using FinanceFlix.Domain.Interfaces.IServices;
+using FinanceFlix.Domain.Interfaces.IServices.IAWS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,13 @@ namespace FinanceFlix.Application.Services
     {
 
         private readonly IVideoService _videoService;
+        private readonly IStorageService _storageService;
 
-        public VideoApplicationService(IVideoService videoService)
+        public VideoApplicationService(IVideoService videoService, IStorageService storageService)
         {
             _videoService = videoService;
+            _storageService = storageService;
+
         }
 
         public async Task<bool> Add(AddVideoRequestViewModel video)

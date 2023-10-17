@@ -18,6 +18,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+
+
+
+
+
 //Add Dependence Injection
 builder.Services.AddResolveDependecies();
 

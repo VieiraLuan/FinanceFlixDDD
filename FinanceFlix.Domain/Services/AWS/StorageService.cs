@@ -49,6 +49,7 @@ namespace FinanceFlix.Domain.Services.AWS
 
                 response.StatusCode = 200;
                 response.Message = $"{s3Object.Nome} foi carregado com sucesso";
+              
 
             }
             catch (AmazonS3Exception ex)

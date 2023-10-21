@@ -64,7 +64,7 @@ namespace FinanceFlix.API.Controllers
 
         //Adiciona um novo video e relaciona a um curso
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] AddVideoRequestViewModel video)
+        public async Task<IActionResult> Add([FromForm] AddVideoRequestViewModel video)
         {
             try
             {

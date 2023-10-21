@@ -7,42 +7,37 @@ namespace FinanceFlix.API.Entities
     public class Video : Entity
     {
         public Video(Guid id, string nome, string descricao, string url, int duracaoSegundos,
-            string? filePath, ICollection<CursoVideo>? cursosVideos)
+             ICollection<CursoVideo>? cursosVideos)
         {
 
             Nome = nome;
             Descricao = descricao;
             Url = url;
             DuracaoSegundos = duracaoSegundos;
-            FilePath = filePath;
             CursosVideos = cursosVideos;
         }
 
-        public Video(Guid id, string nome, string descricao, string url, int duracaoSegundos,
-            string? filePath, Guid cursoid)
+        public Video(Guid id, string nome, string descricao, string url, int duracaoSegundos, string filePath, Guid cursoId)
         {
             Id = id;
             Nome = nome;
             Descricao = descricao;
             Url = url;
             DuracaoSegundos = duracaoSegundos;
-            FilePath = filePath;
             ICollection<CursoVideo> cursoVideosList = new List<CursoVideo>();
-            var cursoVideoEntity = new CursoVideo(cursoid, id);
+            var cursoVideoEntity = new CursoVideo(cursoId, id);
             cursoVideosList.Add(cursoVideoEntity);
             CursosVideos = cursoVideosList;
 
         }
 
-        public Video(string nome, string descricao, string url, int duracaoSegundos,
-           string? filePath)
+        public Video(string nome, string descricao, string url, int duracaoSegundos)
         {
-
+            //Add Video
             Nome = nome;
             Descricao = descricao;
-            Url = url;
             DuracaoSegundos = duracaoSegundos;
-            FilePath = filePath;
+            Url = url;
 
         }
 

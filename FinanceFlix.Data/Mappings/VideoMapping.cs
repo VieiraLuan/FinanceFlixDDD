@@ -6,14 +6,15 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace FinanceFlix.Data.Mappings
 {
-    public class VideoMapping: IEntityTypeConfiguration<Video>
+    public class VideoMapping : IEntityTypeConfiguration<Video>
     {
         public void Configure(EntityTypeBuilder<Video> builder)
         {
-           
+
 
             //PK
-            builder.HasKey(c => c.Id).HasName("ID_VIDEO");
+            builder.HasKey(c => c.Id).
+                HasName("ID_VIDEO");
 
             //Columns
             builder.Property(c => c.Nome)
@@ -33,16 +34,24 @@ namespace FinanceFlix.Data.Mappings
 
             builder.Property(c => c.CreatedDate)
             .HasColumnName("DT_CRIACAO")
-            .IsRequired();
+            .IsRequired(false);
 
             builder.Property(c => c.DuracaoSegundos)
             .HasColumnName("DURACAO_SEGUNDOS")
             .IsRequired();
 
-            builder.Property( c=> c.FilePath)
+            builder.Property(c => c.FilePath)
             .HasColumnName("FILE_PATH")
             .HasMaxLength(200)
             .IsRequired(false);
+
+            builder.Property(c => c.LastModifiedDate)
+                .HasColumnName("DT_ULTIMA_MODIFICACAO")
+                .IsRequired(false);
+
+            builder.Property(C => C.Vizualizacoes)
+                .HasColumnName("VIZUALIZACOES")
+                .IsRequired(false);
 
             //TB
             builder.ToTable("TB_VIDEO");

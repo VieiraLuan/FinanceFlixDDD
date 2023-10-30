@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace FinanceFlix.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231004024942_UpdatingRelationCursoCategoriaMigration")]
-    partial class UpdatingRelationCursoCategoriaMigration
+    [Migration("20231030031014_AgainCreatingTablesAgain")]
+    partial class AgainCreatingTablesAgain
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace FinanceFlix.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("RAW(16)");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("TIMESTAMP(7)")
                         .HasColumnName("DT_CRIACAO");
 
@@ -40,6 +40,10 @@ namespace FinanceFlix.Data.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("NVARCHAR2(120)")
                         .HasColumnName("DESC_CATEGORIA");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("DT_ULTIMA_MODIFICACAO");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -62,7 +66,7 @@ namespace FinanceFlix.Data.Migrations
                     b.Property<Guid>("CategoriaId")
                         .HasColumnType("RAW(16)");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("TIMESTAMP(7)")
                         .HasColumnName("DT_CRIACAO");
 
@@ -75,6 +79,10 @@ namespace FinanceFlix.Data.Migrations
                     b.Property<byte[]>("ImagemUrl")
                         .HasColumnType("RAW(2000)")
                         .HasColumnName("URL_IMAGEM");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("DT_ULTIMA_MODIFICACAO");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -111,7 +119,7 @@ namespace FinanceFlix.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("RAW(16)");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("TIMESTAMP(7)")
                         .HasColumnName("DT_CRIACAO");
 
@@ -130,6 +138,10 @@ namespace FinanceFlix.Data.Migrations
                         .HasColumnType("NVARCHAR2(200)")
                         .HasColumnName("FILE_PATH");
 
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("DT_ULTIMA_MODIFICACAO");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(80)
@@ -141,6 +153,10 @@ namespace FinanceFlix.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("NVARCHAR2(200)")
                         .HasColumnName("URL_VIDEO");
+
+                    b.Property<int?>("Vizualizacoes")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("VIZUALIZACOES");
 
                     b.HasKey("Id")
                         .HasName("ID_VIDEO");
@@ -156,12 +172,16 @@ namespace FinanceFlix.Data.Migrations
                     b.Property<Guid>("VideoId")
                         .HasColumnType("RAW(16)");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("TIMESTAMP(7)")
                         .HasColumnName("DT_CRIACAO");
 
                     b.Property<Guid>("Id")
                         .HasColumnType("RAW(16)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("DT_ULTIMA_MODIFICACAO");
 
                     b.HasKey("CursoId", "VideoId")
                         .HasName("ID_CURSO_VIDEO");

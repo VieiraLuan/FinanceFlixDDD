@@ -84,7 +84,7 @@ namespace FinanceFlix.Application.Services
                         Id = categoria.Id,
                         Nome = categoria.Nome,
                         Descricao = categoria.Descricao,
-                        CreatedDate = categoria.CreatedDate
+                        CreatedDate = (DateTime)categoria.CreatedDate
                         
                     };
 
@@ -118,7 +118,7 @@ namespace FinanceFlix.Application.Services
                     Id = categoria.Id,
                     Nome = categoria.Nome,
                     Descricao = categoria.Descricao,
-                    CreatedDate = categoria.CreatedDate
+                    CreatedDate = (DateTime)categoria.CreatedDate
                 };
 
                 return categoriaViewModel;

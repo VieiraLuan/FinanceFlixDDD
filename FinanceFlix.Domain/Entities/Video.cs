@@ -61,6 +61,8 @@ namespace FinanceFlix.API.Entities
 
         public string? FilePath { get; private set; } // Caminho do arquivo de vídeo no servidor
 
+        public int? Vizualizacoes { get; private set; } // Quantidade de vezes que o vídeo foi visualizado
+
         public ICollection<CursoVideo>? CursosVideos { get; private set; }
 
 

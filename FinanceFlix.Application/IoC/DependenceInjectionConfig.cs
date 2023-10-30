@@ -54,19 +54,20 @@ namespace FinanceFlix.Application.IoC
 
             #region Conexão com banco de dados
             //Conexão com o banco de dados - Dev
-            services.AddDbContext<DataContext>(options =>
+            /* services.AddDbContext<DataContext>(options =>
             {
                 options.UseOracle("User Id=C##SYS_DBA;Password=senha123;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SID=xe)))");
-            });
+            });*/
+
 
 
 
             //Conexão com o banco de dados - Produção
-            /*
+      
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseOracle("User Id=RM96330;Password=140400;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=oracle.fiap.com.br)(PORT=1521))(CONNECT_DATA=(SID=ORCL)))");
-            });*/
+            });
 
             #endregion
 

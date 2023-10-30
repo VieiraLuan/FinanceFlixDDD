@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FinanceFlix.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class CreatingTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,8 @@ namespace FinanceFlix.Data.Migrations
                     Id = table.Column<Guid>(type: "RAW(16)", nullable: false),
                     NOME_CATEGORIA = table.Column<string>(type: "NVARCHAR2(80)", maxLength: 80, nullable: false),
                     DESC_CATEGORIA = table.Column<string>(type: "NVARCHAR2(120)", maxLength: 120, nullable: false),
-                    DT_CRIACAO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false)
+                    DT_CRIACAO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
+                    DT_ULTIMA_MODIFICACAO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +36,9 @@ namespace FinanceFlix.Data.Migrations
                     URL_VIDEO = table.Column<string>(type: "NVARCHAR2(200)", maxLength: 200, nullable: false),
                     DURACAO_SEGUNDOS = table.Column<int>(type: "NUMBER(10)", nullable: false),
                     FILE_PATH = table.Column<string>(type: "NVARCHAR2(200)", maxLength: 200, nullable: true),
-                    DT_CRIACAO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false)
+                    Vizualizacoes = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    DT_CRIACAO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
+                    DT_ULTIMA_MODIFICACAO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,14 +80,15 @@ namespace FinanceFlix.Data.Migrations
                     DESC_CURSO = table.Column<string>(type: "NVARCHAR2(120)", maxLength: 120, nullable: false),
                     URL_IMAGEM = table.Column<byte[]>(type: "RAW(2000)", nullable: true),
                     CategoriaId = table.Column<Guid>(type: "RAW(16)", nullable: false),
-                    DT_CRIACAO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false)
+                    DT_CRIACAO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
+                    DT_ULTIMA_MODIFICACAO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("ID_CURSO", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TB_CURSO_TB_CATEGORIA_Id",
-                        column: x => x.Id,
+                        name: "FK_TB_CURSO_TB_CATEGORIA_CategoriaId",
+                        column: x => x.CategoriaId,
                         principalTable: "TB_CATEGORIA",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -97,7 +101,8 @@ namespace FinanceFlix.Data.Migrations
                     CursoId = table.Column<Guid>(type: "RAW(16)", nullable: false),
                     VideoId = table.Column<Guid>(type: "RAW(16)", nullable: false),
                     Id = table.Column<Guid>(type: "RAW(16)", nullable: false),
-                    DT_CRIACAO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false)
+                    DT_CRIACAO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
+                    DT_ULTIMA_MODIFICACAO = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,6 +120,11 @@ namespace FinanceFlix.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TB_CURSO_CategoriaId",
+                table: "TB_CURSO",
+                column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TB_CURSO_VIDEO_VideoId",

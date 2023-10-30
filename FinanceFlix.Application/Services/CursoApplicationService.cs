@@ -124,7 +124,7 @@ namespace FinanceFlix.Application.Services
                         categoria.Id = curso.Categoria.Id;
                         categoria.Nome = curso.Categoria.Nome;
                         categoria.Descricao = curso.Categoria.Descricao;
-                        categoria.CreatedDate = curso.Categoria.CreatedDate;
+                        categoria.CreatedDate = (DateTime)curso.Categoria.CreatedDate;
 
                         listaCursos.Add(new ListCursoResponseViewModel
                         {
@@ -170,7 +170,7 @@ namespace FinanceFlix.Application.Services
                         categoria.Id = curso.Categoria.Id;
                         categoria.Nome = curso.Categoria.Nome;
                         categoria.Descricao = curso.Categoria.Descricao;
-                        categoria.CreatedDate = curso.Categoria.CreatedDate;
+                        categoria.CreatedDate = (DateTime)curso.Categoria.CreatedDate;
 
                         listaCursos.Add(new ListCursoResponseViewModel
                         {
@@ -212,7 +212,7 @@ namespace FinanceFlix.Application.Services
                     categoria.Id = curso.Categoria.Id;
                     categoria.Nome = curso.Categoria.Nome;
                     categoria.Descricao = curso.Categoria.Descricao;
-                    categoria.CreatedDate = curso.Categoria.CreatedDate;
+                    categoria.CreatedDate = (DateTime)curso.Categoria.CreatedDate;
 
                     cursoViewModel.Id = curso.Id;
                     cursoViewModel.Nome = curso.Nome;

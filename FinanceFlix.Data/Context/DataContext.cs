@@ -50,10 +50,10 @@ namespace FinanceFlix.Data.Context
 
 
                 //Banco de dados Oracle Desenvolvimento
-                optionsBuilder.UseOracle(GetDatabaseConnectionLOCAL());
+                //optionsBuilder.UseOracle(GetDatabaseConnectionLOCAL());
 
                 //Banco de dados Oracle "Produção"
-                //optionsBuilder.UseOracle(GetDatabaseConnectionFIAP());
+                optionsBuilder.UseOracle(GetDatabaseConnectionFIAP());
 
                 base.OnConfiguring(optionsBuilder);
             }

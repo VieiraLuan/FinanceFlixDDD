@@ -16,7 +16,7 @@ namespace FinanceFlix.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Categoria> builder)
         {
-            
+
 
             //PK
             builder.HasKey(c => c.Id).HasName("ID_CATEGORIA");
@@ -33,10 +33,15 @@ namespace FinanceFlix.Data.Mappings
             .HasMaxLength(120)
             .IsRequired();
 
-            
+
             builder.Property(c => c.CreatedDate)
-            .HasColumnName("DT_CRIACAO")
-            .IsRequired();
+              .HasColumnName("DT_CRIACAO")
+              .IsRequired(false);
+
+
+            builder.Property(c => c.LastModifiedDate)
+                .HasColumnName("DT_ULTIMA_MODIFICACAO")
+                .IsRequired(false);
 
             //Relationships 1:N
             builder.HasMany(c => c.Cursos)

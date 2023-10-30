@@ -6,11 +6,11 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace FinanceFlix.Data.Mappings
 {
-    public class CursoVideoMapping: IEntityTypeConfiguration<CursoVideo>
+    public class CursoVideoMapping : IEntityTypeConfiguration<CursoVideo>
     {
         public void Configure(EntityTypeBuilder<CursoVideo> builder)
         {
-            
+
 
             //PK
             builder.HasKey
@@ -26,8 +26,13 @@ namespace FinanceFlix.Data.Mappings
 
             //Columns
             builder.Property(c => c.CreatedDate)
-            .HasColumnName("DT_CRIACAO")
-            .IsRequired();
+             .HasColumnName("DT_CRIACAO")
+             .IsRequired(false);
+
+
+            builder.Property(c => c.LastModifiedDate)
+                .HasColumnName("DT_ULTIMA_MODIFICACAO")
+                .IsRequired(false);
 
             //TB
             builder.ToTable("TB_CURSO_VIDEO");

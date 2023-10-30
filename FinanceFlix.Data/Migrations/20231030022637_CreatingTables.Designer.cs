@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace FinanceFlix.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231002040703_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20231030022637_CreatingTables")]
+    partial class CreatingTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,10 @@ namespace FinanceFlix.Data.Migrations
                         .HasColumnType("NVARCHAR2(120)")
                         .HasColumnName("DESC_CATEGORIA");
 
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("DT_ULTIMA_MODIFICACAO");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(80)
@@ -56,6 +60,7 @@ namespace FinanceFlix.Data.Migrations
             modelBuilder.Entity("FinanceFlix.API.Entities.Curso", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("RAW(16)");
 
                     b.Property<Guid>("CategoriaId")
@@ -75,6 +80,10 @@ namespace FinanceFlix.Data.Migrations
                         .HasColumnType("RAW(2000)")
                         .HasColumnName("URL_IMAGEM");
 
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("DT_ULTIMA_MODIFICACAO");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(80)
@@ -83,6 +92,8 @@ namespace FinanceFlix.Data.Migrations
 
                     b.HasKey("Id")
                         .HasName("ID_CURSO");
+
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("TB_CURSO", (string)null);
                 });
@@ -127,6 +138,10 @@ namespace FinanceFlix.Data.Migrations
                         .HasColumnType("NVARCHAR2(200)")
                         .HasColumnName("FILE_PATH");
 
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("DT_ULTIMA_MODIFICACAO");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(80)
@@ -138,6 +153,9 @@ namespace FinanceFlix.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("NVARCHAR2(200)")
                         .HasColumnName("URL_VIDEO");
+
+                    b.Property<int>("Vizualizacoes")
+                        .HasColumnType("NUMBER(10)");
 
                     b.HasKey("Id")
                         .HasName("ID_VIDEO");
@@ -159,6 +177,10 @@ namespace FinanceFlix.Data.Migrations
 
                     b.Property<Guid>("Id")
                         .HasColumnType("RAW(16)");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("TIMESTAMP(7)")
+                        .HasColumnName("DT_ULTIMA_MODIFICACAO");
 
                     b.HasKey("CursoId", "VideoId")
                         .HasName("ID_CURSO_VIDEO");
@@ -193,7 +215,7 @@ namespace FinanceFlix.Data.Migrations
                 {
                     b.HasOne("FinanceFlix.API.Entities.Categoria", "Categoria")
                         .WithMany("Cursos")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

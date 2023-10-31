@@ -22,7 +22,8 @@ namespace FinanceFlix.Data.Repositories
             {
                 try
                 {
-                    await _context.Cursos.AddAsync(curso);
+                     _context.Cursos.Add(curso);
+
 
                     if (await _context.SaveChangesAsync() > 0)
                     {

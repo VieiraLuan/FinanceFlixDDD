@@ -25,6 +25,7 @@ namespace FinanceFlix.Application.IoC
             services.AddScoped<ICategoriaApplicationService, CategoriaApplicationService>();
             services.AddScoped<ICursoApplicationService, CursoApplicationService>();
             services.AddScoped<IVideoApplicationService, VideoApplicationService>();
+            services.AddScoped<ITokenService, TokenService>();
             #endregion
 
             //Domain

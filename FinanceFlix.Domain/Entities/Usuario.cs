@@ -1,14 +1,36 @@
 ﻿
+using FinanceFlix.Domain.Entities;
+
 namespace FinanceFlix.API.Entities
-{ 
-    public class Usuario
+{
+    public class Usuario : Entity
     {
 
-
-        public Guid Id { get; set; }
-
-       
-
         public string Nome { get; private set; }
+
+        public string Email { get; private set; }
+
+        public string Senha { get; private set; }
+
+        public string Tipo { get; private set; }
+
+        public string FotoUrl { get; private set; }
+
+
+        public Usuario()
+        {
+
+        }
+
+        public Usuario(string nome, string email, string senha, string tipo, string foto)
+        {
+            Nome = nome;
+            Email = email;
+            Senha = senha;
+            Tipo = tipo;
+            FotoUrl = foto;
+        }
+
+
     }
 }

@@ -1,0 +1,89 @@
+﻿using FinanceFlix.Application.Interfaces;
+using FinanceFlix.Application.ViewModels.Usuario.Request;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace FinanceFlix.API.Controllers
+{
+    [Route("[controller]")]
+    [ApiController]
+    public class UsuarioController : ControllerBase
+    {
+
+        private readonly IUsuarioApplicationService _usuarioApplicationService;
+
+        public UsuarioController(IUsuarioApplicationService usuarioApplicationService)
+        {
+            _usuarioApplicationService = usuarioApplicationService;
+        }
+
+
+        [HttpPost]
+        [Route("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login (LoginResponseViewModel usuarioLogin)
+        {
+            try
+            {
+                if (String.IsNullOrEmpty(usuarioLogin.Email) || String.IsNullOrEmpty(usuarioLogin.Senha))
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    var usuario = await _usuarioApplicationService.Login(usuarioLogin);
+
+                    if (usuario != null)
+                    {
+                        return Ok(usuario);
+                    }
+                    else
+                    {
+                        return NotFound("Usuário ou senha inválido");
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+                return BadRequest("Erro ao tentar fazer login");
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [Route("AddUser")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Add(AddUsuarioRequestViewModel usuario)
+        {
+            try
+            {
+               if(usuario != null)
+                {
+                    var usuarioAdd = await _usuarioApplicationService.Add(usuario);
+
+                    if (usuarioAdd)
+                    {
+                        return Ok("Usuário cadastrado com sucesso");
+                    }
+                    else
+                    {
+                        return BadRequest("Erro ao cadastrar usuário");
+                    }
+                }
+                else
+                {
+                    return BadRequest("Erro ao cadastrar usuário");
+                }
+
+            }
+            catch (Exception)
+            {
+                return BadRequest("Erro ao cadastrar usuário");
+                throw;
+            }
+        }
+
+    }
+}

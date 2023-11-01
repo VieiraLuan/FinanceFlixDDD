@@ -2,6 +2,7 @@
 using FinanceFlix.Application.Interfaces;
 using FinanceFlix.Application.ViewModels.Curso.Request;
 using FinanceFlix.Application.ViewModels.CursoCategoria.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceFlix.API.Controllers
@@ -20,6 +21,7 @@ namespace FinanceFlix.API.Controllers
 
         [HttpGet]
         [Route("GetAll")]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -37,6 +39,7 @@ namespace FinanceFlix.API.Controllers
 
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
@@ -62,6 +65,7 @@ namespace FinanceFlix.API.Controllers
 
 
         [HttpPost]
+        [Authorize]
         [Route("AddCursoCategoriaExists")]
         public async Task<IActionResult> Add([FromBody] AddCursoRequestViewModel curso)
         {
@@ -91,6 +95,7 @@ namespace FinanceFlix.API.Controllers
 
 
         [HttpPost]
+        [Authorize]
         [Route("AddCursoCategoriaNoExists")]
         public async Task<IActionResult> AddCursoCategoria([FromBody] AddCursoCategoriaRequestViewModel curso)
         {
@@ -119,6 +124,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> Update([FromBody] EditCursoRequestViewModel curso)
         {
             try
@@ -144,6 +150,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             try
@@ -174,6 +181,7 @@ namespace FinanceFlix.API.Controllers
 
         [HttpGet]
         [Route("GetAllByCategoriaCurso/{id}")]
+        [Authorize]
         public async Task<IActionResult> GetAllByCategoria(Guid id)
         {
             try

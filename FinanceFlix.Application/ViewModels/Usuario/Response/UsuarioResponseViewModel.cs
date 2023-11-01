@@ -12,6 +12,8 @@ namespace FinanceFlix.Application.ViewModels.Usuario.Request
        
         public Guid Id { get; set; }
 
+        public string Token { get; set; }
+
         public string Nome { get; set; }
 
         public string Email { get; set; }

@@ -3,6 +3,7 @@ using FinanceFlix.Application.Interfaces;
 using FinanceFlix.Application.ViewModels;
 using FinanceFlix.Application.ViewModels.Video.Request;
 using FinanceFlix.Domain.Interfaces.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,7 @@ namespace FinanceFlix.API.Controllers
         //Lista todos os videos existentes  
         [HttpGet]
         [Route("GetAll")]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -40,6 +42,7 @@ namespace FinanceFlix.API.Controllers
 
         //Lista um video pelo id 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
@@ -64,6 +67,7 @@ namespace FinanceFlix.API.Controllers
 
         //Adiciona um novo video e relaciona a um curso
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add([FromForm] AddVideoRequestViewModel video)
         {
             try
@@ -92,6 +96,7 @@ namespace FinanceFlix.API.Controllers
         //Relaciona um video a uma coleção de cursos
         [HttpPost]
         [Route("AddVideoToCurso")]
+        [Authorize]
         public async Task<IActionResult> AddVideoToCurso([FromBody] AddVideoToCursoRequestViewModel video)
         {
             try
@@ -119,6 +124,7 @@ namespace FinanceFlix.API.Controllers
 
         //Atualiza um video
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> Update([FromBody] EditVideoRequestViewModel video)
         {
             try
@@ -146,6 +152,7 @@ namespace FinanceFlix.API.Controllers
 
         //Deleta um video
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             try
@@ -174,6 +181,7 @@ namespace FinanceFlix.API.Controllers
 
         //Assiste um video especifico
         [HttpGet("WatchVideo/{id}")]
+        [Authorize]
         public async Task<IActionResult> WatchVideoUrl(Guid id)
         {
             try
@@ -201,6 +209,7 @@ namespace FinanceFlix.API.Controllers
 
         //Lista todos os videos de um curso especifico
         [HttpGet("GetAllVideosByCurso/{id}")]
+        [Authorize]
         public async Task<IActionResult> GetAllVideosByCurso(Guid id)
         {
             try

@@ -26,7 +26,7 @@ namespace FinanceFlix.Application.ViewModels.Usuario.Request
         public string Tipo { get; set; }
 
         [StringLength(80, ErrorMessage = "O url da foto deve ter até 80 caracteres")]
-        public string FotoUrl { get; set; }
+        public string? FotoUrl { get; set; }
 
     }
 }

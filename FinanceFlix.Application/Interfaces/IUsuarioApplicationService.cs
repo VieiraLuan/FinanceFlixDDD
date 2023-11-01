@@ -11,7 +11,7 @@ namespace FinanceFlix.Application.Interfaces
     public interface IUsuarioApplicationService
     {
 
-        Task<UsuarioResponseViewModel> Get(LoginResponseViewModel usuarioLogin);
+        Task<UsuarioResponseViewModel> Login(LoginResponseViewModel usuarioLogin);
 
         Task<bool> Add(AddUsuarioRequestViewModel usuario);
 

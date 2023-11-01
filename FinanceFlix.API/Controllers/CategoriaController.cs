@@ -1,5 +1,6 @@
 ﻿using FinanceFlix.Application.Interfaces;
 using FinanceFlix.Application.ViewModels.Categoria.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceFlix.API.Controllers
@@ -16,6 +17,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -32,6 +34,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
@@ -54,6 +57,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add([FromBody] AddCategoriaRequestViewModel categoria)
         {
             try
@@ -80,6 +84,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> Update([FromBody] EditCategoriaRequestViewModel categoria)
         {
             try
@@ -106,6 +111,7 @@ namespace FinanceFlix.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             try

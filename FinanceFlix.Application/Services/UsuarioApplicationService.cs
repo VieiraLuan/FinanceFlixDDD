@@ -13,34 +13,49 @@ namespace FinanceFlix.Application.Services
     public class UsuarioApplicationService : IUsuarioApplicationService
     {
         private readonly IUsuarioService _usuarioService;
+        private readonly ITokenApplicationService _tokenService;
 
-        public UsuarioApplicationService(IUsuarioService usuarioService)
+        public UsuarioApplicationService(IUsuarioService usuarioService, ITokenApplicationService tokenService)
         {
             _usuarioService = usuarioService;
+            _tokenService = tokenService;
         }
 
-        public async Task<UsuarioResponseViewModel> Get(LoginResponseViewModel usuarioLogin)
+        public async Task<UsuarioResponseViewModel> Login(LoginResponseViewModel usuarioLogin)
         {
             try
             {
-                if (String.IsNullOrEmpty(usuarioLogin.Email) || String.IsNullOrEmpty(usuarioLogin.Senha))
+
+
+                var usuario = await _usuarioService.Get(usuarioLogin.Email, usuarioLogin.Senha);
+
+                if (usuario != null)
                 {
-                    return null;
+                    var token = _tokenService.GenerateToken(usuario);
+
+                    var usuarioResponse = new UsuarioResponseViewModel
+                    {
+                        Id = usuario.Id,
+                        Token = token,
+                        Email = usuarioLogin.Email,
+                        Nome = usuario.Nome,
+                        Tipo = usuario.Tipo,
+                        FotoUrl = usuario.FotoUrl
+
+                    };
+
+                    return usuarioResponse;
+
                 }
                 else
                 {
-                    //Continuar daqui
-                    var usuarioEntity = new Usuario(usuarioLogin.Email, usuarioLogin.Senha);
+                    return null;
                 }
-
-                return null;
-
-
 
             }
             catch (Exception)
             {
-
+                return null;
                 throw;
             }
         }
@@ -49,7 +64,12 @@ namespace FinanceFlix.Application.Services
             try
             {
                 if (usuario != null)
-                {
+                {   
+                    if(_usuarioService.Get(usuario.Email, usuario.Senha) != null)
+                    {
+                        return false;
+                    }
+
                     var usuarioEntity = new Usuario(usuario.Nome, usuario.Email, usuario.Senha, usuario.Tipo, usuario.FotoUrl);
                     return await _usuarioService.Add(usuarioEntity);
                 }

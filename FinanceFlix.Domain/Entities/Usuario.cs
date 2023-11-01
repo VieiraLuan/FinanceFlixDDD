@@ -22,6 +22,7 @@ namespace FinanceFlix.API.Entities
 
         }
 
+        //Add
         public Usuario(string nome, string email, string senha, string tipo, string foto)
         {
             Nome = nome;
@@ -29,6 +30,25 @@ namespace FinanceFlix.API.Entities
             Senha = senha;
             Tipo = tipo;
             FotoUrl = foto;
+        }
+
+        //Edit
+        public Usuario(Guid id,DateTime lastModifiedDate, string nome, string email, string senha, string tipo, string foto)
+        {
+            Id = id;
+            LastModifiedDate = lastModifiedDate;
+            Nome = nome;
+            Email = email;
+            Senha = senha;
+            Tipo = tipo;
+            FotoUrl = foto;
+        }
+
+        //Login
+        public Usuario(String email, string senha)
+        {
+            Email = email;
+            Senha = senha;
         }
 
 

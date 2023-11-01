@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FinanceFlix.Application.Interfaces
 {
-    public interface ITokenService
+    public interface ITokenApplicationService
     {
         public string GenerateToken(Usuario usuario);
     }

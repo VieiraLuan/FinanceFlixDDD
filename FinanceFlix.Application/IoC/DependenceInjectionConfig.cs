@@ -25,7 +25,8 @@ namespace FinanceFlix.Application.IoC
             services.AddScoped<ICategoriaApplicationService, CategoriaApplicationService>();
             services.AddScoped<ICursoApplicationService, CursoApplicationService>();
             services.AddScoped<IVideoApplicationService, VideoApplicationService>();
-            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ITokenApplicationService, TokenService>();
+            services.AddScoped<IUsuarioApplicationService, UsuarioApplicationService>();
             #endregion
 
             //Domain
@@ -33,6 +34,7 @@ namespace FinanceFlix.Application.IoC
             services.AddScoped<ICategoriaService, CategoriaService>();
             services.AddScoped<IVideoService, VideoService>();
             services.AddScoped<ICursoService, CursoService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
             #endregion
 
             #region Inversão de Controles - AWS Services
@@ -47,6 +49,7 @@ namespace FinanceFlix.Application.IoC
             services.AddScoped<IVideoRepository, VideoRepository>();
             services.AddScoped<ICursoRepository, CursoRepository>();
             services.AddScoped<ICursoVideoRepository, CursoVideoRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             #endregion
 
 

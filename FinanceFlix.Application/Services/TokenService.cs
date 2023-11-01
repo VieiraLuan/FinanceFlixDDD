@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FinanceFlix.Application.Services
 {
-    public class TokenService:ITokenService
+    public class TokenService:ITokenApplicationService
     {
         public string GenerateToken(Usuario usuario)
         {

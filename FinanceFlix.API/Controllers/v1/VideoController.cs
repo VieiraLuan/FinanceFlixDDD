@@ -1,24 +1,27 @@
-﻿
+﻿using FinanceFlix.API.Entities;
 using FinanceFlix.Application.Interfaces;
-using FinanceFlix.Application.ViewModels.Curso.Request;
-using FinanceFlix.Application.ViewModels.CursoCategoria.Request;
+using FinanceFlix.Application.ViewModels;
+using FinanceFlix.Application.ViewModels.Video.Request;
+using FinanceFlix.Domain.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FinanceFlix.API.Controllers
+namespace FinanceFlix.API.Controllers.v1
 {
     [Route("[controller]")]
     [ApiController]
-    public class CursoController : ControllerBase
+    public class VideoController : ControllerBase
     {
 
-        private readonly ICursoApplicationService _cursoService;
+        private readonly IVideoApplicationService _videoService;
 
-        public CursoController(ICursoApplicationService cursoService)
+        public VideoController(IVideoApplicationService videoService)
         {
-            _cursoService = cursoService;
+            _videoService = videoService;
         }
 
+        //Lista todos os videos existentes  
         [HttpGet]
         [Route("GetAll")]
         [Authorize]
@@ -26,9 +29,9 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                var cursos = await _cursoService.GetAll();
+                var videos = await _videoService.GetAll();
 
-                return Ok(cursos);
+                return Ok(videos);
             }
             catch (Exception ex)
             {
@@ -37,23 +40,21 @@ namespace FinanceFlix.API.Controllers
 
         }
 
-
+        //Lista um video pelo id 
         [HttpGet("{id}")]
         [Authorize]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
             {
-                var curso = await _cursoService.GetById(id);
-
-                if (curso == null)
+                if (_videoService.GetById == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-
-                    return Ok(curso);
+                    var video = await _videoService.GetById(id);
+                    return Ok(video);
                 }
             }
             catch (Exception ex)
@@ -64,10 +65,10 @@ namespace FinanceFlix.API.Controllers
         }
 
 
+        //Adiciona um novo video e relaciona a um curso
         [HttpPost]
         [Authorize]
-        [Route("AddCursoCategoriaExists")]
-        public async Task<IActionResult> Add([FromBody] AddCursoRequestViewModel curso)
+        public async Task<IActionResult> Add([FromForm] AddVideoRequestViewModel video)
         {
             try
             {
@@ -76,14 +77,13 @@ namespace FinanceFlix.API.Controllers
                     return BadRequest();
                 }
 
-                if (await _cursoService.Add(curso) != false)
+                if (await _videoService.Add(video) == false)
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = curso.Nome }, curso);
-
+                    return BadRequest();
                 }
                 else
                 {
-                    return BadRequest();
+                    return CreatedAtAction(nameof(GetById), new { id = video.Nome }, video);
                 }
 
             }
@@ -93,27 +93,26 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
-
+        //Relaciona um video a uma coleção de cursos
         [HttpPost]
+        [Route("AddVideoToCurso")]
         [Authorize]
-        [Route("AddCursoCategoriaNoExists")]
-        public async Task<IActionResult> AddCursoCategoria([FromBody] AddCursoCategoriaRequestViewModel curso)
+        public async Task<IActionResult> AddVideoToCurso([FromBody] AddVideoToCursoRequestViewModel video)
         {
             try
             {
-                if (curso == null || !ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
                     return BadRequest();
                 }
 
-                if (await _cursoService.AddCursoCategoria(curso) != false )
+                if (await _videoService.AddVideoCurso(video) == false)
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = curso.Nome }, curso);
-
+                    return BadRequest();
                 }
                 else
                 {
-                    return BadRequest();
+                    return CreatedAtAction(nameof(GetById), new { id = video.VideoId }, video);
                 }
 
             }
@@ -123,9 +122,10 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
+        //Atualiza um video
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> Update([FromBody] EditCursoRequestViewModel curso)
+        public async Task<IActionResult> Update([FromBody] EditVideoRequestViewModel video)
         {
             try
             {
@@ -134,7 +134,7 @@ namespace FinanceFlix.API.Controllers
                     return BadRequest();
                 }
 
-                if (await _cursoService.Update(curso) == false)
+                if (await _videoService.Update(video) == false)
                 {
                     return BadRequest();
                 }
@@ -142,6 +142,7 @@ namespace FinanceFlix.API.Controllers
                 {
                     return NoContent();
                 }
+
             }
             catch (Exception ex)
             {
@@ -149,27 +150,28 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
+        //Deleta um video
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
-                if(id.Equals(Guid.Empty))
+                if (id.Equals(Guid.Empty))
                 {
                     return BadRequest();
                 }
 
-                if (await _cursoService.Delete(id) == false)
-                {
-                    return BadRequest();
-                }
-                else
+                if (await _videoService.Delete(id) == true)
                 {
                     return NoContent();
                 }
+                else
+                {
+                    return BadRequest();
+                }
 
-                
+
             }
             catch (Exception ex)
             {
@@ -177,29 +179,60 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
-
-
-        [HttpGet]
-        [Route("GetAllByCategoriaCurso/{id}")]
+        //Assiste um video especifico
+        [HttpGet("WatchVideo/{id}")]
         [Authorize]
-        public async Task<IActionResult> GetAllByCategoria(Guid id)
+        public async Task<IActionResult> WatchVideoUrl(Guid id)
         {
             try
             {
+                if (id == null)
+                {
+                    return BadRequest();
+                }
 
-                var cursos = await _cursoService.GetByCategoriaCurso(id);
+                var video = await _videoService.WatchVideoUrl(id);
 
-                if (cursos == null)
+                if (video == null)
                 {
                     return NotFound();
                 }
-                
-                return Ok(cursos);
+
+                return Ok(video);
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+
+        }
+
+        //Lista todos os videos de um curso especifico
+        [HttpGet("GetAllVideosByCurso/{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetAllVideosByCurso(Guid id)
+        {
+            try
+            {
+                if (id.Equals(Guid.Empty))
+                {
+                    return BadRequest();
+                }
+
+                var videos = await _videoService.GetAllVideosByCurso(id);
+
+                if (videos == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(videos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
         }
 
 

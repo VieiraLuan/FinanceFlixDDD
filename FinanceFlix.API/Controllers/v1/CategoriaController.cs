@@ -3,9 +3,10 @@ using FinanceFlix.Application.ViewModels.Categoria.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FinanceFlix.API.Controllers
+namespace FinanceFlix.API.Controllers.v1
 {
-    [Route("Categoria")]
+    [Route("api/v{version:apiVersion}/Categoria")]
+    [ApiVersion("1.0")]
     [ApiController]
     public class CategoriaController : ControllerBase
     {

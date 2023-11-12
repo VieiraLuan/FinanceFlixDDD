@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FinanceFlix.API.Controllers
+namespace FinanceFlix.API.Controllers.v1
 {
     [Route("[controller]")]
     [ApiController]
@@ -22,11 +22,11 @@ namespace FinanceFlix.API.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login (LoginResponseViewModel usuarioLogin)
+        public async Task<IActionResult> Login(LoginResponseViewModel usuarioLogin)
         {
             try
             {
-                if (String.IsNullOrEmpty(usuarioLogin.Email) || String.IsNullOrEmpty(usuarioLogin.Senha))
+                if (string.IsNullOrEmpty(usuarioLogin.Email) || string.IsNullOrEmpty(usuarioLogin.Senha))
                 {
                     return BadRequest();
                 }
@@ -59,7 +59,7 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-               if(usuario != null)
+                if (usuario != null)
                 {
                     var usuarioAdd = await _usuarioApplicationService.Add(usuario);
 

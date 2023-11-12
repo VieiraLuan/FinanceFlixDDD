@@ -85,6 +85,7 @@ namespace FinanceFlix.Domain.Services
             {
                 if(usuario != null)
                 {
+                    usuario.LastModifiedDate = DateTime.Now;
                     return await _usuarioRepository.Update(usuario);
                 }
                 else

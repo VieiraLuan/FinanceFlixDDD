@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using FinanceFlix.Domain.Services.AWS;
 using FinanceFlix.Domain.Interfaces.IServices.IAWS;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace FinanceFlix.Application.IoC
 {
@@ -53,8 +55,10 @@ namespace FinanceFlix.Application.IoC
             #endregion
 
 
-            //Data
+            //Data 
             services.AddScoped<DataContext>();
+
+           
 
             #region Conexão com banco de dados
             //Conexão com o banco de dados - Dev

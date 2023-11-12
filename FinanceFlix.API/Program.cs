@@ -1,8 +1,14 @@
+using FinanceFlix.API.Swagger;
 using FinanceFlix.Application.Auth;
 using FinanceFlix.Application.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 
 
@@ -33,9 +39,33 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+//Adicionando versionamento
+builder.Services.AddApiVersioning(
+    x =>
+    {
+        x.AssumeDefaultVersionWhenUnspecified = true;
+        x.DefaultApiVersion = new ApiVersion(1, 0);
+    });
+
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddVersionedApiExplorer(
+    setup =>
+    {
+        setup.GroupNameFormat = "'v'VVV";
+        setup.SubstituteApiVersionInUrl = true;
+    }
+
+    );
+builder.Services.AddSwaggerGen(
+    c => c.OperationFilter<SwaggerDefaultValues>()
+);
+
+//Adding Swagger Dependecies
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+
 
 //Serilog
 
@@ -61,6 +91,7 @@ builder.Services.AddResolveDependecies();
 
 
 var app = builder.Build();
+var version = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
 // Add Authentication and Authorization
 app.UseAuthentication();
@@ -70,7 +101,16 @@ app.UseAuthorization();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(
+        options =>
+        {
+            foreach (var description in version.ApiVersionDescriptions)
+            {
+                options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+                    $"Finance Flix API - {description.GroupName.ToUpper()}");
+            }
+        }
+        );
 
 }
 

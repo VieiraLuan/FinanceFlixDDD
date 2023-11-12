@@ -103,6 +103,7 @@ namespace FinanceFlix.Domain.Services
                     return false;
                 }
 
+                curso.LastModifiedDate = DateTime.Now;
                 return await _cursoRepository.Update(curso);
 
 

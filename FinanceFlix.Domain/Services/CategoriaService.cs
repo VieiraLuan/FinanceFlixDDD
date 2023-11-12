@@ -94,6 +94,7 @@ namespace FinanceFlix.Domain.Services
             {
                 if (categoria != null)
                 {
+                    categoria.LastModifiedDate = DateTime.Now;
                     return await _categoriaRepository.Update(categoria);
 
                 }

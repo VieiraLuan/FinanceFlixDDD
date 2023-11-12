@@ -117,6 +117,7 @@ namespace FinanceFlix.Domain.Services
             }
             try
             {
+                video.LastModifiedDate = DateTime.Now;
                 return await _videoRepository.Update(video);
 
             }

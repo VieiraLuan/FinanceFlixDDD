@@ -1,27 +1,23 @@
-﻿using FinanceFlix.API.Entities;
-using FinanceFlix.Application.Interfaces;
-using FinanceFlix.Application.ViewModels;
-using FinanceFlix.Application.ViewModels.Video.Request;
-using FinanceFlix.Domain.Interfaces.IServices;
+﻿using FinanceFlix.Application.Interfaces;
+using FinanceFlix.Application.ViewModels.Curso.Request;
+using FinanceFlix.Application.ViewModels.CursoCategoria.Request;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FinanceFlix.API.Controllers
+namespace FinanceFlix.API.Controllers.v1
 {
     [Route("[controller]")]
     [ApiController]
-    public class VideoController : ControllerBase
+    public class CursoController : ControllerBase
     {
 
-        private readonly IVideoApplicationService _videoService;
+        private readonly ICursoApplicationService _cursoService;
 
-        public VideoController(IVideoApplicationService videoService)
+        public CursoController(ICursoApplicationService cursoService)
         {
-            _videoService = videoService;
+            _cursoService = cursoService;
         }
 
-        //Lista todos os videos existentes  
         [HttpGet]
         [Route("GetAll")]
         [Authorize]
@@ -29,9 +25,9 @@ namespace FinanceFlix.API.Controllers
         {
             try
             {
-                var videos = await _videoService.GetAll();
+                var cursos = await _cursoService.GetAll();
 
-                return Ok(videos);
+                return Ok(cursos);
             }
             catch (Exception ex)
             {
@@ -40,21 +36,23 @@ namespace FinanceFlix.API.Controllers
 
         }
 
-        //Lista um video pelo id 
+
         [HttpGet("{id}")]
         [Authorize]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
             {
-                if (_videoService.GetById == null)
+                var curso = await _cursoService.GetById(id);
+
+                if (curso == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    var video = await _videoService.GetById(id);
-                    return Ok(video);
+
+                    return Ok(curso);
                 }
             }
             catch (Exception ex)
@@ -65,10 +63,10 @@ namespace FinanceFlix.API.Controllers
         }
 
 
-        //Adiciona um novo video e relaciona a um curso
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Add([FromForm] AddVideoRequestViewModel video)
+        [Route("AddCursoCategoriaExists")]
+        public async Task<IActionResult> Add([FromBody] AddCursoRequestViewModel curso)
         {
             try
             {
@@ -77,13 +75,14 @@ namespace FinanceFlix.API.Controllers
                     return BadRequest();
                 }
 
-                if (await _videoService.Add(video) == false)
+                if (await _cursoService.Add(curso) != false)
                 {
-                    return BadRequest();
+                    return CreatedAtAction(nameof(GetById), new { id = curso.Nome }, curso);
+
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = video.Nome }, video);
+                    return BadRequest();
                 }
 
             }
@@ -93,26 +92,27 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
-        //Relaciona um video a uma coleção de cursos
+
         [HttpPost]
-        [Route("AddVideoToCurso")]
         [Authorize]
-        public async Task<IActionResult> AddVideoToCurso([FromBody] AddVideoToCursoRequestViewModel video)
+        [Route("AddCursoCategoriaNoExists")]
+        public async Task<IActionResult> AddCursoCategoria([FromBody] AddCursoCategoriaRequestViewModel curso)
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (curso == null || !ModelState.IsValid)
                 {
                     return BadRequest();
                 }
 
-                if (await _videoService.AddVideoCurso(video) == false)
+                if (await _cursoService.AddCursoCategoria(curso) != false)
                 {
-                    return BadRequest();
+                    return CreatedAtAction(nameof(GetById), new { id = curso.Nome }, curso);
+
                 }
                 else
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = video.VideoId }, video);
+                    return BadRequest();
                 }
 
             }
@@ -122,10 +122,9 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
-        //Atualiza um video
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> Update([FromBody] EditVideoRequestViewModel video)
+        public async Task<IActionResult> Update([FromBody] EditCursoRequestViewModel curso)
         {
             try
             {
@@ -134,7 +133,7 @@ namespace FinanceFlix.API.Controllers
                     return BadRequest();
                 }
 
-                if (await _videoService.Update(video) == false)
+                if (await _cursoService.Update(curso) == false)
                 {
                     return BadRequest();
                 }
@@ -142,7 +141,6 @@ namespace FinanceFlix.API.Controllers
                 {
                     return NoContent();
                 }
-
             }
             catch (Exception ex)
             {
@@ -150,7 +148,6 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
-        //Deleta um video
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<IActionResult> Delete(Guid id)
@@ -162,13 +159,13 @@ namespace FinanceFlix.API.Controllers
                     return BadRequest();
                 }
 
-                if (await _videoService.Delete(id) == true)
+                if (await _cursoService.Delete(id) == false)
                 {
-                    return NoContent();
+                    return BadRequest();
                 }
                 else
                 {
-                    return BadRequest();
+                    return NoContent();
                 }
 
 
@@ -179,60 +176,29 @@ namespace FinanceFlix.API.Controllers
             }
         }
 
-        //Assiste um video especifico
-        [HttpGet("WatchVideo/{id}")]
+
+
+        [HttpGet]
+        [Route("GetAllByCategoriaCurso/{id}")]
         [Authorize]
-        public async Task<IActionResult> WatchVideoUrl(Guid id)
+        public async Task<IActionResult> GetAllByCategoria(Guid id)
         {
             try
             {
-                if (id == null)
-                {
-                    return BadRequest();
-                }
 
-                var video = await _videoService.WatchVideoUrl(id);
+                var cursos = await _cursoService.GetByCategoriaCurso(id);
 
-                if (video == null)
+                if (cursos == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(video);
+                return Ok(cursos);
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-
-        }
-
-        //Lista todos os videos de um curso especifico
-        [HttpGet("GetAllVideosByCurso/{id}")]
-        [Authorize]
-        public async Task<IActionResult> GetAllVideosByCurso(Guid id)
-        {
-            try
-            {
-                if (id.Equals(Guid.Empty))
-                {
-                    return BadRequest();
-                }
-
-                var videos = await _videoService.GetAllVideosByCurso(id);
-
-                if (videos == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(videos);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-
         }
 
 

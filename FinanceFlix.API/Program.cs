@@ -2,7 +2,9 @@ using FinanceFlix.Application.Auth;
 using FinanceFlix.Application.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,9 +37,27 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Serilog
+
+//Criando configuração servilog recuperando do appsettings.json
+
+var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+
+// Criando configuração Serilog recuperando do appsettings.
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(configuration)
+    .CreateLogger();
+
+
+
+
 
 //Add Dependence Injection
 builder.Services.AddResolveDependecies();
+
+
+
 
 
 var app = builder.Build();

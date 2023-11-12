@@ -3,7 +3,7 @@ using FinanceFlix.Data.Context;
 using FinanceFlix.Domain.Entities;
 using FinanceFlix.Domain.Interfaces.IRepositories;
 using Microsoft.EntityFrameworkCore;
-
+using Serilog;
 
 namespace FinanceFlix.Data.Repositories
 {
@@ -35,18 +35,28 @@ namespace FinanceFlix.Data.Repositories
                     }
                     else
                     {
+                        Log.Logger.Error($"Erro durante persistência dos dados de Video: " +
+                            $"ID: {video.Id}, " +
+                            $"DESCRICAO: {video.Descricao}," +
+                            $"VISUALIZACOES: {video.Vizualizacoes}," +
+                            $"CREATEDDATE: {video.CreatedDate}," +
+                            $"CURSOS: {video.CursosVideos.ToList()}, " +
+                            $"DURACAO EM SEGUNDOS: {video.DuracaoSegundos}, " +
+                            $"FILEPATH: {video.FilePath}, " +
+                            $"URL AWS: {video.Url}, " +
+                            $"NOME: {video.Nome}, ");
                         return false;
                     }
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Implementar log
+                    Log.Logger.Error($"Erro durante persistência dos dados de Video: {ex.Message}");
                     return false;
                 }
             }
             else
             {
-                //TODO: Implementar log
+                Log.Logger.Error("Video é nulo");
                 return false;
             }
         }
@@ -71,6 +81,9 @@ namespace FinanceFlix.Data.Repositories
                 }
                 else
                 {
+                    Log.Logger.Error($"Erro durante persistência de vinculação dos dados de Video: " +
+                        $"ID video: {idVideo}, " +
+                        $"ID CURSOS: {idCursos.ToList()}, ");
                     return false;
                 }
 
@@ -78,8 +91,8 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                Log.Logger.Error($"Erro durante persistência de vinculação dos dados de Video: {ex.Message}");
+                throw;
             }
         }
 
@@ -96,18 +109,21 @@ namespace FinanceFlix.Data.Repositories
                     }
                     else
                     {
+                        Log.Logger.Error("Erro durante a exclusão do video: " +
+                                                       $"ID: {video.Id}, ");
+
                         return false;
                     }
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Implementar log
+                    Log.Logger.Error($"Erro durante a exclusão do video: {ex.Message}");
                     return false;
                 }
             }
             else
             {
-                //TODO: Implementar log
+                Log.Logger.Error("Video é nulo");
                 return false;
             }
         }
@@ -121,7 +137,7 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (Exception ex)
             {
-                //TODO: Implementar log
+                Log.Logger.Error($"Erro durante a consulta de todos os videos: {ex.Message}");
                 return null;
             }
         }
@@ -149,14 +165,15 @@ namespace FinanceFlix.Data.Repositories
                 }
                 else
                 {
+
                     return null;
                 }
 
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                Log.Logger.Error($"Erro durante a consulta de todos os videos por curso: {ex.Message}");
+                throw;
             }
         }
 
@@ -168,18 +185,17 @@ namespace FinanceFlix.Data.Repositories
                 {
 
                     return await _context.Videos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-
-
-
                 }
                 else
                 {
                     return null;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //TODO: Implementar log
+                Log.Logger.Error($"Erro durante a consulta de video por id \n " +
+                    $"ID: {id}, " +
+                    $"Erro: {ex.Message}");
                 return null;
             }
 
@@ -198,13 +214,14 @@ namespace FinanceFlix.Data.Repositories
                 }
                 else
                 {
+
                     return null;
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //TODO: Implementar log
+                Log.Logger.Error($"Erro: {ex.Message}");
                 return null;
 
             }
@@ -227,9 +244,9 @@ namespace FinanceFlix.Data.Repositories
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //TODO: Implementar log
+                Log.Logger.Error($"Erro: {ex.Message}");
                 return null;
 
             }

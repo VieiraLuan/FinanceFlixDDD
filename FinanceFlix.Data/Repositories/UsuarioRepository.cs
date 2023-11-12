@@ -2,6 +2,7 @@
 using FinanceFlix.Data.Context;
 using FinanceFlix.Domain.Interfaces.IRepositories;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (Exception ex)
             {
-                //Logar erro
+               Log.Logger.Error($"Erro:{ex.Message} ");
                 return false;
                 throw;
             }
@@ -71,9 +72,9 @@ namespace FinanceFlix.Data.Repositories
                 return false;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //Logar erro
+                Log.Logger.Error($"Erro:{ex.Message} ");    
                 return false;
                 throw;
             }
@@ -93,6 +94,7 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (Exception ex)
             {
+                Log.Logger.Error($"Erro:{ex.Message} ");
                 return null;
                 throw;
             }
@@ -116,9 +118,9 @@ namespace FinanceFlix.Data.Repositories
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //Logar erro
+                Log.Logger.Error($"Erro:{ex.Message} ");
                 return false;
                 throw;
             }

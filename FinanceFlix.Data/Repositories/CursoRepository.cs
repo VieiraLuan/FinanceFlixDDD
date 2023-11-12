@@ -2,7 +2,7 @@
 using FinanceFlix.Data.Context;
 using FinanceFlix.Domain.Interfaces.IRepositories;
 using Microsoft.EntityFrameworkCore;
-
+using Serilog;
 
 namespace FinanceFlix.Data.Repositories
 {
@@ -22,7 +22,7 @@ namespace FinanceFlix.Data.Repositories
             {
                 try
                 {
-                     _context.Cursos.Add(curso);
+                    _context.Cursos.Add(curso);
 
 
                     if (await _context.SaveChangesAsync() > 0)
@@ -36,14 +36,14 @@ namespace FinanceFlix.Data.Repositories
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Implementar log
+                    Log.Logger.Error("Erro: " + ex.Message);
 
                     return false;
                 }
             }
             else
             {
-                //TODO: Implementar log
+                Log.Logger.Error("Erro: " + "Curso é nulo");
                 return false;
             }
         }
@@ -73,7 +73,7 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (Exception ex)
             {
-                //TODO: Implementar log
+                Log.Logger.Error("Erro: " + ex.Message);
                 return false;
             }
 
@@ -90,7 +90,7 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (Exception ex)
             {
-                //TODO: Implementar log
+                Log.Logger.Error("Erro: " + ex.Message);
                 return null;
             }
         }
@@ -114,7 +114,7 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (Exception ex)
             {
-                //TODO: Implementar log
+                Log.Logger.Error("Erro: " + ex.Message);
                 return null;
             }
         }
@@ -135,9 +135,9 @@ namespace FinanceFlix.Data.Repositories
                     return null;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //TODO: Implementar log
+                Log.Logger.Error("Erro: " + ex.Message);
                 return null;
             }
 
@@ -164,11 +164,13 @@ namespace FinanceFlix.Data.Repositories
                 }
                 catch (Exception ex)
                 {
+                    Log.Logger.Error("Erro: " + ex.Message);
                     return false;
                 }
             }
             else
             {
+                Log.Logger.Error("Erro: " + "Curso é nulo");
                 return false;
             }
 

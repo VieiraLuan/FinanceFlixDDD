@@ -2,7 +2,7 @@
 using FinanceFlix.Data.Context;
 using FinanceFlix.Domain.Interfaces.IRepositories;
 using Microsoft.EntityFrameworkCore;
-
+using Serilog;
 
 namespace FinanceFlix.Data.Repositories
 {
@@ -30,23 +30,31 @@ namespace FinanceFlix.Data.Repositories
 
                 if (await _context.SaveChangesAsync() > 0)
                 {
+                    Log.Logger.Information("Categoria persistida com sucesso, ID: " + categoria.Id);
+
+
                     return true;
                 }
                 else
                 {
+                    Log.Logger.Error($"Falha na persistência dos dados \n " +
+                        $"ID: {categoria.Id}, " +
+                        $"NOME: {categoria.Nome}, " +
+                        $"CREATED DATE: {categoria.CreatedDate} , " +
+                        $"DESCRICAO: {categoria.Descricao} , " +
+                        $"LASTMODIFIEDDATE: {categoria.LastModifiedDate}");
                     return false;
                 }
-
 
             }
             catch (DbUpdateException ex)
             {
-                //Registro no Log
+                Log.Logger.Error("Erro: " + ex.Message);
                 return false;
             }
             catch (Exception ex)
             {
-                //Registro no Log
+                Log.Logger.Error("Erro: " + ex.Message);
                 return false;
             }
         }
@@ -74,22 +82,24 @@ namespace FinanceFlix.Data.Repositories
                     }
                     else
                     {
+                        Log.Logger.Information("Categoria é null");
                         return false;
                     }
                 }
                 else
                 {
+                    Log.Logger.Information("Categoria não encontrada: " + id);
                     return false;
                 }
             }
             catch (DbUpdateException ex)
             {
-                //Registro no Log
+                Log.Logger.Error("Erro: " + ex.Message);
                 return false;
             }
             catch (Exception ex)
             {
-
+                Log.Logger.Error("Erro: " + ex.Message);
                 return false;
             }
         }
@@ -100,12 +110,10 @@ namespace FinanceFlix.Data.Repositories
             try
             {
                 return await _context.Categorias.AsNoTracking().ToListAsync();
-
-
             }
             catch (Exception ex)
             {
-                // Registro no Log
+                Log.Logger.Error("Erro: " + ex.Message);
                 return null;
             }
 
@@ -123,6 +131,7 @@ namespace FinanceFlix.Data.Repositories
                 }
                 else
                 {
+                    Log.Logger.Information("Categoria não encontrada: " + id);
                     return null;
                 }
 
@@ -130,7 +139,7 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (Exception ex)
             {
-                //Registro no Log
+                Log.Logger.Error("Erro: " + ex.Message);
                 return null;
             }
 
@@ -156,12 +165,19 @@ namespace FinanceFlix.Data.Repositories
                     }
                     else
                     {
+                        Log.Logger.Error($"Falha na atualização dos dados \n " +
+                            $"ID: {categoria.Id}, " +
+                            $"NOME: {categoria.Nome}, " +
+                            $"CREATED DATE: {categoria.CreatedDate} , " +
+                            $"DESCRICAO: {categoria.Descricao} , " +
+                            $"LASTMODIFIEDDATE: {categoria.LastModifiedDate}");
                         return false;
                     }
 
                 }
                 else
                 {
+                    Log.Error("Categoria é null");
                     return false;
 
                 }
@@ -170,12 +186,12 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (DbUpdateException ex)
             {
-                //Registro no Log
+                Log.Logger.Error("Erro: " + ex.Message);
                 return false;
             }
             catch (Exception ex)
             {
-                //Registro no Log
+                Log.Logger.Error("Erro: " + ex.Message);
                 return false;
             }
         }

@@ -1,6 +1,7 @@
 ﻿using FinanceFlix.Data.Context;
 using FinanceFlix.Domain.Interfaces.IRepositories;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,7 @@ namespace FinanceFlix.Data.Repositories
             }
             catch (Exception ex)
             {
-                //TODO: Implementar log
+                Log.Logger.Error(ex, "Erro ao deletar cursoVideo"); 
                 return false;
 
             }

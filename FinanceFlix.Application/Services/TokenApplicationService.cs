@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FinanceFlix.Application.Services
 {
-    public class TokenService:ITokenApplicationService
+    public class TokenApplicationService:ITokenApplicationService
     {
         public string GenerateToken(Usuario usuario)
         {
@@ -26,7 +26,7 @@ namespace FinanceFlix.Application.Services
                     new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Role, usuario.Tipo.ToString())
                 }),
 
-                Expires = DateTime.UtcNow.AddHours(8),
+                Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 
             };

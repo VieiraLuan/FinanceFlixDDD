@@ -28,6 +28,7 @@ namespace FinanceFlix.Application.ViewModels.Video.Request
 
         public IFormFile videoFile { get; set; }
 
+        [Required]
         public Guid CursoId { get; set; }
 
 

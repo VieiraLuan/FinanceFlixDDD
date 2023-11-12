@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceFlix.API.Controllers.v1
 {
-    [Route("[controller]")]
+    [Route("api/v{version:apiVersion}/Video")]
+    [ApiVersion("1.0")]
     [ApiController]
     public class VideoController : ControllerBase
     {

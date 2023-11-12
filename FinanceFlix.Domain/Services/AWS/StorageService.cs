@@ -14,20 +14,22 @@ namespace FinanceFlix.Domain.Services.AWS
 
         public async Task<S3Response> UploadFileAsync(S3Object s3Object, Entities.AWS.AWSCredentials awsCredentials)
         {
-
-            //aws credentials
-            var credentials = new BasicAWSCredentials(awsCredentials.AwsKey, awsCredentials.AwsSecretKey);
-
-            //region
-            var config = new AmazonS3Config
-            {
-                RegionEndpoint = Amazon.RegionEndpoint.USEast1
-            };
-
             var response = new S3Response();
 
             try
             {
+                //aws credentials
+                var credentials = new BasicAWSCredentials(awsCredentials.AwsKey, awsCredentials.AwsSecretKey);
+
+                //region
+                var config = new AmazonS3Config
+                {
+                    RegionEndpoint = Amazon.RegionEndpoint.USEast1
+                };
+
+               
+
+
                 //upload Request
                 var uploadRequest = new TransferUtilityUploadRequest
                 {
@@ -47,9 +49,12 @@ namespace FinanceFlix.Domain.Services.AWS
                 //Uploading the file to S3
                 await fileTransferUtility.UploadAsync(uploadRequest);
 
+
+
                 response.StatusCode = 200;
                 response.Message = $"{s3Object.Nome} foi carregado com sucesso";
-              
+
+                
 
             }
             catch (AmazonS3Exception ex)
@@ -65,6 +70,7 @@ namespace FinanceFlix.Domain.Services.AWS
             }
 
             return response;
+       
 
 
         }

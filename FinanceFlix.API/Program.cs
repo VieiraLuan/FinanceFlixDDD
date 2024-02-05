@@ -86,12 +86,24 @@ Log.Logger = new LoggerConfiguration()
 //Add Dependence Injection
 builder.Services.AddResolveDependecies();
 
+//Add Cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost4200", builder => builder
+        .WithOrigins("http://localhost:4200") 
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials());
+});
+
 
 
 
 
 var app = builder.Build();
 var version = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+app.UseCors("AllowLocalhost4200");
 
 // Add Authentication and Authorization
 app.UseAuthentication();
@@ -113,6 +125,8 @@ if (app.Environment.IsDevelopment())
         );
 
 }
+
+
 
 app.UseHttpsRedirection();
 

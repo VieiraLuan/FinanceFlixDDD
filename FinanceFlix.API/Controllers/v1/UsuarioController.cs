@@ -41,15 +41,16 @@ namespace FinanceFlix.API.Controllers.v1
                     }
                     else
                     {
-                        return NotFound("Usuário ou senha inválido");
+                        return NotFound(new { Status = "Error", Message = "Usuário ou senha inválidos." });
                     }
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("Erro ao tentar fazer login");
-                throw;
+                Console.WriteLine(ex.Message);
+                return BadRequest("Erro ao tentar fazer login: " + ex.Message);         
+                
             }
         }
 
